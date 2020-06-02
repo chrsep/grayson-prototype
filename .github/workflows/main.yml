@@ -17,14 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    - name: ESLint Action
-      uses: hallee/eslint-action@1.0.3
-      with:
-        # GitHub repository token for publishing inline lint annotations. Should be secrets.GITHUB_TOKEN.
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        # The type of runner that the job will run on
-        
-    - name: TypeScript Error Reporter
-      uses: andoshin11/typescript-error-reporter-action@v1.0.2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '14'
+      - run: yarn install
+      - run: yarn lint
+      - run: yarn typecheck
