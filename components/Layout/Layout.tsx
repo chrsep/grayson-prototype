@@ -1,16 +1,18 @@
-import { FC } from "react"
+import React, { FC } from "react"
 import Button from "../Button/Button"
 
 const Layout: FC = ({ children }) => {
   return (
     <div>
-      <nav className="p-3 flex items-center">
+      <nav className="p-3 flex items-center mx-auto max-w-4xl">
         <div>Grayson</div>
         <a href="/api/login" className="ml-auto">
           <Button>Login</Button>
         </a>
       </nav>
-      {children}
+      <main className="mx-auto max-w-4xl">{children}</main>
+
+      <footer className="p-3 mx-auto max-w-4xl">Grayson</footer>
     </div>
   )
 }
