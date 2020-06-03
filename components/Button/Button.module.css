@@ -1,11 +1,3 @@
 .base {
-    @apply rounded px-4 py-2;
-}
-
-.default {
-    @apply bg-black text-white;
-}
-
-.outline {
-
+    @apply rounded px-4 py-2 bg-black text-white;
 }
