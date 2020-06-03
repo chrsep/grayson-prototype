@@ -61,6 +61,10 @@ module.exports = {
     "no-unused-expressions": "off",
     "jest/no-mocks-import": "off",
     "react/jsx-fragments": "off",
+    "jsx-a11y/label-has-associated-control": [ 2, {
+      "controlComponents": ["Input"],
+      "depth": 3,
+    }],
     "no-restricted-imports": [
       "error",
       {

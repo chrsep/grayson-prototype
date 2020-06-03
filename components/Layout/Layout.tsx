@@ -11,8 +11,6 @@ const Layout: FC = ({ children }) => {
         </a>
       </nav>
       <main className="mx-auto max-w-4xl">{children}</main>
-
-      <footer className="p-3 mx-auto max-w-4xl">Grayson</footer>
     </div>
   )
 }
