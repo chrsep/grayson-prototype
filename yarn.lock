@@ -8369,10 +8369,10 @@ react-is@16.13.1, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-query@1.5.5:
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.5.tgz#6f94e061a8ce9ff1fb746f2c50b588711aa0f070"
-  integrity sha512-6pUh6/qSf3e8HNMJFMIfhqluE3WZ8F/ugZGrNZ9YT5zvftDlXNj5gdY9ZUK0rldkBqxUHqmiNAePcaApHCZMFw==
+react-query@1.5.6:
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.6.tgz#3aa567196680d9dc8a3fa36b2cd44fb55d062082"
+  integrity sha512-P4Km3Mlcyq5jGwd2HJaB1WcdNUEtxgtiVh3/5LjPsfjS/kwQY4s/0PCNKxy+87CHPShW6XPVonSn3tEt8Vs1JA==
   dependencies:
     "@scarf/scarf" "^1.0.0"
     ts-toolbelt "^6.4.2"
