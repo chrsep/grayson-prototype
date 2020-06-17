@@ -10,7 +10,7 @@ const Home = () => {
         <title>Grayson</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="p-3">
+      <div className="px-3">
         <label
           className="flex border rounded bg-white w-full block"
           aria-label="search"
