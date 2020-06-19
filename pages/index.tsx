@@ -23,6 +23,22 @@ const Home = () => {
           <Input className="w-full" />
         </label>
       </div>
+      <picture>
+        <source
+          srcSet={require("../images/no-product.png?webp")}
+          type="image/webp"
+        />
+        <source
+          srcSet={require("../images/no-product.png")}
+          type="image/jpeg"
+        />
+        <img
+          className="w-64 mx-auto mt-12"
+          alt="No plans yet illustration"
+          src={require("../images/no-product.png")}
+        />
+      </picture>
+      <h6 className="mt-8 text-center text-xl">Belum ada produk terdaftar</h6>
     </>
   )
 }
