@@ -29,7 +29,7 @@ const Home = () => {
           type="image/webp"
         />
         <source
-          srcSet={require("../images/no-products.png")}
+          srcSet={require("../images/no-product.png")}
           type="image/jpeg"
         />
         <img
