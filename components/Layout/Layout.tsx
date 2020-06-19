@@ -9,14 +9,22 @@ const Layout: FC = ({ children }) => {
   return (
     <div>
       <nav className="p-3 flex items-center mx-auto max-w-4xl">
-        <img alt="profile-pic" src={data?.picture} className="w-8 rounded" />
-        <div className="ml-3">{data?.name}</div>
+        {status === "success" && (
+          <>
+            <img
+              alt="profile-pic"
+              src={data?.picture}
+              className="w-8 rounded flex-shrink-0"
+            />
+            <p className="ml-3 mr-3 w-3/5 truncate">{data?.name}</p>
+          </>
+        )}
         {status !== "success" ? (
-          <a href="/api/login" className="ml-auto">
+          <a href="/api/login" className="ml-auto flex-shrink-0">
             <Button>Login</Button>
           </a>
         ) : (
-          <a href="/product" className="ml-auto">
+          <a href="/product" className="ml-auto  flex-shrink-0">
             <Button className="flex items-center">
               <img
                 alt="product icon"

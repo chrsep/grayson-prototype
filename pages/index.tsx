@@ -15,7 +15,11 @@ const Home = () => {
           className="flex border rounded bg-white w-full block"
           aria-label="search"
         >
-          <img alt="search icon" src={SearchIcon} className="m-3" />
+          <img
+            alt="search icon"
+            src={SearchIcon}
+            className="m-3 flex-shrink-0"
+          />
           <Input className="w-full" />
         </label>
       </div>
