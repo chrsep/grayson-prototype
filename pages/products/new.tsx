@@ -9,7 +9,7 @@ const NewProductPage = () => (
     <Header />
     <main className="mx-auto max-w-4xl">
       <div className="flex">
-        <h1 className="text-4xl font-bold mx-3">Produk baru</h1>
+        <h1 className="text-4xl font-bold mx-3">Produk Baru</h1>
       </div>
     </main>
   </>
