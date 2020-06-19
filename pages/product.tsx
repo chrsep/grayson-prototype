@@ -10,17 +10,17 @@ const ProductPage = () => (
       <h1 className="text-4xl font-bold mx-3">Produk-ku</h1>
       <picture>
         <source
-          srcSet={require("../images/you-no-product.png?webp&width=256")}
+          srcSet={require("../images/you-no-product.png?webp&width=672")}
           type="image/webp"
         />
         <source
-          srcSet={require("../images/you-no-product.png?resize&size=256")}
+          srcSet={require("../images/you-no-product.png?resize&size=672")}
           type="image/jpeg"
         />
         <img
           className="w-64 mx-auto mt-12"
           alt="No plans yet illustration"
-          src={require("../images/you-no-product.png?resize&size=256")}
+          src={require("../images/you-no-product.png?resize&size=672")}
         />
       </picture>
       <h6 className="mt-8 text-center text-xl text-gray-900">
