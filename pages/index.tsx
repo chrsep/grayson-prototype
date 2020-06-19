@@ -20,7 +20,7 @@ const Home = () => {
             src={SearchIcon}
             className="m-3 flex-shrink-0"
           />
-          <Input className="w-full" />
+          <Input className="w-full" placeholder="Cari produk" />
         </label>
       </div>
       <picture>
@@ -38,7 +38,9 @@ const Home = () => {
           src={require("../images/no-product.png")}
         />
       </picture>
-      <h6 className="mt-8 text-center text-xl">Belum ada produk terdaftar</h6>
+      <h6 className="mt-8 text-center text-xl text-gray-900">
+        Belum ada produk terdaftar
+      </h6>
     </>
   )
 }
