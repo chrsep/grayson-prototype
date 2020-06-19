@@ -1,5 +1,6 @@
 import Head from "next/head"
 import React from "react"
+import Link from "next/link"
 import Input from "../components/Input/Input"
 import SearchIcon from "../icons/search.svg"
 import useGetUserProfileApi from "../hooks/useGetUserProfileApi"
@@ -56,7 +57,7 @@ const Header = () => {
 
   return (
     <nav className="p-3 flex items-center mx-auto max-w-4xl">
-      {status === "success" && (
+      {data && (
         <>
           <img
             alt="profile-pic"
@@ -67,12 +68,12 @@ const Header = () => {
         </>
       )}
       {status !== "success" ? (
-        <a href="/api/login" className="ml-auto flex-shrink-0">
-          <Button>Login</Button>
-        </a>
+        <Link href="/api/login">
+          <Button className="flex-shrink-0">Login</Button>
+        </Link>
       ) : (
-        <a href="/product" className="ml-auto  flex-shrink-0">
-          <Button className="flex items-center">
+        <Link href="/product">
+          <Button className="flex items-center flex-shrink-0">
             <img
               alt="product icon"
               src={BoxIcon}
@@ -80,7 +81,7 @@ const Header = () => {
             />
             Produk-ku
           </Button>
-        </a>
+        </Link>
       )}
     </nav>
   )

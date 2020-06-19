@@ -5,7 +5,7 @@ import { UserProfile } from "../pages/api/users/profile"
 const useGetUserProfileApi = () => {
   const getProfile = getApi<UserProfile>("/users/profile")
 
-  return useQuery(["profile"], getProfile)
+  return useQuery("profile", getProfile)
 }
 
 export default useGetUserProfileApi

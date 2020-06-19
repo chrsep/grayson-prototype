@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "next/link"
 import useGetUserProfileApi from "../hooks/useGetUserProfileApi"
 import Button from "../components/Button/Button"
 import ChevronLeftIcon from "../icons/chevron-left.svg"
@@ -31,11 +32,11 @@ const ProductPage = () => (
 )
 
 const Header = () => {
-  const { data, status } = useGetUserProfileApi()
+  const { data } = useGetUserProfileApi()
 
   return (
     <nav className="p-3 flex items-center mx-auto max-w-4xl">
-      {status === "success" && (
+      {data && (
         <>
           <img
             alt="profile-pic"
@@ -45,7 +46,7 @@ const Header = () => {
           <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
         </>
       )}
-      <a href="/" className="ml-auto  flex-shrink-0">
+      <Link href="/">
         <Button className="flex items-center pl-2 rounded bg-transparent text-black border shadow-none">
           <img
             alt="product icon"
@@ -54,7 +55,7 @@ const Header = () => {
           />
           Kembali
         </Button>
-      </a>
+      </Link>
     </nav>
   )
 }
