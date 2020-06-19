@@ -1,9 +1,9 @@
 import React from "react"
 import Link from "next/link"
-import useGetUserProfileApi from "../hooks/useGetUserProfileApi"
-import Button from "../components/Button/Button"
-import ChevronLeftIcon from "../icons/chevron-left.svg"
-import PlusIcon from "../icons/plus.svg"
+import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
+import Button from "../../components/Button/Button"
+import ChevronLeftIcon from "../../icons/chevron-left.svg"
+import PlusIcon from "../../icons/plus.svg"
 
 const ProductPage = () => (
   <>
@@ -11,7 +11,7 @@ const ProductPage = () => (
     <main className="mx-auto max-w-4xl">
       <div className="flex">
         <h1 className="text-4xl font-bold mx-3">Produk-ku</h1>
-        <Link href="/product/new">
+        <Link href="/products/new">
           <button className="bg-black rounded-full py-3 pl-3 pr-6 shadow absolute right-0 bottom-0 m-3 z-50 text-white flex items-center md:relative md:ml-auto text-sm">
             <img alt="Produk baru" src={PlusIcon} className="mr-2" />
             Tambah Produk
@@ -20,17 +20,17 @@ const ProductPage = () => (
       </div>
       <picture>
         <source
-          srcSet={require("../images/you-no-product.png?webp&width=672")}
+          srcSet={require("../../images/you-no-product.png?webp&width=672")}
           type="image/webp"
         />
         <source
-          srcSet={require("../images/you-no-product.png?resize&size=672")}
+          srcSet={require("../../images/you-no-product.png?resize&size=672")}
           type="image/jpeg"
         />
         <img
           className="w-64 mx-auto mt-12"
           alt="No plans yet illustration"
-          src={require("../images/you-no-product.png?resize&size=672")}
+          src={require("../../images/you-no-product.png?resize&size=672")}
         />
       </picture>
       <h6 className="mt-8 text-center text-xl text-gray-900">

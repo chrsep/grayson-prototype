@@ -72,7 +72,7 @@ const Header = () => {
           <Button className="ml-auto flex-shrink-0">Login</Button>
         </Link>
       ) : (
-        <Link href="/product">
+        <Link href="/products">
           <Button className="flex items-center ml-auto flex-shrink-0">
             <img
               alt="product icon"
