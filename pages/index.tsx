@@ -69,11 +69,11 @@ const Header = () => {
       )}
       {status !== "success" ? (
         <Link href="/api/login">
-          <Button className="flex-shrink-0">Login</Button>
+          <Button className="ml-auto flex-shrink-0">Login</Button>
         </Link>
       ) : (
         <Link href="/product">
-          <Button className="flex items-center flex-shrink-0">
+          <Button className="flex items-center ml-auto flex-shrink-0">
             <img
               alt="product icon"
               src={BoxIcon}
