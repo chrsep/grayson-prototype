@@ -3054,7 +3054,7 @@ clone@^2.1.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
-cloudinary@^1.22.0:
+cloudinary@1.22.0:
   version "1.22.0"
   resolved "https://registry.yarnpkg.com/cloudinary/-/cloudinary-1.22.0.tgz#48a36aab98838f910d350300419e2b10e4eb7e6b"
   integrity sha512-qQhSVqGyOWtGbPc3JrwyUXJEZpdqsEzBFSf5+gTo7gbKbXdzEysLagigoSlp6JYI7YW2oEbz4aeZlgN2ucOkzQ==
@@ -7016,7 +7016,7 @@ next-optimized-images@3.0.0-canary.0:
     optimized-images-loader "^0.2.1"
     react-optimized-image "^0.2.0"
 
-next-pwa@^2.6.0:
+next-pwa@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/next-pwa/-/next-pwa-2.6.0.tgz#e58f2b52c294c7d24df7a01c6d23b9b205aa8d33"
   integrity sha512-eBP0SvhAN1Maw6tuXrOAz1+sbN+AF5XkbQg7gwuMA4zNiTvst9lxucmm8ZnmpJDCPyiKLEp/XaRqYVtRAztKzA==
