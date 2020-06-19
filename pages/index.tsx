@@ -30,17 +30,17 @@ const Home = () => {
         </div>
         <picture>
           <source
-            srcSet={require("../images/no-product.png?webp")}
+            srcSet={require("../images/no-product.png?resize&size=256&webp")}
             type="image/webp"
           />
           <source
-            srcSet={require("../images/no-product.png")}
+            srcSet={require("../images/no-product.png?resize&size=256")}
             type="image/jpeg"
           />
           <img
             className="w-64 mx-auto mt-12"
             alt="No plans yet illustration"
-            src={require("../images/no-product.png")}
+            src={require("../images/no-product.png?resize&size=256")}
           />
         </picture>
         <h6 className="mt-8 text-center text-xl text-gray-900">
