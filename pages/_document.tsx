@@ -15,6 +15,8 @@ class MyDocument extends Document {
             name="Description"
             content="Directory jasa jemaat GKI Pamulang"
           />
+
+          {/* TODO: These meta and link tags needs real icons and name. */}
           <meta name="application-name" content="Grayson" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
