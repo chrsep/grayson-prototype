@@ -40,27 +40,21 @@ const Header = () => {
           <img
             alt="profile-pic"
             src={data?.picture}
-            className="w-8 rounded flex-shrink-0"
+            className="w-8 rounded flex-shrink-0 shadow"
           />
-          <p className="ml-3 mr-3 w-3/5 truncate">{data?.name}</p>
+          <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
         </>
       )}
-      {status !== "success" ? (
-        <a href="/api/login" className="ml-auto flex-shrink-0">
-          <Button>Login</Button>
-        </a>
-      ) : (
-        <a href="/" className="ml-auto  flex-shrink-0">
-          <Button className="flex items-center pl-2">
-            <img
-              alt="product icon"
-              src={ChevronLeftIcon}
-              className="text-white mr-1 w-5"
-            />
-            Kembali
-          </Button>
-        </a>
-      )}
+      <a href="/" className="ml-auto  flex-shrink-0">
+        <Button className="flex items-center pl-2 rounded bg-transparent text-black border shadow-none">
+          <img
+            alt="product icon"
+            src={ChevronLeftIcon}
+            className="text-white mr-1 w-5"
+          />
+          Kembali
+        </Button>
+      </a>
     </nav>
   )
 }

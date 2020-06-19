@@ -61,9 +61,9 @@ const Header = () => {
           <img
             alt="profile-pic"
             src={data?.picture}
-            className="w-8 rounded flex-shrink-0"
+            className="w-8 rounded flex-shrink-0 shadow-md"
           />
-          <p className="ml-3 mr-3 w-3/5 truncate">{data?.name}</p>
+          <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
         </>
       )}
       {status !== "success" ? (
@@ -78,7 +78,7 @@ const Header = () => {
               src={BoxIcon}
               className="text-white mr-2 w-5"
             />
-            Produk
+            Produk-ku
           </Button>
         </a>
       )}
