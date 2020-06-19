@@ -10,7 +10,7 @@ const ProductPage = () => (
       <h1 className="text-4xl font-bold mx-3">Produk-ku</h1>
       <picture>
         <source
-          srcSet={require("../images/you-no-product.png?resize&size=256&webp")}
+          srcSet={require("../images/you-no-product.png?webp&resize&size=256")}
           type="image/webp"
         />
         <source

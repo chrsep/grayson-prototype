@@ -30,7 +30,7 @@ const Home = () => {
         </div>
         <picture>
           <source
-            srcSet={require("../images/no-product.png?resize&size=256&webp")}
+            srcSet={require("../images/no-product.png?webp&resize&size=256")}
             type="image/webp"
           />
           <source
