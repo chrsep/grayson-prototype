@@ -1,16 +1,33 @@
-import React from "react"
+import React, { ChangeEventHandler, FC } from "react"
 import Link from "next/link"
 import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../../components/Button/Button"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
+import Input from "../../components/Input/Input"
 
 const NewProductPage = () => (
   <>
     <Header />
     <main className="mx-auto max-w-4xl">
-      <div className="flex">
-        <h1 className="text-4xl font-bold mx-3">Produk Baru</h1>
-      </div>
+      <h1 className="text-3xl font-bold mx-3">Produk Baru</h1>
+      <TextField
+        id="name"
+        onChange={() => {}}
+        label="Nama produk / jasa"
+        placeholder="Belum di-isi"
+      />
+      <TextField
+        id="price"
+        onChange={() => {}}
+        label="Harga"
+        placeholder="Rp. 0"
+      />
+      <TextField
+        id="note"
+        onChange={() => {}}
+        label="Catatan"
+        placeholder="Belum di-isi"
+      />
     </main>
   </>
 )
@@ -41,6 +58,33 @@ const Header = () => {
         </Button>
       </Link>
     </nav>
+  )
+}
+
+interface TextFieldProps {
+  id: string
+  label: string
+  onChange: ChangeEventHandler<HTMLInputElement>
+  placeholder: string
+}
+const TextField: FC<TextFieldProps> = ({
+  id,
+  label,
+  onChange,
+  placeholder,
+}) => {
+  return (
+    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+      <label htmlFor={id} className="inline-block w-full text-sm">
+        {label}
+      </label>
+      <Input
+        id={id}
+        placeholder={placeholder}
+        className="w-full py-1 px-0"
+        onChange={onChange}
+      />
+    </div>
   )
 }
 

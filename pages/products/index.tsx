@@ -10,7 +10,7 @@ const ProductPage = () => (
     <Header />
     <main className="mx-auto max-w-4xl">
       <div className="flex">
-        <h1 className="text-4xl font-bold mx-3">Produk-ku</h1>
+        <h1 className="text-3xl font-bold mx-3">Produk-ku</h1>
         <Link href="/products/new">
           <button className="bg-black rounded-full py-3 pl-3 pr-6 shadow absolute right-0 bottom-0 m-3 z-50 text-white flex items-center md:relative md:ml-auto text-sm">
             <img alt="Produk baru" src={PlusIcon} className="mr-2" />
