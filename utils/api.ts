@@ -1,5 +1,3 @@
-import { ApiError } from "./useApi"
-
 const BASE_URL = "/api"
 
 export const getApi = <T>(url: string) => async (): Promise<T> => {
@@ -22,7 +20,7 @@ export const deleteApi = (url: string, id: string) => async () => {
   })
 
   if (!result.ok) {
-    const body: ApiError = await result.json()
+    const body = await result.json()
     throw Error(body?.error?.message ?? "")
   }
 
@@ -37,7 +35,7 @@ export const patchApi = <T>(url: string, id: string) => async (payload: T) => {
   })
 
   if (!result.ok) {
-    const body: ApiError = await result.json()
+    const body = await result.json()
     throw Error(body?.error?.message ?? "")
   }
 
@@ -52,7 +50,7 @@ export const postApi = <T>(url: string, id: string) => async (payload: T) => {
   })
 
   if (!result.ok) {
-    const body: ApiError = await result.json()
+    const body = await result.json()
     throw Error(body?.error?.message ?? "")
   }
 
