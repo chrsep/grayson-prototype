@@ -7,12 +7,13 @@ import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
 import usePostProductImage from "../../hooks/usePostProductImage"
 import { PostImageResponse } from "../api/images"
+import { generateUrl } from "../../utils/cloudinary"
 
 const NewProductPage = () => {
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
   const [note, setNote] = useState("")
-  const [images, setImages] = useState<{ id: string; url: string }[]>([])
+  const [images, setImages] = useState<{ id: string }[]>([])
 
   return (
     <>
@@ -64,7 +65,7 @@ const NewProductPage = () => {
               return (
                 <img
                   key={image.id}
-                  src={image.url}
+                  src={generateUrl(image.id, { width: 160 })}
                   alt="gambar produk"
                   className="h-20 border rounded mr-3"
                 />
@@ -167,7 +168,7 @@ const CurrencyField: FC<CurrencyField> = ({
         {label}
       </label>
       <div className="flex items-center">
-        Rp
+        <p className="text-gray-600">Rp</p>
         <Input
           required={required}
           id={id}
@@ -184,27 +185,40 @@ const CurrencyField: FC<CurrencyField> = ({
 }
 
 interface ImageUploaderProps {
-  onChange: (image: { id: string; url: string }) => void
+  onChange: (image: { id: string }) => void
 }
 const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
-  const [mutate] = usePostProductImage()
+  const [mutate, { status, error }] = usePostProductImage()
   return (
-    <label className="h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3">
-      <img alt="foto" src={PlusIcon} className="mx-auto" />
-      Gambar
-      <input
-        type="file"
-        className="hidden"
-        accept="image/*"
-        onChange={async (e) => {
-          const result = await mutate(e.target.files[0])
-          if (result.ok) {
-            const imageData: PostImageResponse = await result.json()
-            onChange(imageData)
-          }
-        }}
-      />
-    </label>
+    <div className="mb-6">
+      <label className=" h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3 cursor-pointer">
+        {status === "loading" ? (
+          <div>loading...</div>
+        ) : (
+          <>
+            <img alt="foto" src={PlusIcon} className="mx-auto" />
+            Gambar
+            <input
+              type="file"
+              className="hidden"
+              accept="image/*"
+              onChange={async (e) => {
+                const result = await mutate(e.target.files[0])
+                if (result?.ok) {
+                  const imageData: PostImageResponse = await result.json()
+                  onChange(imageData)
+                }
+              }}
+            />
+          </>
+        )}
+      </label>
+      {status === "error" && (
+        <div className="absolute ml-3 md:ml-0 mt-2 text-sm text-red-600">
+          {error.message}
+        </div>
+      )}
+    </div>
   )
 }
 export default NewProductPage

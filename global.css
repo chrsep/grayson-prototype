@@ -4,7 +4,7 @@
 
 
 body {
-  @apply bg-background;
+    @apply bg-background;
 }
 
 @tailwind utilities;
