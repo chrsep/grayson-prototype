@@ -183,6 +183,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
       <input
         type="file"
         className="hidden"
+        accept="image/*"
         onChange={async (e) => {
           const result = await mutate(e.target.files[0])
           if (result.ok) {
