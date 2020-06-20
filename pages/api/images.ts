@@ -1,6 +1,11 @@
 import { NextApiHandler } from "next"
 import auth0 from "../../utils/auth0"
 
+export interface PostImageResponse {
+  id: string
+  url: string
+}
+
 const images: NextApiHandler = async (req, res) => {
   try {
     const session = await auth0.getSession(req)

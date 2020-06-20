@@ -5,11 +5,14 @@ import Button from "../../components/Button/Button"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
+import usePostProductImage from "../../hooks/usePostProductImage"
+import { PostImageResponse } from "../api/images"
 
 const NewProductPage = () => {
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
   const [note, setNote] = useState("")
+  const [images, setImages] = useState<{ id: string; url: string }[]>([])
 
   return (
     <>
@@ -18,42 +21,51 @@ const NewProductPage = () => {
         <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
           Produk Baru
         </h1>
-        <TextField
-          id="name"
-          label="Nama produk / jasa"
-          placeholder="Belum di-isi"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value)
-          }}
-        />
-        <TextField
-          id="price"
-          label="Harga"
-          placeholder="Rp. 0"
-          value={price}
-          onChange={(e) => {
-            setPrice(e.target.value)
-          }}
-        />
-        <TextField
-          id="note"
-          label="Catatan"
-          placeholder="Belum di-isi"
-          value={note}
-          onChange={(e) => {
-            setNote(e.target.value)
-          }}
-        />
-        <div className="flex mt-3">
-          <ImageUploader />
-        </div>
-        <div className="flex p-3">
-          <Button outline className="flex-shrink-0 mr-2">
-            Reset Ulang
-          </Button>
-          <Button className="w-full">Simpan</Button>
-        </div>
+        <form>
+          <TextField
+            id="name"
+            label="Nama produk / jasa"
+            placeholder="Belum di-isi"
+            required
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value)
+            }}
+          />
+          <CurrencyField
+            id="price"
+            label="Harga"
+            placeholder="0"
+            required
+            value={price}
+            onChange={(e) => {
+              setPrice(e.target.value)
+            }}
+          />
+          <TextField
+            id="note"
+            label="Catatan"
+            placeholder="Belum di-isi"
+            value={note}
+            onChange={(e) => {
+              setNote(e.target.value)
+            }}
+          />
+          <div className="flex mt-3">
+            <ImageUploader
+              onChange={(image) => setImages([...images, image])}
+            />
+            {images.map((image) => {
+              return <img key={image.id} src={image.url} alt="gambar produk" />
+            })}
+          </div>
+          <div className="flex p-3">
+            <Button outline className="flex-shrink-0 mr-3">
+              Reset Ulang
+            </Button>
+            <Button className="w-full">Simpan</Button>
+          </div>
+        </form>
       </main>
     </>
   )
@@ -94,6 +106,7 @@ interface TextFieldProps {
   value: string
   onChange: ChangeEventHandler<HTMLInputElement>
   placeholder: string
+  required?: boolean
 }
 const TextField: FC<TextFieldProps> = ({
   id,
@@ -101,6 +114,7 @@ const TextField: FC<TextFieldProps> = ({
   onChange,
   placeholder,
   value,
+  required,
 }) => {
   return (
     <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
@@ -108,6 +122,7 @@ const TextField: FC<TextFieldProps> = ({
         {label}
       </label>
       <Input
+        required={required}
         id={id}
         placeholder={placeholder}
         className="w-full py-1 px-0"
@@ -118,12 +133,64 @@ const TextField: FC<TextFieldProps> = ({
   )
 }
 
-const ImageUploader: FC = () => {
+interface CurrencyField {
+  id: string
+  label: string
+  value: string
+  onChange: ChangeEventHandler<HTMLInputElement>
+  placeholder: string
+  required?: boolean
+}
+const CurrencyField: FC<CurrencyField> = ({
+  id,
+  label,
+  onChange,
+  placeholder,
+  value,
+  required,
+}) => {
+  return (
+    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+      <label htmlFor={id} className="inline-block w-full text-sm">
+        {label}
+      </label>
+      <div className="flex items-center">
+        Rp
+        <Input
+          required={required}
+          id={id}
+          placeholder={placeholder}
+          className="w-full py-1 px-0 ml-1"
+          onChange={onChange}
+          value={value}
+          inputMode="numeric"
+          pattern="[0-9]*"
+        />
+      </div>
+    </div>
+  )
+}
+
+interface ImageUploaderProps {
+  onChange: (image: { id: string; url: string }) => void
+}
+const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
+  const [mutate] = usePostProductImage()
   return (
     <label className="border rounded text-sm px-3 py-3 bg-white ml-3 text-sm text-gray-800">
       <img alt="foto" src={PlusIcon} className="mx-auto" />
       Gambar
-      <input type="file" className="hidden" />
+      <input
+        type="file"
+        className="hidden"
+        onChange={async (e) => {
+          const result = await mutate(e.target.files[0])
+          if (result.ok) {
+            const imageData: PostImageResponse = await result.json()
+            onChange(imageData)
+          }
+        }}
+      />
     </label>
   )
 }
