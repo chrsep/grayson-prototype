@@ -51,15 +51,27 @@ const NewProductPage = () => {
               setNote(e.target.value)
             }}
           />
-          <div className="flex mt-3">
+          {images.length > 0 && (
+            <p className="mx-4 md:mx-0 mt-3 text-sm text-gray-800">
+              Ter-pasang {images.length} gambar
+            </p>
+          )}
+          <div className="flex mt-3 overflow-x-auto">
             <ImageUploader
               onChange={(image) => setImages([...images, image])}
             />
             {images.map((image) => {
-              return <img key={image.id} src={image.url} alt="gambar produk" />
+              return (
+                <img
+                  key={image.id}
+                  src={image.url}
+                  alt="gambar produk"
+                  className="h-20 border rounded mr-3"
+                />
+              )
             })}
           </div>
-          <div className="flex p-3">
+          <div className="flex py-3 px-3 md:px-0">
             <Button outline className="flex-shrink-0 mr-3">
               Reset Ulang
             </Button>
@@ -177,7 +189,7 @@ interface ImageUploaderProps {
 const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
   const [mutate] = usePostProductImage()
   return (
-    <label className="border rounded text-sm px-3 py-3 bg-white ml-3 text-sm text-gray-800">
+    <label className="h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3">
       <img alt="foto" src={PlusIcon} className="mx-auto" />
       Gambar
       <input
