@@ -1,36 +1,57 @@
-import React, { ChangeEventHandler, FC } from "react"
+import React, { ChangeEventHandler, FC, useState } from "react"
 import Link from "next/link"
 import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../../components/Button/Button"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
 import Input from "../../components/Input/Input"
+import PhotoIcon from "../../icons/photo.svg"
 
-const NewProductPage = () => (
-  <>
-    <Header />
-    <main className="mx-auto max-w-4xl">
-      <h1 className="text-3xl font-bold mx-3">Produk Baru</h1>
-      <TextField
-        id="name"
-        onChange={() => {}}
-        label="Nama produk / jasa"
-        placeholder="Belum di-isi"
-      />
-      <TextField
-        id="price"
-        onChange={() => {}}
-        label="Harga"
-        placeholder="Rp. 0"
-      />
-      <TextField
-        id="note"
-        onChange={() => {}}
-        label="Catatan"
-        placeholder="Belum di-isi"
-      />
-    </main>
-  </>
-)
+const NewProductPage = () => {
+  const [name, setName] = useState("")
+  const [price, setPrice] = useState("")
+  const [note, setNote] = useState("")
+
+  return (
+    <>
+      <Header />
+      <main className="mx-auto max-w-4xl">
+        <div className="flex content-end">
+          <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
+            Produk Baru
+          </h1>
+          <ImageUploader />
+        </div>
+        <TextField
+          id="name"
+          label="Nama produk / jasa"
+          placeholder="Belum di-isi"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value)
+          }}
+        />
+        <TextField
+          id="price"
+          label="Harga"
+          placeholder="Rp. 0"
+          value={price}
+          onChange={(e) => {
+            setPrice(e.target.value)
+          }}
+        />
+        <TextField
+          id="note"
+          label="Catatan"
+          placeholder="Belum di-isi"
+          value={note}
+          onChange={(e) => {
+            setNote(e.target.value)
+          }}
+        />
+      </main>
+    </>
+  )
+}
 
 const Header = () => {
   const { data } = useGetUserProfileApi()
@@ -64,6 +85,7 @@ const Header = () => {
 interface TextFieldProps {
   id: string
   label: string
+  value: string
   onChange: ChangeEventHandler<HTMLInputElement>
   placeholder: string
 }
@@ -72,6 +94,7 @@ const TextField: FC<TextFieldProps> = ({
   label,
   onChange,
   placeholder,
+  value,
 }) => {
   return (
     <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
@@ -83,9 +106,19 @@ const TextField: FC<TextFieldProps> = ({
         placeholder={placeholder}
         className="w-full py-1 px-0"
         onChange={onChange}
+        value={value}
       />
     </div>
   )
 }
 
+const ImageUploader: FC = () => {
+  return (
+    <label className="border rounded text-sm px-3 py-4 ml-auto mr-3 bg-white">
+      <img alt="foto" src={PhotoIcon} className="mx-auto mb-1" />
+      Upload gambar
+      <input type="file" className="hidden" />
+    </label>
+  )
+}
 export default NewProductPage

@@ -6,7 +6,18 @@ const withPWA = require("next-pwa")
 const path = require("path")
 
 module.exports = withPlugins(
-  [[withPWA, { pwa: { dest: "public" } }], withPrefresh, optimizedImages],
+  [
+    [
+      withPWA,
+      {
+        pwa: {
+          dest: "public",
+        },
+      },
+    ],
+    withPrefresh,
+    optimizedImages,
+  ],
   {
     experimental: {
       modern: true,
