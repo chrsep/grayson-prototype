@@ -4,7 +4,7 @@ import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../../components/Button/Button"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
 import Input from "../../components/Input/Input"
-import PhotoIcon from "../../icons/photo.svg"
+import PlusIcon from "../../icons/plus-black.svg"
 
 const NewProductPage = () => {
   const [name, setName] = useState("")
@@ -15,12 +15,9 @@ const NewProductPage = () => {
     <>
       <Header />
       <main className="mx-auto max-w-4xl">
-        <div className="flex content-end">
-          <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
-            Produk Baru
-          </h1>
-          <ImageUploader />
-        </div>
+        <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
+          Produk Baru
+        </h1>
         <TextField
           id="name"
           label="Nama produk / jasa"
@@ -48,6 +45,15 @@ const NewProductPage = () => {
             setNote(e.target.value)
           }}
         />
+        <div className="flex mt-3">
+          <ImageUploader />
+        </div>
+        <div className="flex p-3">
+          <Button outline className="flex-shrink-0 mr-2">
+            Reset Ulang
+          </Button>
+          <Button className="w-full">Simpan</Button>
+        </div>
       </main>
     </>
   )
@@ -69,7 +75,7 @@ const Header = () => {
         </>
       )}
       <Link href="/products">
-        <Button className="ml-auto flex-shrink-0 flex items-center pl-2 rounded bg-transparent text-black border shadow-none">
+        <Button outline className="ml-auto flex-shrink-0 pl-2">
           <img
             alt="product icon"
             src={ChevronLeftIcon}
@@ -114,9 +120,9 @@ const TextField: FC<TextFieldProps> = ({
 
 const ImageUploader: FC = () => {
   return (
-    <label className="border rounded text-sm px-3 py-4 ml-auto mr-3 bg-white">
-      <img alt="foto" src={PhotoIcon} className="mx-auto mb-1" />
-      Upload gambar
+    <label className="border rounded text-sm px-3 py-3 bg-white ml-3 text-sm text-gray-800">
+      <img alt="foto" src={PlusIcon} className="mx-auto" />
+      Gambar
       <input type="file" className="hidden" />
     </label>
   )
