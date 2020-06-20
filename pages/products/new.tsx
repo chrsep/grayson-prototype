@@ -19,7 +19,7 @@ const NewProductPage = () => {
       <Header />
       <main className="mx-auto max-w-4xl">
         <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
-          Produk Baru
+          Tambah Produk
         </h1>
         <form>
           <TextField
