@@ -4,6 +4,7 @@ import styles from "./Button.module.css"
 interface Props {
   outline?: boolean
   className?: string
+  onClick?: () => void
 }
 const Button: FC<Props> = ({ className = "default", outline, ...props }) => {
   // eslint-disable-next-line jsx-a11y/control-has-associated-label

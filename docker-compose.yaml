@@ -1,7 +1,10 @@
-version: 3
+version: "3"
 services:
-  fauna:
-    image: fauna/faunadb:latest
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
     ports:
-      - "8443:8443"
-      - "8084:8084"
+      - "27017:27017"

@@ -6,8 +6,8 @@ export const getApi = <T>(url: string) => async (): Promise<T> => {
   })
 
   const json = await result.json()
-  if (json.error) {
-    throw Error(json.error.message)
+  if (!result.ok) {
+    throw Error(json.error)
   }
 
   return json
@@ -21,7 +21,7 @@ export const deleteApi = (url: string, id: string) => async () => {
 
   if (!result.ok) {
     const body = await result.json()
-    throw Error(body?.error?.message ?? "")
+    throw Error(body?.error ?? "")
   }
 
   return result
@@ -36,7 +36,7 @@ export const patchApi = <T>(url: string, id: string) => async (payload: T) => {
 
   if (!result.ok) {
     const body = await result.json()
-    throw Error(body?.error?.message ?? "")
+    throw Error(body?.error ?? "")
   }
 
   return result
@@ -51,7 +51,7 @@ export const postApi = <T>(url: string, id: string) => async (payload: T) => {
 
   if (!result.ok) {
     const body = await result.json()
-    throw Error(body?.error?.message ?? "")
+    throw Error(body?.error ?? "")
   }
 
   return result

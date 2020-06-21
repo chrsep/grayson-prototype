@@ -10,7 +10,6 @@ class MyDocument extends Document {
     return (
       <Html lang="id">
         <Head>
-          <title>Grayson</title>
           <meta
             name="Description"
             content="Directory jasa jemaat GKI Pamulang"
