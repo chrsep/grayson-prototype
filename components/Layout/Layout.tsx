@@ -20,7 +20,7 @@ const Header = () => {
   const router = useRouter()
 
   return (
-    <nav className="px-3 pt-3 flex items-center mx-auto max-w-4xl">
+    <nav className="p-3 pt-3 flex items-center mx-auto max-w-4xl h-16">
       {data && (
         <Link href="/profile">
           <div className="flex items-center fade-in cursor-pointer">
@@ -50,7 +50,8 @@ const Header = () => {
             <img
               alt="product icon"
               src={ChevronLeftIcon}
-              className="text-white mr-1 h-full"
+              className="text-white mr-1"
+              style={{ height: 20 }}
             />
             Kembali
           </Button>
