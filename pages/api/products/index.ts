@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { v4 } from "uuid"
-import auth0 from "../../../utils/auth0"
-import { upsertProduct } from "../../../utils/mongodb"
+import { queryProducts } from "../../../utils/mongodb"
 
 export interface PatchProduct {
   id?: string
@@ -11,12 +9,14 @@ export interface PatchProduct {
   images: string[]
 }
 
-async function postHandlers(req: NextApiRequest, res: NextApiResponse) {
-  const session = await auth0.getSession(req)
-  const { id, name, price, note, images } = req.body as PatchProduct
-  if (session) {
-    await upsertProduct(id ?? v4(), session.user.sub, name, price, note, images)
-    res.status(201).end()
+async function getProductsHandler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const products = queryProducts()
+    res.json(products)
+    res.status(200).end()
+  } catch (error) {
+    console.error(error)
+    res.status(error.status || 400).end(error.message)
   }
 }
 
@@ -27,7 +27,7 @@ export default async function product(
   try {
     switch (req.method) {
       case "PATCH":
-        await postHandlers(req, res)
+        await getProductsHandler(req, res)
         break
       default:
     }

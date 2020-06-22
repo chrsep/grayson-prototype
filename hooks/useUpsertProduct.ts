@@ -3,7 +3,7 @@ import { patchApi } from "../utils/api"
 import { PatchProduct } from "../pages/api/products"
 
 const useUpsertProduct = () => {
-  const patchProduct = patchApi<PatchProduct>("/products")
+  const patchProduct = patchApi<PatchProduct>("/me/products")
 
   return useMutation(patchProduct)
 }
