@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, useState } from "react"
+import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
@@ -13,6 +13,7 @@ const NewProductPage = () => {
   const [note, setNote] = useState("")
   const [images, setImages] = useState<string[]>([])
 
+  const [error, setError] = useState("")
   const [upsertProduct] = useUpsertProduct()
 
   return (
@@ -69,6 +70,7 @@ const NewProductPage = () => {
           <div className="flex mt-3 overflow-x-auto">
             <ImageUploader
               onChange={(image) => setImages([...images, image])}
+              onError={setError}
             />
             {images.map((image) => {
               return (
@@ -81,6 +83,11 @@ const NewProductPage = () => {
               )
             })}
           </div>
+          {error && (
+            <div className="ml-3 md:ml-0 mt-2 text-sm text-red-600">
+              {error}
+            </div>
+          )}
           <div className="flex py-3 px-3 md:px-0">
             <Button outline className="flex-shrink-0 mr-3">
               Reset Ulang
@@ -166,42 +173,43 @@ const CurrencyField: FC<CurrencyField> = ({
 
 interface ImageUploaderProps {
   onChange: (image: string) => void
+  onError: (error: string) => void
 }
-const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
+const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
   const [mutate, { status, error }] = usePostProductImage()
+
+  useEffect(() => {
+    if (error) {
+      onError(error.message)
+    }
+  }, [error])
+
   return (
-    <div className="mb-6">
-      <label className=" h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3 cursor-pointer">
-        {status === "loading" ? (
-          <div>loading...</div>
-        ) : (
-          <>
-            <img alt="foto" src={PlusIcon} className="mx-auto" />
-            Gambar
-            <input
-              type="file"
-              className="hidden"
-              accept="image/*"
-              onChange={async (e) => {
-                const file = e?.target?.files?.[0]
-                if (file) {
-                  const result = await mutate(file)
-                  if (result?.ok) {
-                    const imageData: PostImageResponse = await result.json()
-                    onChange(imageData.id)
-                  }
+    <label className=" h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3 cursor-pointer">
+      {status === "loading" ? (
+        <div>loading...</div>
+      ) : (
+        <>
+          <img alt="foto" src={PlusIcon} className="mx-auto" />
+          Gambar
+          <input
+            type="file"
+            className="hidden"
+            accept="image/*"
+            onChange={async (e) => {
+              const file = e?.target?.files?.[0]
+              if (file) {
+                const result = await mutate(file)
+                if (result?.ok) {
+                  const imageData: PostImageResponse = await result.json()
+                  onChange(imageData.id)
                 }
-              }}
-            />
-          </>
-        )}
-      </label>
-      {status === "error" && (
-        <div className="absolute ml-3 md:ml-0 mt-2 text-sm text-red-600">
-          {error?.message}
-        </div>
+              }
+            }}
+          />
+        </>
       )}
-    </div>
+    </label>
   )
 }
 export default NewProductPage
