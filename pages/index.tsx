@@ -24,9 +24,9 @@ const Home: FC<Props> = ({ products }) => {
           <title>Grayson</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="px-3">
+        <div className="mx-2 sticky top-0 pt-3 z-10 bg-gray-100 rounded-b-lg">
           <label
-            className="flex border rounded bg-white w-full block"
+            className="flex bg-white w-full block rounded-lg shadow"
             aria-label="search"
           >
             <img
@@ -35,7 +35,7 @@ const Home: FC<Props> = ({ products }) => {
               className="m-3 flex-shrink-0"
             />
             <Input
-              className="w-full"
+              className="w-full "
               placeholder="Cari produk"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -51,7 +51,7 @@ const Home: FC<Props> = ({ products }) => {
                   ? generateUrl(images[0], { width: 400 })
                   : ""
               return (
-                <div key={_id} className="w-1/2 sm:w-1/4 pr-2 mb-3 bg-white">
+                <div key={_id} className="w-1/2 sm:w-1/4 pr-2 mb-3 fade-in">
                   <div
                     className="w-full relative overflow-hidden rounded-lg shadow"
                     style={{ paddingBottom: "75%" }}
@@ -59,7 +59,7 @@ const Home: FC<Props> = ({ products }) => {
                     <img
                       alt={name}
                       src={productImage}
-                      className="absolute top-0 w-full h-full fade-in"
+                      className="absolute top-0 w-full h-full"
                       loading={idx < 7 ? "eager" : "lazy"}
                     />
                   </div>
