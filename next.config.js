@@ -12,6 +12,7 @@ module.exports = withPlugins(
       {
         pwa: {
           dest: "public",
+          precacheHomePage: false,
         },
       },
     ],
@@ -22,7 +23,6 @@ module.exports = withPlugins(
     experimental: {
       modern: true,
       polyfillsOptimization: true,
-      precacheHomePage: false,
     },
 
     webpack(config, { dev, isServer }) {
