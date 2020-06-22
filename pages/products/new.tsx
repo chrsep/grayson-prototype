@@ -5,12 +5,15 @@ import PlusIcon from "../../icons/plus-black.svg"
 import usePostProductImage from "../../hooks/usePostProductImage"
 import { PostImageResponse } from "../api/images"
 import { generateUrl } from "../../utils/cloudinary"
+import useUpsertProduct from "../../hooks/useUpsertProduct"
 
 const NewProductPage = () => {
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
   const [note, setNote] = useState("")
-  const [images, setImages] = useState<{ id: string }[]>([])
+  const [images, setImages] = useState<string[]>([])
+
+  const [upsertProduct] = useUpsertProduct()
 
   return (
     <>
@@ -18,7 +21,17 @@ const NewProductPage = () => {
         <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
           Tambah Produk
         </h1>
-        <form>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault()
+            await upsertProduct({
+              name,
+              price: parseInt(price, 10),
+              note,
+              images,
+            })
+          }}
+        >
           <TextField
             id="name"
             label="Nama produk / jasa"
@@ -60,8 +73,8 @@ const NewProductPage = () => {
             {images.map((image) => {
               return (
                 <img
-                  key={image.id}
-                  src={generateUrl(image.id, { width: 160 })}
+                  key={image}
+                  src={generateUrl(image, { width: 160 })}
                   alt="gambar produk"
                   className="h-20 border rounded mr-3"
                 />
@@ -152,7 +165,7 @@ const CurrencyField: FC<CurrencyField> = ({
 }
 
 interface ImageUploaderProps {
-  onChange: (image: { id: string }) => void
+  onChange: (image: string) => void
 }
 const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
   const [mutate, { status, error }] = usePostProductImage()
@@ -175,7 +188,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
                   const result = await mutate(file)
                   if (result?.ok) {
                     const imageData: PostImageResponse = await result.json()
-                    onChange(imageData)
+                    onChange(imageData.id)
                   }
                 }
               }}

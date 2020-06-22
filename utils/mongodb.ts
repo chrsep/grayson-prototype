@@ -24,17 +24,17 @@ export const upsertUser = async (
 }
 
 export const upsertProduct = async (
+  productId: string,
   userId: string,
   name: string,
   price: number,
   note: string,
-  images: string[],
-  productId?: string
+  images: string[]
 ) => {
   await client.connect()
   await client
     .db("grayson")
-    .collection<{ a: string }>("users")
+    .collection("products")
     .updateOne(
       { _id: productId },
       { $set: { userId, name, price, note, images } },
