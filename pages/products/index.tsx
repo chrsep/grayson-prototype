@@ -30,7 +30,7 @@ const ProductPage = () => {
           const productImage =
             (images?.length ?? 0) > 0
               ? generateUrl(images[0], { width: 80 })
-              : ""
+              : require("../../images/empty-image-placeholder.jpg?webp&width=80")
           return (
             <div className="flex m-3 items-center fade-in" key={_id}>
               <img
