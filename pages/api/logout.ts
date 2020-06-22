@@ -1,6 +1,7 @@
+import { NextApiHandler } from "next"
 import auth0 from "../../utils/auth0"
 
-export default async function logout(req, res) {
+const logout: NextApiHandler = async (req, res) => {
   try {
     await auth0.handleLogout(req, res)
   } catch (error) {
@@ -8,3 +9,5 @@ export default async function logout(req, res) {
     res.status(error.status || 400).end(error.message)
   }
 }
+
+export default logout

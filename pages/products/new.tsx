@@ -170,10 +170,13 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
               className="hidden"
               accept="image/*"
               onChange={async (e) => {
-                const result = await mutate(e.target.files[0])
-                if (result?.ok) {
-                  const imageData: PostImageResponse = await result.json()
-                  onChange(imageData)
+                const file = e?.target?.files?.[0]
+                if (file) {
+                  const result = await mutate(file)
+                  if (result?.ok) {
+                    const imageData: PostImageResponse = await result.json()
+                    onChange(imageData)
+                  }
                 }
               }}
             />
@@ -182,7 +185,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange }) => {
       </label>
       {status === "error" && (
         <div className="absolute ml-3 md:ml-0 mt-2 text-sm text-red-600">
-          {error.message}
+          {error?.message}
         </div>
       )}
     </div>
