@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
@@ -8,6 +9,7 @@ import { generateUrl } from "../../utils/cloudinary"
 import useUpsertProduct from "../../hooks/useUpsertProduct"
 
 const NewProductPage = () => {
+  const router = useRouter()
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
   const [note, setNote] = useState("")
@@ -25,12 +27,15 @@ const NewProductPage = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault()
-            await upsertProduct({
+            const result = await upsertProduct({
               name,
               price: parseInt(price, 10),
               note,
               images,
             })
+            if (result.ok) {
+              await router.push("/products")
+            }
           }}
         >
           <TextField

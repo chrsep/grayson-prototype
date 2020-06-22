@@ -23,7 +23,7 @@ const Header = () => {
     <nav className="p-3 flex items-center mx-auto max-w-4xl h-16">
       {data && (
         <Link href="/profile">
-          <div className="flex items-center fade-in">
+          <div className="flex items-center fade-in cursor-pointer">
             <img
               alt="profile-pic"
               src={data?.picture}
@@ -36,18 +36,25 @@ const Header = () => {
       {router.route === "/" ? (
         <IndexNavigation status={status} />
       ) : (
-        <Button
-          outline
-          className="ml-auto flex-shrink-0 pl-2"
-          onClick={() => router.back()}
+        <Link
+          href={(() => {
+            switch (router.route) {
+              case "/products/new":
+                return "/products"
+              default:
+                return "/"
+            }
+          })()}
         >
-          <img
-            alt="product icon"
-            src={ChevronLeftIcon}
-            className="text-white mr-1 h-full"
-          />
-          Kembali
-        </Button>
+          <Button outline className="ml-auto flex-shrink-0 pl-2">
+            <img
+              alt="product icon"
+              src={ChevronLeftIcon}
+              className="text-white mr-1 h-full"
+            />
+            Kembali
+          </Button>
+        </Link>
       )}
     </nav>
   )

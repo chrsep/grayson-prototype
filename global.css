@@ -21,6 +21,6 @@ body {
 
 .fade-in {
     @apply transition-opacity;
-    animation: fade-in-animation 0.4s;
+    animation: fade-in-animation 0.250s cubic-bezier(0.0, 0.0, 0.2, 1);
 }
 

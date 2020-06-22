@@ -1,11 +1,13 @@
-import { useMutation } from "react-query"
+import { queryCache, useMutation } from "react-query"
 import { patchApi } from "../utils/api"
 import { PatchProduct } from "../pages/api/products"
 
 const useUpsertProduct = () => {
   const patchProduct = patchApi<PatchProduct>("/me/products")
 
-  return useMutation(patchProduct)
+  return useMutation(patchProduct, {
+    onSuccess: () => queryCache.refetchQueries(["me", "products"]),
+  })
 }
 
 export default useUpsertProduct

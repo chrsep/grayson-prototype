@@ -1,6 +1,13 @@
 import { MongoClient } from "mongodb"
 
-const client = new MongoClient(process.env.MONGODB_URL ?? "")
+const CLIENT = new MongoClient(process.env.MONGODB_URL ?? "")
+
+const getClient = async () => {
+  if (!CLIENT.isConnected()) {
+    await CLIENT.connect()
+  }
+  return CLIENT
+}
 
 interface UserSchema {
   _id: string
@@ -17,7 +24,7 @@ export const upsertUser = async (
   image: string,
   emailVerified: boolean
 ) => {
-  await client.connect()
+  const client = await getClient()
   await client
     .db("grayson")
     .collection<UserSchema>("users")
@@ -29,7 +36,6 @@ export const upsertUser = async (
       },
       { upsert: true }
     )
-  await client.close()
 }
 
 interface ProductSchema {
@@ -49,7 +55,7 @@ export const upsertProduct = async (
   note: string,
   images: string[]
 ) => {
-  await client.connect()
+  const client = await getClient()
   await client
     .db("grayson")
     .collection<ProductSchema>("products")
@@ -58,14 +64,24 @@ export const upsertProduct = async (
       { $set: { userId, name, price, note, images } },
       { upsert: true }
     )
-  await client.close()
 }
 
 export const queryProducts = async (): Promise<ProductSchema[]> => {
-  await client.connect()
+  const client = await getClient()
   const allProducts = client
     .db("grayson")
     .collection<ProductSchema>("products")
     .find()
+  return allProducts.toArray()
+}
+
+export const queryProductsByUserId = async (
+  userId: string
+): Promise<ProductSchema[]> => {
+  const client = await getClient()
+  const allProducts = client
+    .db("grayson")
+    .collection<ProductSchema>("products")
+    .find({ userId })
   return allProducts.toArray()
 }
