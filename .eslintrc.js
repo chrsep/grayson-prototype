@@ -25,6 +25,7 @@ module.exports = {
     },
   ],
   rules: {
+    "react/destructuring-assignment": "off",
     "no-console": "off",
     "global-require": 0,
     "react/button-has-type": 0,

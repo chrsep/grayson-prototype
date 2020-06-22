@@ -9,6 +9,8 @@ export interface UserProfile {
   picture: string
   sub: string
   updated_at: string
+  phone?: string
+  address?: string
 }
 
 export default auth0.requireAuthentication(async function me(req, res) {

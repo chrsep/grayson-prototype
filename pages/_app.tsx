@@ -1,11 +1,14 @@
 import "../global.css"
 import { AppProps } from "next/app"
 import Layout from "../components/Layout/Layout"
+import ErrorBoundary from "../components/ErrorBoundary"
 
 const App = ({ Component, pageProps }: AppProps) => (
-  <Layout>
-    <Component {...pageProps} />
-  </Layout>
+  <ErrorBoundary>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  </ErrorBoundary>
 )
 
 export default App
