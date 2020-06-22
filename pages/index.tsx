@@ -42,7 +42,7 @@ const Home: FC<Props> = ({ products }) => {
             />
           </label>
         </div>
-        <div className="flex ml-3 mt-3">
+        <div className="flex ml-3 mr-1 mt-3 flex-wrap">
           {products
             .filter((product) => product.name.toLowerCase().includes(search))
             .map(({ _id, name, price, images }, idx) => {
@@ -51,7 +51,7 @@ const Home: FC<Props> = ({ products }) => {
                   ? generateUrl(images[0], { width: 400 })
                   : ""
               return (
-                <div key={_id} className="w-1/2 sm:w-1/4 mr-3 mb-3">
+                <div key={_id} className="w-1/2 sm:w-1/4 pr-2 mb-3 bg-white">
                   <div
                     className="w-full relative overflow-hidden rounded-lg shadow"
                     style={{ paddingBottom: "75%" }}
