@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb"
 
-const CLIENT = new MongoClient(process.env.MONGODB_URL ?? "")
+const CLIENT = new MongoClient(process.env.MONGO_URL ?? "")
 
 const getClient = async () => {
   if (!CLIENT.isConnected()) {
