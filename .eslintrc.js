@@ -25,6 +25,7 @@ module.exports = {
     },
   ],
   rules: {
+    "no-console": "off",
     "global-require": 0,
     "react/button-has-type": 0,
     "no-undef": 0,

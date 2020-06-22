@@ -5,13 +5,13 @@
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>jdbc:mongodb+srv://grayson-f33m2.mongodb.net</jdbc-url>
+      <jdbc-url>jdbc:mongodb+srv://grayson-f33m2.mongodb.net/grayson</jdbc-url>
     </data-source>
     <data-source source="LOCAL" name="@localhost" uuid="83eac852-c292-4b9b-b089-89ba6383a718">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb://localhost:27017</jdbc-url>
+      <jdbc-url>mongodb://localhost:27017/</jdbc-url>
     </data-source>
   </component>
 </project>
