@@ -1,4 +1,4 @@
-import { Cursor, MongoClient } from "mongodb"
+import { MongoClient } from "mongodb"
 
 const client = new MongoClient(process.env.MONGODB_URL ?? "")
 
