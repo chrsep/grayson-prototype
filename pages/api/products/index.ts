@@ -4,7 +4,7 @@ import auth0 from "../../../utils/auth0"
 import { upsertProduct } from "../../../utils/mongodb"
 
 export interface PatchProduct {
-  id: string
+  id?: string
   name: string
   price: number
   note: string
