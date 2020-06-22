@@ -2263,11 +2263,6 @@ arrify@^2.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-2.0.1.tgz#c9655e9331e0abcd588d2a7cad7e9956f66701fa"
   integrity sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==
 
-asap@^2.0.0:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
-  integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
-
 asn1.js@^4.0.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-4.10.1.tgz#b9c2bf5805f1e64aadeed6df3a2bfafb5a73f5a0"
@@ -3978,14 +3973,6 @@ detective@^5.2.0:
     defined "^1.0.0"
     minimist "^1.1.1"
 
-dezalgo@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/dezalgo/-/dezalgo-1.0.3.tgz#7f742de066fc748bc8db820569dddce49bf0d456"
-  integrity sha1-f3Qt4Gb8dIvI24IFad3c5Jvw1FY=
-  dependencies:
-    asap "^2.0.0"
-    wrappy "1"
-
 diffie-hellman@^5.0.0:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/diffie-hellman/-/diffie-hellman-5.0.3.tgz#40e8ee98f55a2149607146921c63e1ae5f3d2875"
@@ -5017,13 +5004,17 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formidable@2.0.0-dev.20200131.2:
-  version "2.0.0-dev.20200131.2"
-  resolved "https://registry.yarnpkg.com/formidable/-/formidable-2.0.0-dev.20200131.2.tgz#e36fa8bc527cf83a3f8bb042c61062513e7dee03"
-  integrity sha512-QqOPy9YPdGO0aL1iW2xNjABA+qRvb5H24iV6cFAwtJVfo8XsfJ7EcNocuxBI6oAt83fNCfBN6GbcqB5A5xvR1A==
+formidable-serverless@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/formidable-serverless/-/formidable-serverless-1.0.3.tgz#5023c04b394bddcf4f6d27bfbe1c7d89dd1e5368"
+  integrity sha512-BT47bmGBk3V2kQwNPBvM5SY1Ypc08CnFinBOp05gVrH+4g7ZlxYX6kQtC8wuLjH+Qcj0Re10PY2VxBlpNIWGGQ==
   dependencies:
-    dezalgo "^1.0.3"
-    once "^1.4.0"
+    formidable "^1.2.1"
+
+formidable@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.2.2.tgz#bf69aea2972982675f00865342b982986f6b8dd9"
+  integrity sha512-V8gLm+41I/8kguQ4/o1D3RIHRmhYFG4pnNyonvua+40rqcEmT4+V71yaZ3B457xbbgCsCfjSPi65u/W6vK1U5Q==
 
 fragment-cache@^0.2.1:
   version "0.2.1"

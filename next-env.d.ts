@@ -31,3 +31,7 @@ class Workbox {
 interface Window {
   workbox: Workbox
 }
+
+declare module "formidable-serverless" {
+  export * from "formidable"
+}
