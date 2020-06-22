@@ -51,12 +51,9 @@ const Home: FC<Props> = ({ products }) => {
                   ? generateUrl(images[0], { width: 400 })
                   : ""
               return (
-                <div
-                  key={_id}
-                  className="border w-1/2 sm:w-1/4 mr-3 mb-3 shadow-md bg-white rounded-md overflow-hidden"
-                >
+                <div key={_id} className="w-1/2 sm:w-1/4 mr-3 mb-3">
                   <div
-                    className="w-full relative"
+                    className="w-full relative overflow-hidden rounded-lg shadow"
                     style={{ paddingBottom: "75%" }}
                   >
                     <img
@@ -66,7 +63,7 @@ const Home: FC<Props> = ({ products }) => {
                       loading={idx < 7 ? "eager" : "lazy"}
                     />
                   </div>
-                  <div className="p-3">
+                  <div className="p-1">
                     <div>{name}</div>
                     <div className="text-sm text-gray-700">
                       {new Intl.NumberFormat("id", {
