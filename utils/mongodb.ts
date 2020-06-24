@@ -1,12 +1,16 @@
 import { MongoClient } from "mongodb"
 
-const CLIENT = new MongoClient(process.env.MONGO_URL ?? "")
+const MONGO_URL = process.env.MONGO_URL ?? ""
 
-const getClient = async () => {
-  if (!CLIENT.isConnected()) {
-    await CLIENT.connect()
+let cachedDb: MongoClient
+
+const connectToDb = async () => {
+  if (cachedDb && cachedDb.isConnected()) {
+    return cachedDb
   }
-  return CLIENT
+
+  cachedDb = await MongoClient.connect(MONGO_URL)
+  return cachedDb
 }
 
 interface UserSchema {
@@ -16,15 +20,14 @@ interface UserSchema {
   image: string
   emailVerified: boolean
 }
-
-export const upsertUser = async (
+export const createUser = async (
   userId: string,
   email: string,
   name: string,
   image: string,
   emailVerified: boolean
 ) => {
-  const client = await getClient()
+  const client = await connectToDb()
   await client
     .db("grayson")
     .collection<UserSchema>("users")
@@ -60,7 +63,7 @@ export const upsertProduct = async (
   userName: string,
   userPhoto: string
 ) => {
-  const client = await getClient()
+  const client = await connectToDb()
   await client.db("grayson").collection<ProductSchema>("products").updateOne(
     { _id: productId },
     {
@@ -79,7 +82,7 @@ export const upsertProduct = async (
 }
 
 export const queryProducts = async (): Promise<ProductSchema[]> => {
-  const client = await getClient()
+  const client = await connectToDb()
   const allProducts = client
     .db("grayson")
     .collection<ProductSchema>("products")
@@ -90,7 +93,7 @@ export const queryProducts = async (): Promise<ProductSchema[]> => {
 export const queryProductsByUserId = async (
   userId: string
 ): Promise<ProductSchema[]> => {
-  const client = await getClient()
+  const client = await connectToDb()
   const allProducts = client
     .db("grayson")
     .collection<ProductSchema>("products")
