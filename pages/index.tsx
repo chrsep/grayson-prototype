@@ -26,7 +26,7 @@ const Home: FC<Props> = ({ products }) => {
           <title>Grayson</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="mx-2 sticky top-0 pt-3 z-10 bg-gray-100 rounded-b-lg">
+        <div className="mx-3 sticky top-0 pt-3 z-10 bg-gray-100 rounded-b-lg ">
           <label
             className="flex bg-white w-full block rounded-lg shadow"
             aria-label="search"
