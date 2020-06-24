@@ -1,7 +1,11 @@
-import { FC } from "react"
+import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from "react"
 import styles from "./Button.module.css"
 
-interface Props {
+interface Props
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   outline?: boolean
   className?: string
   onClick?: () => void

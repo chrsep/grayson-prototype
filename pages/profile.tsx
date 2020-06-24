@@ -4,6 +4,8 @@ import Input from "../components/Input/Input"
 import usePostProductImage from "../hooks/usePostProductImage"
 import { PostImageResponse } from "./api/images"
 import useGetUserProfileApi from "../hooks/useGetUserProfileApi"
+import CancelIcon from "../icons/cancel.svg"
+import CheckIcon from "../icons/check.svg"
 
 const ProfilePage: FC = () => {
   const { data } = useGetUserProfileApi()
@@ -37,7 +39,6 @@ const Form: FC<FormProps> = (props) => {
   const [name, setName] = useState(props.name)
   const [address, setAddress] = useState(props.address)
   const [phone, setPhone] = useState(props.phone)
-  const [image, setImage] = useState(props.picture)
 
   const [error, setError] = useState("")
   return (
@@ -72,7 +73,7 @@ const Form: FC<FormProps> = (props) => {
           setPhone(e.target.value)
         }}
       />
-      <TextField
+      <TextAreaField
         id="address"
         label="Alamat"
         placeholder="Belum di-isi"
@@ -82,21 +83,49 @@ const Form: FC<FormProps> = (props) => {
           setAddress(e.target.value)
         }}
       />
-      <div className="flex flex-col mt-3 w-32 mx-3 md:mx-0">
-        <img
-          src={image}
-          alt="profil"
-          className="mb-1 border rounded-lg mr-3 w-full h-32"
-        />
-        <ImageUploader
-          onChange={(newImage) => setImage(newImage)}
-          onError={setError}
-        />
-      </div>
+
+      <ChangeImageForm original={props.picture} onError={setError} />
       {error && (
         <div className="ml-3 md:ml-0 mt-2 text-sm text-red-600">{error}</div>
       )}
     </form>
+  )
+}
+
+const ChangeImageForm: FC<{
+  original: string
+  onError: (error: string) => void
+}> = ({ original, onError }) => {
+  const [image, setImage] = useState(original)
+
+  return (
+    <div className="flex flex-col mt-3 w-32 mx-3 md:mx-0">
+      <img
+        src={image}
+        alt="profil"
+        className="mb-1 border rounded-lg mr-3 w-full h-32"
+      />
+      {image === original ? (
+        <ImageUploader
+          onChange={(newImage) => setImage(newImage)}
+          onError={onError}
+        />
+      ) : (
+        <div className="flex w-32">
+          <Button
+            outline
+            type="button"
+            className="mr-2 px-2 flex-shrink-0"
+            onClick={() => setImage(original)}
+          >
+            <img alt="cancel" src={CancelIcon} className="w-5" />
+          </Button>
+          <Button type="button" className="w-full">
+            <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+          </Button>
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -118,7 +147,7 @@ const TextField: FC<TextFieldProps> = ({
 }) => {
   return (
     <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm">
+      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
         {label}
       </label>
       <Input
@@ -152,7 +181,13 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
         <div>loading...</div>
       ) : (
         <>
-          <Button className="w-full">Ubah Gambar</Button>
+          <div
+            role="button"
+            tabIndex={0}
+            className="w-full bg-black text-white text-center rounded py-2 shadow text-sm focus:shadow-outline"
+          >
+            Ubah Gambar
+          </div>
           <input
             type="file"
             className="hidden"
@@ -171,6 +206,39 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
         </>
       )}
     </label>
+  )
+}
+
+interface TextAreaFieldProps {
+  id: string
+  label: string
+  value?: string
+  onChange: ChangeEventHandler<HTMLTextAreaElement>
+  placeholder: string
+  required?: boolean
+}
+const TextAreaField: FC<TextAreaFieldProps> = ({
+  id,
+  label,
+  onChange,
+  placeholder,
+  value,
+  required,
+}) => {
+  return (
+    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
+        {label}
+      </label>
+      <textarea
+        required={required}
+        id={id}
+        placeholder={placeholder}
+        className="w-full py-1 px-0 h-32"
+        onChange={onChange}
+        value={value}
+      />
+    </div>
   )
 }
 
