@@ -79,8 +79,8 @@ const Home: FC<Props> = ({ products }) => {
                     <div className="flex items-center">
                       <img
                         alt={userName}
-                        className="rounded w-5 mr-1"
-                        src={userPhoto}
+                        className="rounded w-5 mr-1 object-cover"
+                        src={generateUrl(userPhoto, { width: 40 })}
                       />
                       <div className="text-sm text-gray-700">{userName}</div>
                     </div>

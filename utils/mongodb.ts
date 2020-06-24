@@ -54,12 +54,31 @@ export const updateUser = async (
   address?: string
 ) => {
   const client = await connectToDb()
-  await client.db("grayson").collection<User>("users").updateOne(
-    { _id },
-    {
-      $set: { email, name, image, phone, whatsapp, address },
-    }
-  )
+  const session = await client.startSession()
+  try {
+    await session.withTransaction(async () => {
+      await client.db("grayson").collection<User>("users").updateOne(
+        { _id },
+        {
+          $set: { email, name, image, phone, whatsapp, address },
+        },
+        { session }
+      )
+
+      const newProduct: { userName?: string; userPhoto?: string } = {}
+      if (name) newProduct.userName = name
+      if (image) newProduct.userPhoto = image
+      await client.db("grayson").collection<Product>("products").updateMany(
+        { userId: _id },
+        {
+          $set: newProduct,
+        },
+        { session }
+      )
+    })
+  } finally {
+    await session.endSession()
+  }
 }
 
 export const queryUserById = async (userId: string) => {
