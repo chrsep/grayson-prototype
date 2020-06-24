@@ -11,7 +11,7 @@ export const generateUrl = (
   { width, height, scale }: Options
 ) => {
   // In case image is already a full URL
-  if (image.includes("https")) {
+  if (image?.includes("https")) {
     return image
   }
   const configArray: string[] = []

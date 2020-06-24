@@ -59,11 +59,11 @@ export const updateUser = async (
     await session.withTransaction(async () => {
       const newUser: Partial<User> = {}
       if (email) newUser.email = email
-      if (name) newUser.email = name
-      if (image) newUser.email = image
-      if (phone) newUser.email = phone
-      if (whatsapp) newUser.email = whatsapp
-      if (address) newUser.email = address
+      if (name) newUser.name = name
+      if (image) newUser.image = image
+      if (phone) newUser.phone = phone
+      if (whatsapp) newUser.whatsapp = whatsapp
+      if (address) newUser.address = address
       await client.db("grayson").collection<User>("users").updateOne(
         { _id },
         {
@@ -110,7 +110,9 @@ export const upsertProduct = async (
   price?: number,
   description?: string,
   images?: string[],
-  userId?: string
+  userId?: string,
+  userName?: string,
+  userPhoto?: string
 ) => {
   const client = await connectToDb()
   const user = await client
@@ -129,8 +131,8 @@ export const upsertProduct = async (
           description,
           images,
           userId,
-          userName: user?.name,
-          userPhoto: user?.image,
+          userName: user?.name ?? userName,
+          userPhoto: user?.image ?? userPhoto,
         },
       },
       { upsert: true }
