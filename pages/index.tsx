@@ -76,11 +76,15 @@ const Home: FC<Props> = ({ products }) => {
                         currency: "IDR",
                       }).format(price)}
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex">
                       <img
                         alt={userName}
-                        className="rounded w-5 mr-1 object-cover"
-                        src={generateUrl(userPhoto, { width: 40 })}
+                        className="rounded w-5 h-5 mr-1 object-cover"
+                        src={generateUrl(userPhoto, {
+                          width: 40,
+                          height: 40,
+                          scale: true,
+                        })}
                       />
                       <div className="text-sm text-gray-700">{userName}</div>
                     </div>
