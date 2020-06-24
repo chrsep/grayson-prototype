@@ -36,7 +36,7 @@ const ProductPage = () => {
               <img
                 alt={name}
                 src={productImage}
-                className="w-12 h-12 rounded"
+                className="w-12 h-12 rounded object-cover"
               />
               <div className="ml-3">
                 <div>{name}</div>

@@ -83,7 +83,7 @@ const NewProductPage = () => {
                   key={image}
                   src={generateUrl(image, { width: 160 })}
                   alt="gambar produk"
-                  className="h-20 border rounded mr-3"
+                  className="h-20 border rounded mr-3 object-cover"
                 />
               )
             })}

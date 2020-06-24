@@ -64,7 +64,7 @@ const Home: FC<Props> = ({ products }) => {
                     <img
                       alt={name}
                       src={productImage}
-                      className="absolute top-0 w-full h-full"
+                      className="absolute top-0 w-full h-full object-cover"
                       loading={idx < 7 ? "eager" : "lazy"}
                     />
                   </div>

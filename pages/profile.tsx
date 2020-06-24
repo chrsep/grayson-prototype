@@ -7,6 +7,7 @@ import useGetUserProfileApi from "../hooks/useGetUserProfileApi"
 import CancelIcon from "../icons/cancel.svg"
 import CheckIcon from "../icons/check.svg"
 import { generateUrl } from "../utils/cloudinary"
+import usePatchProfile from "../hooks/usePatchProfile"
 
 const ProfilePage: FC = () => {
   const { data } = useGetUserProfileApi()
@@ -98,15 +99,14 @@ const ChangeImageForm: FC<{
 }> = ({ original }) => {
   const [image, setImage] = useState(original)
   const [error, setError] = useState<string>()
+  const [mutate] = usePatchProfile()
 
   return (
     <div className="flex flex-col mt-3 w-24 mx-3 md:mx-0">
       <img
         alt="profil"
-        className="mb-1 border rounded-lg mr-3 w-full h-24"
-        src={
-          image?.includes("https") ? image : generateUrl(image, { width: 160 })
-        }
+        className="mb-1 border rounded-lg mr-3 w-full h-24 object-cover"
+        src={generateUrl(image, { width: 160, height: 160 })}
       />
       {image === original ? (
         <ImageUploader
@@ -123,7 +123,13 @@ const ChangeImageForm: FC<{
           >
             <img alt="cancel" src={CancelIcon} className="w-5" />
           </Button>
-          <Button type="button" className="w-full">
+          <Button
+            type="button"
+            className="w-full"
+            onClick={async () => {
+              await mutate({ image })
+            }}
+          >
             <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
           </Button>
         </div>
