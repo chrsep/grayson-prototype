@@ -13,12 +13,15 @@ const connectToDb = async () => {
   return cachedDb
 }
 
-interface UserSchema {
+interface User {
   _id: string
   email: string
   name: string
   image: string
   emailVerified: boolean
+  phone: string
+  whatsapp: string
+  address: string
 }
 export const createUser = async (
   userId: string,
@@ -30,7 +33,7 @@ export const createUser = async (
   const client = await connectToDb()
   await client
     .db("grayson")
-    .collection<UserSchema>("users")
+    .collection<User>("users")
     .updateOne(
       { _id: userId },
       {
@@ -41,7 +44,25 @@ export const createUser = async (
     )
 }
 
-interface ProductSchema {
+export const updateUser = async (
+  _id: string,
+  email?: string,
+  name?: string,
+  image?: string,
+  phone?: string,
+  whatsapp?: string,
+  address?: string
+) => {
+  const client = await connectToDb()
+  await client.db("grayson").collection<User>("users").updateOne(
+    { _id },
+    {
+      $set: { email, name, image, phone, whatsapp, address },
+    }
+  )
+}
+
+interface Product {
   _id: string
   name: string
   price: number
@@ -54,49 +75,49 @@ interface ProductSchema {
 }
 
 export const upsertProduct = async (
-  productId: string,
-  name: string,
-  price: number,
-  description: string,
-  images: string[],
-  userId: string,
-  userName: string,
-  userPhoto: string
+  _id: string,
+  name?: string,
+  price?: number,
+  description?: string,
+  images?: string[],
+  userId?: string,
+  userName?: string,
+  userPhoto?: string
 ) => {
   const client = await connectToDb()
-  await client.db("grayson").collection<ProductSchema>("products").updateOne(
-    { _id: productId },
+  await client.db("grayson").collection<Product>("products").updateOne(
+    { _id },
     {
       $set: {
-        userId,
         name,
         price,
         description,
         images,
-        userPhoto,
+        userId,
         userName,
+        userPhoto,
       },
     },
     { upsert: true }
   )
 }
 
-export const queryProducts = async (): Promise<ProductSchema[]> => {
+export const queryProducts = async (): Promise<Product[]> => {
   const client = await connectToDb()
   const allProducts = client
     .db("grayson")
-    .collection<ProductSchema>("products")
+    .collection<Product>("products")
     .find()
   return allProducts.toArray()
 }
 
 export const queryProductsByUserId = async (
   userId: string
-): Promise<ProductSchema[]> => {
+): Promise<Product[]> => {
   const client = await connectToDb()
   const allProducts = client
     .db("grayson")
-    .collection<ProductSchema>("products")
+    .collection<Product>("products")
     .find({ userId })
   return allProducts.toArray()
 }
