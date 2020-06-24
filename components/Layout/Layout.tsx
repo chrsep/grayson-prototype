@@ -21,7 +21,7 @@ const Header = () => {
   const router = useRouter()
 
   return (
-    <nav className="p-3 pt-3 flex items-center mx-auto max-w-4xl h-16">
+    <nav className="px-3 pt-3 flex items-center mx-auto max-w-4xl">
       {data && (
         <Link href="/profile">
           <div className="flex items-center fade-in cursor-pointer">
@@ -32,8 +32,8 @@ const Header = () => {
                 height: 80,
                 scale: true,
               })}
-              className="w-8 rounded flex-shrink-0 shadow-md object-cover"
-              style={{ height: 32, width: 32 }}
+              className="rounded flex-shrink-0 shadow-md object-cover"
+              style={{ height: 40, width: 40 }}
             />
             <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
           </div>

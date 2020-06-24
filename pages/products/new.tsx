@@ -20,7 +20,7 @@ const NewProductPage = () => {
 
   return (
     <>
-      <main className="mx-auto max-w-4xl">
+      <main className="mx-auto max-w-4xl pt-6">
         <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
           Tambah Produk
         </h1>

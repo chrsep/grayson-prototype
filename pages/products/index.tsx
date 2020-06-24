@@ -9,7 +9,7 @@ const ProductPage = () => {
 
   return (
     <>
-      <main className="mx-auto max-w-4xl">
+      <main className="mx-auto max-w-4xl pt-6">
         <div className="flex items-end">
           <h1 className="text-3xl font-bold mx-3">Produk-ku</h1>
           <Link href="/products/new">

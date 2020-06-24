@@ -34,11 +34,11 @@ const Home: FC<Props> = ({ products }) => {
             <img
               alt="search icon"
               src={SearchIcon}
-              className="m-3 flex-shrink-0"
+              className="m-3 mr-1 flex-shrink-0"
             />
             <Input
               className="w-full "
-              placeholder="Cari produk"
+              placeholder="Cari"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -70,7 +70,7 @@ const Home: FC<Props> = ({ products }) => {
                   </div>
                   <div className="p-1">
                     <div>{name}</div>
-                    <div className="text-sm text-gray-700 mb-2">
+                    <div className="text-sm text-gray-700 mb-1">
                       {new Intl.NumberFormat("id", {
                         style: "currency",
                         currency: "IDR",
