@@ -4,7 +4,7 @@ const convertToMB = (size: number) => {
   return size / 1048576
 }
 
-const usePostProductImage = () => {
+const usePostImage = () => {
   const postImage = (image: File) => {
     const fileSize = convertToMB(image.size)
     if (fileSize > 10) {
@@ -24,4 +24,4 @@ const usePostProductImage = () => {
   return useMutation(postImage)
 }
 
-export default usePostProductImage
+export default usePostImage

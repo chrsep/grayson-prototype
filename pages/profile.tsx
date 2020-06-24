@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
 import Button from "../components/Button/Button"
 import Input from "../components/Input/Input"
-import usePostProductImage from "../hooks/usePostProductImage"
+import usePostImage from "../hooks/usePostImage"
 import { PostImageResponse } from "./api/images"
 import useGetUserProfileApi from "../hooks/useGetUserProfileApi"
 import CancelIcon from "../icons/cancel.svg"
@@ -146,7 +146,8 @@ interface ImageUploaderProps {
   onError: (error: string) => void
 }
 const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
-  const [mutate, { status, error }] = usePostProductImage()
+  const [mutate, { status, error }] = usePostImage()
+  const [loadingImage, setLoadingImage] = useState(false)
 
   useEffect(() => {
     if (error) {
@@ -162,19 +163,24 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
           tabIndex={0}
           className="w-full bg-black text-white text-center rounded py-2 p-x1 shadow focus:shadow-outline text-xs"
         >
-          {status === "loading" ? "loading..." : "Ubah Gambar"}
+          {status === "loading" || loadingImage ? "loading..." : "Ubah Gambar"}
         </div>
         <input
           type="file"
           className="hidden"
           accept="image/*"
-          disabled={status === "loading"}
+          disabled={status === "loading" || loadingImage}
           onChange={async (e) => {
             const file = e?.target?.files?.[0]
             if (file) {
               const result = await mutate(file)
               if (result?.ok) {
+                setLoadingImage(true)
                 const imageData: PostImageResponse = await result.json()
+                await fetch(
+                  generateUrl(imageData.id, { width: 160, height: 160 })
+                )
+                setLoadingImage(false)
                 onChange(imageData.id)
               }
             }

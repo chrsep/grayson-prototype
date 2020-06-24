@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import auth0 from "../../../utils/auth0"
-import { updateUser } from "../../../utils/mongodb"
+import { queryUserById, updateUser } from "../../../utils/mongodb"
 
 export interface PatchProfileRequestBody {
   email?: string
@@ -28,22 +28,35 @@ async function handlePatchProfile(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export interface GetProfileResponse {
-  family_name: string
-  given_name: string
-  locale: string
   name: string
-  nickname: string
   picture: string
-  sub: string
-  updated_at: string
   phone?: string
   address?: string
 }
-export default auth0.requireAuthentication(async function me(req, res) {
+
+async function handleGetProfile(req: NextApiRequest, res: NextApiResponse) {
+  const session = await auth0.getSession(req)
+  if (session) {
+    const user = await queryUserById(session.user.sub)
+    const response: GetProfileResponse = {
+      name: user?.name ?? session.user.name,
+      picture: user?.image ?? session.user.picture,
+      phone: user?.phone,
+      address: user?.address,
+    }
+    res.json(response)
+    res.status(200).end()
+  }
+}
+
+export default auth0.requireAuthentication(async function me(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     switch (req.method) {
       case "GET":
-        await auth0.handleProfile(req, res)
+        await handleGetProfile(req, res)
         break
       case "PATCH":
         await handlePatchProfile(req, res)

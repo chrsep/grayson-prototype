@@ -5,6 +5,7 @@ import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../Button/Button"
 import BoxIcon from "../../icons/box.svg"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
+import { generateUrl } from "../../utils/cloudinary"
 
 const Layout: FC = ({ children }) => {
   return (
@@ -26,8 +27,13 @@ const Header = () => {
           <div className="flex items-center fade-in cursor-pointer">
             <img
               alt="profile-pic"
-              src={data?.picture}
-              className="w-8 rounded flex-shrink-0 shadow-md"
+              src={generateUrl(data.picture, {
+                width: 80,
+                height: 80,
+                scale: true,
+              })}
+              className="w-8 rounded flex-shrink-0 shadow-md object-cover"
+              style={{ height: 32, width: 32 }}
             />
             <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
           </div>

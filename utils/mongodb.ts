@@ -62,6 +62,11 @@ export const updateUser = async (
   )
 }
 
+export const queryUserById = async (userId: string) => {
+  const client = await connectToDb()
+  return client.db("grayson").collection<User>("users").findOne({ _id: userId })
+}
+
 interface Product {
   _id: string
   name: string
@@ -73,7 +78,6 @@ interface Product {
   userName: string
   userPhoto: string
 }
-
 export const upsertProduct = async (
   _id: string,
   name?: string,
