@@ -6,16 +6,23 @@ import { PostImageResponse } from "./api/images"
 import useGetUserProfileApi from "../hooks/useGetUserProfileApi"
 import CancelIcon from "../icons/cancel.svg"
 import CheckIcon from "../icons/check.svg"
+import { generateUrl } from "../utils/cloudinary"
 
 const ProfilePage: FC = () => {
   const { data } = useGetUserProfileApi()
 
   return (
     <>
-      <main className="mx-auto max-w-4xl">
-        <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
-          Data Diri
-        </h1>
+      <main className="mx-auto max-w-4xl pb-8">
+        <div className="flex">
+          <h1
+            className="text-3xl font-bold ml-3 flex-shrink-0 mr-auto"
+            style={{ marginTop: 100 }}
+          >
+            Data Diri
+          </h1>
+          {data && <ChangeImageForm original={data.picture} />}
+        </div>
         {data && (
           <Form
             name={data.name}
@@ -40,7 +47,6 @@ const Form: FC<FormProps> = (props) => {
   const [address, setAddress] = useState(props.address)
   const [phone, setPhone] = useState(props.phone)
 
-  const [error, setError] = useState("")
   return (
     <form className="fade-in">
       <TextField
@@ -83,35 +89,32 @@ const Form: FC<FormProps> = (props) => {
           setAddress(e.target.value)
         }}
       />
-
-      <ChangeImageForm original={props.picture} onError={setError} />
-      {error && (
-        <div className="ml-3 md:ml-0 mt-2 text-sm text-red-600">{error}</div>
-      )}
     </form>
   )
 }
 
 const ChangeImageForm: FC<{
   original: string
-  onError: (error: string) => void
-}> = ({ original, onError }) => {
+}> = ({ original }) => {
   const [image, setImage] = useState(original)
+  const [error, setError] = useState<string>()
 
   return (
-    <div className="flex flex-col mt-3 w-32 mx-3 md:mx-0">
+    <div className="flex flex-col mt-3 w-24 mx-3 md:mx-0">
       <img
-        src={image}
         alt="profil"
-        className="mb-1 border rounded-lg mr-3 w-full h-32"
+        className="mb-1 border rounded-lg mr-3 w-full h-24"
+        src={
+          image?.includes("https") ? image : generateUrl(image, { width: 160 })
+        }
       />
       {image === original ? (
         <ImageUploader
           onChange={(newImage) => setImage(newImage)}
-          onError={onError}
+          onError={setError}
         />
       ) : (
-        <div className="flex w-32">
+        <div className="flex w-24">
           <Button
             outline
             type="button"
@@ -125,7 +128,54 @@ const ChangeImageForm: FC<{
           </Button>
         </div>
       )}
+      {error && (
+        <div className="ml-3 md:ml-0 mt-2 text-sm text-red-600">{error}</div>
+      )}
     </div>
+  )
+}
+
+interface ImageUploaderProps {
+  onChange: (image: string) => void
+  onError: (error: string) => void
+}
+const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
+  const [mutate, { status, error }] = usePostProductImage()
+
+  useEffect(() => {
+    if (error) {
+      onError(error.message)
+    }
+  }, [error])
+
+  return (
+    <label>
+      <>
+        <div
+          role="button"
+          tabIndex={0}
+          className="w-full bg-black text-white text-center rounded py-2 p-x1 shadow focus:shadow-outline text-xs"
+        >
+          {status === "loading" ? "loading..." : "Ubah Gambar"}
+        </div>
+        <input
+          type="file"
+          className="hidden"
+          accept="image/*"
+          disabled={status === "loading"}
+          onChange={async (e) => {
+            const file = e?.target?.files?.[0]
+            if (file) {
+              const result = await mutate(file)
+              if (result?.ok) {
+                const imageData: PostImageResponse = await result.json()
+                onChange(imageData.id)
+              }
+            }
+          }}
+        />
+      </>
+    </label>
   )
 }
 
@@ -162,53 +212,6 @@ const TextField: FC<TextFieldProps> = ({
   )
 }
 
-interface ImageUploaderProps {
-  onChange: (image: string) => void
-  onError: (error: string) => void
-}
-const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
-  const [mutate, { status, error }] = usePostProductImage()
-
-  useEffect(() => {
-    if (error) {
-      onError(error.message)
-    }
-  }, [error])
-
-  return (
-    <label>
-      {status === "loading" ? (
-        <div>loading...</div>
-      ) : (
-        <>
-          <div
-            role="button"
-            tabIndex={0}
-            className="w-full bg-black text-white text-center rounded py-2 shadow text-sm focus:shadow-outline"
-          >
-            Ubah Gambar
-          </div>
-          <input
-            type="file"
-            className="hidden"
-            accept="image/*"
-            onChange={async (e) => {
-              const file = e?.target?.files?.[0]
-              if (file) {
-                const result = await mutate(file)
-                if (result?.ok) {
-                  const imageData: PostImageResponse = await result.json()
-                  onChange(imageData.id)
-                }
-              }
-            }}
-          />
-        </>
-      )}
-    </label>
-  )
-}
-
 interface TextAreaFieldProps {
   id: string
   label: string
@@ -234,7 +237,7 @@ const TextAreaField: FC<TextAreaFieldProps> = ({
         required={required}
         id={id}
         placeholder={placeholder}
-        className="w-full py-1 px-0 h-32"
+        className="w-full py-1 px-0 h-16"
         onChange={onChange}
         value={value}
       />
