@@ -47,22 +47,21 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default async function product(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  try {
-    switch (req.method) {
-      case "PATCH":
-        await postHandler(req, res)
-        break
-      case "GET":
-        await getHandler(req, res)
-        break
-      default:
+export default auth0.requireAuthentication(
+  async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+      switch (req.method) {
+        case "PATCH":
+          await postHandler(req, res)
+          break
+        case "GET":
+          await getHandler(req, res)
+          break
+        default:
+      }
+    } catch (error) {
+      console.error(error)
+      res.status(error.status || 400).end(error.message)
     }
-  } catch (error) {
-    console.error(error)
-    res.status(error.status || 400).end(error.message)
   }
-}
+)

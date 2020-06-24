@@ -1,9 +1,9 @@
 import { useQuery } from "react-query"
 import { getApi } from "../utils/api"
-import { UserProfile } from "../pages/api/me/profile"
+import { GetProfileResponse } from "../pages/api/me/profile"
 
 const useGetUserProfileApi = () => {
-  const getProfile = getApi<UserProfile>("/me/profile")
+  const getProfile = getApi<GetProfileResponse>("/me/profile")
 
   return useQuery(["me", "profile"], getProfile, {
     retry: (failureCount, error) => {
