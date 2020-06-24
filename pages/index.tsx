@@ -11,6 +11,8 @@ interface Props {
     name: string
     price: number
     images: string[]
+    userPhoto: string
+    userName: string
   }>
 }
 
@@ -45,7 +47,7 @@ const Home: FC<Props> = ({ products }) => {
         <div className="flex ml-3 mr-1 mt-3 flex-wrap">
           {products
             .filter((product) => product.name.toLowerCase().includes(search))
-            .map(({ _id, name, price, images }, idx) => {
+            .map(({ _id, name, price, images, userName, userPhoto }, idx) => {
               const productImage =
                 (images?.length ?? 0) > 0
                   ? generateUrl(images[0], { width: 400 })
@@ -68,11 +70,19 @@ const Home: FC<Props> = ({ products }) => {
                   </div>
                   <div className="p-1">
                     <div>{name}</div>
-                    <div className="text-sm text-gray-700">
+                    <div className="text-sm text-gray-700 mb-2">
                       {new Intl.NumberFormat("id", {
                         style: "currency",
                         currency: "IDR",
                       }).format(price)}
+                    </div>
+                    <div className="flex items-center">
+                      <img
+                        alt={userName}
+                        className="rounded w-5 mr-1"
+                        src={userPhoto}
+                      />
+                      <div className="text-sm text-gray-700">{userName}</div>
                     </div>
                   </div>
                 </div>

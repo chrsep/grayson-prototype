@@ -12,7 +12,7 @@ const NewProductPage = () => {
   const router = useRouter()
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
-  const [note, setNote] = useState("")
+  const [descriptions, setDescription] = useState("")
   const [images, setImages] = useState<string[]>([])
 
   const [error, setError] = useState("")
@@ -30,7 +30,7 @@ const NewProductPage = () => {
             const result = await upsertProduct({
               name,
               price: parseInt(price, 10),
-              note,
+              note: descriptions,
               images,
             })
             if (result.ok) {
@@ -58,13 +58,13 @@ const NewProductPage = () => {
               setPrice(e.target.value)
             }}
           />
-          <TextField
-            id="note"
-            label="Catatan"
+          <TextAreaField
+            id="description"
+            label="Deskripsi"
             placeholder="Belum di-isi"
-            value={note}
+            value={descriptions}
             onChange={(e) => {
-              setNote(e.target.value)
+              setDescription(e.target.value)
             }}
           />
           {images.length > 0 && (
@@ -123,7 +123,7 @@ const TextField: FC<TextFieldProps> = ({
 }) => {
   return (
     <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm">
+      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
         {label}
       </label>
       <Input
@@ -131,6 +131,39 @@ const TextField: FC<TextFieldProps> = ({
         id={id}
         placeholder={placeholder}
         className="w-full py-1 px-0"
+        onChange={onChange}
+        value={value}
+      />
+    </div>
+  )
+}
+
+interface TextAreaFieldProps {
+  id: string
+  label: string
+  value: string
+  onChange: ChangeEventHandler<HTMLTextAreaElement>
+  placeholder: string
+  required?: boolean
+}
+const TextAreaField: FC<TextAreaFieldProps> = ({
+  id,
+  label,
+  onChange,
+  placeholder,
+  value,
+  required,
+}) => {
+  return (
+    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
+        {label}
+      </label>
+      <textarea
+        required={required}
+        id={id}
+        placeholder={placeholder}
+        className="w-full py-1 px-0 h-32"
         onChange={onChange}
         value={value}
       />
@@ -156,7 +189,7 @@ const CurrencyField: FC<CurrencyField> = ({
 }) => {
   return (
     <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm">
+      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
         {label}
       </label>
       <div className="flex items-center">

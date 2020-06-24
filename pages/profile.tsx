@@ -53,7 +53,7 @@ const Form: FC<FormProps> = (props) => {
         }}
       />
       <TextField
-        id="name"
+        id="phone"
         label="Telefon / HP"
         placeholder="Belum di-isi"
         required
@@ -63,7 +63,17 @@ const Form: FC<FormProps> = (props) => {
         }}
       />
       <TextField
-        id="name"
+        id="phone"
+        label="WhatsApp"
+        placeholder="Belum di-isi"
+        required
+        value={phone}
+        onChange={(e) => {
+          setPhone(e.target.value)
+        }}
+      />
+      <TextField
+        id="address"
         label="Alamat"
         placeholder="Belum di-isi"
         required

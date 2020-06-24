@@ -11,7 +11,7 @@ export interface PatchProduct {
 
 async function getProductsHandler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const products = queryProducts()
+    const products = await queryProducts()
     res.json(products)
     res.status(200).end()
   } catch (error) {

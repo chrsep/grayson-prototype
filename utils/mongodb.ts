@@ -40,30 +40,42 @@ export const upsertUser = async (
 
 interface ProductSchema {
   _id: string
-  userId: string
   name: string
   price: number
-  note: string
+  description: string
   images: string[]
+  // Denormalized user data
+  userId: string
+  userName: string
+  userPhoto: string
 }
 
 export const upsertProduct = async (
   productId: string,
-  userId: string,
   name: string,
   price: number,
-  note: string,
-  images: string[]
+  description: string,
+  images: string[],
+  userId: string,
+  userName: string,
+  userPhoto: string
 ) => {
   const client = await getClient()
-  await client
-    .db("grayson")
-    .collection<ProductSchema>("products")
-    .updateOne(
-      { _id: productId },
-      { $set: { userId, name, price, note, images } },
-      { upsert: true }
-    )
+  await client.db("grayson").collection<ProductSchema>("products").updateOne(
+    { _id: productId },
+    {
+      $set: {
+        userId,
+        name,
+        price,
+        description,
+        images,
+        userPhoto,
+        userName,
+      },
+    },
+    { upsert: true }
+  )
 }
 
 export const queryProducts = async (): Promise<ProductSchema[]> => {

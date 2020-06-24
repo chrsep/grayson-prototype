@@ -7,7 +7,7 @@ export interface PatchProduct {
   id?: string
   name: string
   price: number
-  note: string
+  description: string
   images: string[]
 }
 
@@ -21,16 +21,18 @@ export interface GetMyProductsResponse {
 async function postHandler(req: NextApiRequest, res: NextApiResponse) {
   const session = await auth0.getSession(req)
   if (session) {
-    const { id, name, price, note, images } = JSON.parse(
+    const { id, name, price, description, images } = JSON.parse(
       req.body
     ) as PatchProduct
     await upsertProduct(
       id ?? v4(),
-      session.user.sub,
       name,
       price,
-      note,
-      images ?? []
+      description,
+      images ?? [],
+      session.user.sub,
+      session.user.name,
+      session.user.picture
     )
     res.status(201).end()
   }
