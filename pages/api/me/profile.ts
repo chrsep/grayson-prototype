@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import auth0 from "../../../utils/auth0"
 import { updateUser } from "../../../utils/mongodb"
 
-interface PatchProfileRequestBody {
+export interface PatchProfileRequestBody {
   email?: string
   name?: string
   image?: string
