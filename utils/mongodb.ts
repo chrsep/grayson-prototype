@@ -57,10 +57,17 @@ export const updateUser = async (
   const session = await client.startSession()
   try {
     await session.withTransaction(async () => {
+      const newUser: Partial<User> = {}
+      if (email) newUser.email = email
+      if (name) newUser.email = name
+      if (image) newUser.email = image
+      if (phone) newUser.email = phone
+      if (whatsapp) newUser.email = whatsapp
+      if (address) newUser.email = address
       await client.db("grayson").collection<User>("users").updateOne(
         { _id },
         {
-          $set: { email, name, image, phone, whatsapp, address },
+          $set: newUser,
         },
         { session }
       )
@@ -103,26 +110,31 @@ export const upsertProduct = async (
   price?: number,
   description?: string,
   images?: string[],
-  userId?: string,
-  userName?: string,
-  userPhoto?: string
+  userId?: string
 ) => {
   const client = await connectToDb()
-  await client.db("grayson").collection<Product>("products").updateOne(
-    { _id },
-    {
-      $set: {
-        name,
-        price,
-        description,
-        images,
-        userId,
-        userName,
-        userPhoto,
+  const user = await client
+    .db("grayson")
+    .collection<User>("users")
+    .findOne({ _id: userId })
+  await client
+    .db("grayson")
+    .collection<Product>("products")
+    .updateOne(
+      { _id },
+      {
+        $set: {
+          name,
+          price,
+          description,
+          images,
+          userId,
+          userName: user?.name,
+          userPhoto: user?.image,
+        },
       },
-    },
-    { upsert: true }
-  )
+      { upsert: true }
+    )
 }
 
 export const queryProducts = async (): Promise<Product[]> => {
