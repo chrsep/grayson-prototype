@@ -18,7 +18,14 @@ module.exports = withPlugins(
       },
     ],
     withPrefresh,
-    optimizedImages,
+    [
+      optimizedImages,
+      {
+        images: {
+          // for example
+        },
+      },
+    ],
   ],
   {
     experimental: {
