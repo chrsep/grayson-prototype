@@ -53,10 +53,7 @@ const Home: FC<Props> = ({ products }) => {
                   ? generateUrl(images[0], { width: 400 })
                   : require("../images/empty-image-placeholder.jpg?webp&width=300")
               return (
-                <div
-                  key={_id}
-                  className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 fade-in"
-                >
+                <div key={_id} className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
                   <div
                     className="w-full relative overflow-hidden rounded-lg shadow"
                     style={{ paddingBottom: "75%" }}
