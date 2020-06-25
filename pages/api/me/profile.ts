@@ -32,6 +32,7 @@ export interface GetProfileResponse {
   picture: string
   phone?: string
   address?: string
+  whatsapp?: string
 }
 
 async function handleGetProfile(req: NextApiRequest, res: NextApiResponse) {
@@ -43,6 +44,7 @@ async function handleGetProfile(req: NextApiRequest, res: NextApiResponse) {
       picture: user?.image ?? session.user.picture,
       phone: user?.phone,
       address: user?.address,
+      whatsapp: user?.whatsapp,
     }
     res.json(response)
     res.status(200).end()

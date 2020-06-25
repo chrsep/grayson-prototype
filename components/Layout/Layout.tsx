@@ -27,7 +27,7 @@ const Header = () => {
     >
       {data && (
         <Link href="/profile">
-          <div className="flex items-center fade-in cursor-pointer">
+          <div className="flex items-center fade-in cursor-pointer w-full">
             <img
               alt="profile-pic"
               src={generateUrl(data.picture, {
@@ -38,7 +38,9 @@ const Header = () => {
               className="rounded flex-shrink-0 shadow-md object-cover"
               style={{ height: 36, width: 36 }}
             />
-            <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
+            <p className="ml-2 mr-3 w-3/5 truncate">
+              {data?.name?.split(" ")?.[0]}
+            </p>
           </div>
         </Link>
       )}

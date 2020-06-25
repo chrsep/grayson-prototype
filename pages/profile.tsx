@@ -30,6 +30,7 @@ const ProfilePage: FC = () => {
             phone={data.phone}
             address={data.address}
             picture={data.picture}
+            whatsapp={data.whatsapp}
           />
         )}
       </main>
@@ -42,55 +43,134 @@ interface FormProps {
   picture: string
   address?: string
   phone?: string
+  whatsapp?: string
 }
 const Form: FC<FormProps> = (props) => {
-  const [name, setName] = useState(props.name)
-  const [address, setAddress] = useState(props.address)
-  const [phone, setPhone] = useState(props.phone)
+  const [mutate] = usePatchProfile()
 
   return (
-    <form className="fade-in">
-      <TextField
+    <form className="fade-in pb-8">
+      <NameField
         id="name"
         label="Nama"
         placeholder="Belum di-isi"
-        required
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value)
-        }}
+        original={props.name}
+        onSubmit={(name) => mutate({ name })}
       />
-      <TextField
+      <NameField
         id="phone"
         label="Telefon / HP"
         placeholder="Belum di-isi"
-        required
-        value={phone}
-        onChange={(e) => {
-          setPhone(e.target.value)
-        }}
+        original={props.phone}
+        onSubmit={(phone) => mutate({ phone })}
       />
-      <TextField
-        id="phone"
+      <NameField
+        id="whatsapp"
         label="WhatsApp"
         placeholder="Belum di-isi"
-        required
-        value={phone}
-        onChange={(e) => {
-          setPhone(e.target.value)
-        }}
+        original={props.whatsapp}
+        onSubmit={(whatsapp) => mutate({ whatsapp })}
       />
       <TextAreaField
         id="address"
         label="Alamat"
         placeholder="Belum di-isi"
-        required
-        value={address}
-        onChange={(e) => {
-          setAddress(e.target.value)
-        }}
+        original={props.address}
+        onSubmit={(address) => mutate({ address })}
       />
     </form>
+  )
+}
+
+const NameField: FC<{
+  id: string
+  original?: string
+  onSubmit: (value?: string) => void
+  label: string
+  placeholder: string
+}> = ({ id, original = "", onSubmit, label, placeholder }) => {
+  const [name, setName] = useState(original)
+
+  return (
+    <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2 focus-within:shadow-outline">
+      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
+        {label}
+      </label>
+      <div className="flex items-center">
+        <Input
+          id={id}
+          placeholder={placeholder}
+          className="w-full py-1 px-0 outline-none"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+        />
+        {name !== original && (
+          <>
+            <Button
+              outline
+              type="button"
+              className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
+              onClick={() => setName(original)}
+            >
+              <img alt="cancel" src={CancelIcon} className="w-5" />
+            </Button>
+            <Button
+              type="button"
+              className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
+              onClick={() => onSubmit(name)}
+            >
+              <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+            </Button>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const TextAreaField: FC<{
+  id: string
+  original?: string
+  onSubmit: (value?: string) => void
+  label: string
+  placeholder: string
+}> = ({ id, original = "", onSubmit, label, placeholder }) => {
+  const [name, setName] = useState(original)
+
+  return (
+    <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2 focus-within:shadow-outline">
+      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
+        {label}
+      </label>
+      <textarea
+        id={id}
+        placeholder={placeholder}
+        className="w-full py-1 px-0 outline-none h-16"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+      />
+      <div
+        className={`flex ${
+          name === original && "opacity-0"
+        } transition-opacity duration-100`}
+      >
+        <Button
+          outline
+          type="button"
+          className="mr-2 px-2 py-1 flex-shrink-0 fade-in ml-auto"
+          onClick={() => setName(original)}
+        >
+          <img alt="cancel" src={CancelIcon} className="w-5" />
+        </Button>
+        <Button
+          type="button"
+          className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
+          onClick={() => onSubmit(name)}
+        >
+          <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+        </Button>
+      </div>
+    </div>
   )
 }
 
@@ -188,72 +268,6 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
         />
       </>
     </label>
-  )
-}
-
-interface TextFieldProps {
-  id: string
-  label: string
-  value?: string
-  onChange: ChangeEventHandler<HTMLInputElement>
-  placeholder: string
-  required?: boolean
-}
-const TextField: FC<TextFieldProps> = ({
-  id,
-  label,
-  onChange,
-  placeholder,
-  value,
-  required,
-}) => {
-  return (
-    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
-        {label}
-      </label>
-      <Input
-        required={required}
-        id={id}
-        placeholder={placeholder}
-        className="w-full py-1 px-0"
-        onChange={onChange}
-        value={value}
-      />
-    </div>
-  )
-}
-
-interface TextAreaFieldProps {
-  id: string
-  label: string
-  value?: string
-  onChange: ChangeEventHandler<HTMLTextAreaElement>
-  placeholder: string
-  required?: boolean
-}
-const TextAreaField: FC<TextAreaFieldProps> = ({
-  id,
-  label,
-  onChange,
-  placeholder,
-  value,
-  required,
-}) => {
-  return (
-    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
-        {label}
-      </label>
-      <textarea
-        required={required}
-        id={id}
-        placeholder={placeholder}
-        className="w-full py-1 px-0 h-16"
-        onChange={onChange}
-        value={value}
-      />
-    </div>
   )
 }
 

@@ -64,10 +64,8 @@ export const updateUser = async (
         },
         { session }
       )
+      if (!name && !image) return
 
-      const newProduct: { userName?: string; userPhoto?: string } = {}
-      if (name) newProduct.userName = name
-      if (image) newProduct.userPhoto = image
       await client
         .db("grayson")
         .collection<Product>("products")
