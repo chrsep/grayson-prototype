@@ -28,7 +28,7 @@ const Home: FC<Props> = ({ products }) => {
         </Head>
         <div className="mx-3 sticky top-0 pt-3 z-10 bg-gray-100 rounded-b-lg ">
           <label
-            className="flex bg-white w-full block rounded-lg shadow"
+            className="flex bg-white w-full block rounded-lg shadow focus-within:shadow-outline"
             aria-label="search"
           >
             <img
@@ -37,7 +37,7 @@ const Home: FC<Props> = ({ products }) => {
               className="m-3 mr-1 flex-shrink-0"
             />
             <Input
-              className="w-full "
+              className="w-full outline-none rounded-lg"
               placeholder="Cari"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
