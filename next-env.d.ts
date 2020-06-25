@@ -35,3 +35,14 @@ interface Window {
 declare module "formidable-serverless" {
   export * from "formidable"
 }
+
+declare module "*.svg" {
+  const content: string
+  export default content
+}
+
+declare module "*.jpg" {
+  import { ImgSrc } from "react-optimized-image/lib/components/Img";
+  const content: ImgSrc
+  export default content
+}

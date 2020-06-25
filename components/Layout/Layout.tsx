@@ -1,6 +1,7 @@
 import React, { FC } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { Svg } from "react-optimized-image"
 import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../Button/Button"
 import BoxIcon from "../../icons/box.svg"
@@ -58,12 +59,7 @@ const Header = () => {
           })()}
         >
           <Button outline className="ml-auto flex-shrink-0 pl-2">
-            <img
-              alt="product icon"
-              src={ChevronLeftIcon}
-              className="text-white mr-1"
-              style={{ height: 20 }}
-            />
+            <Svg src={ChevronLeftIcon} className="text-white mr-1" />
             Kembali
           </Button>
         </Link>
@@ -76,11 +72,7 @@ const IndexNavigation: FC<{ status: string }> = ({ status }) => {
   return status === "success" ? (
     <Link href="/products">
       <Button className="flex items-center ml-auto flex-shrink-0 fade-in">
-        <img
-          alt="product icon"
-          src={BoxIcon}
-          className="text-white mr-2 w-5 transition-opacity"
-        />
+        <Svg src={BoxIcon} className="text-white mr-2 w-5 transition-opacity" />
         Produk-ku
       </Button>
     </Link>

@@ -1,9 +1,11 @@
 import Head from "next/head"
 import React, { FC, useState } from "react"
+import Img, { Svg } from "react-optimized-image"
 import Input from "../components/Input/Input"
 import SearchIcon from "../icons/search.svg"
 import { queryProducts } from "../utils/mongodb"
 import { generateUrl } from "../utils/cloudinary"
+import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 
 interface Props {
   products: Array<{
@@ -31,11 +33,7 @@ const Home: FC<Props> = ({ products }) => {
             className="flex bg-white w-full block rounded-lg shadow focus-within:shadow-outline"
             aria-label="search"
           >
-            <img
-              alt="search icon"
-              src={SearchIcon}
-              className="m-3 mr-1 flex-shrink-0"
-            />
+            <Svg src={SearchIcon} className="m-3 mr-1 flex-shrink-0" />
             <Input
               className="w-full outline-none rounded-lg"
               placeholder="Cari"
@@ -47,48 +45,54 @@ const Home: FC<Props> = ({ products }) => {
         <div className="flex ml-3 mr-1 mt-3 flex-wrap">
           {products
             .filter((product) => product.name.toLowerCase().includes(search))
-            .map(({ _id, name, price, images, userName, userPhoto }, idx) => {
-              const productImage =
-                (images?.length ?? 0) > 0
-                  ? generateUrl(images[0], { width: 400 })
-                  : require("../images/empty-image-placeholder.jpg?webp&width=250")
-              return (
-                <div key={_id} className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
-                  <div
-                    className="w-full relative overflow-hidden rounded-lg shadow"
-                    style={{ paddingBottom: "75%" }}
-                  >
+            .map(({ _id, name, price, images, userName, userPhoto }, idx) => (
+              <div key={_id} className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
+                <div
+                  className="w-full relative overflow-hidden rounded-lg shadow"
+                  style={{ paddingBottom: "75%" }}
+                >
+                  {(images?.length ?? 0) > 0 ? (
                     <img
                       alt={name}
-                      src={productImage}
+                      src={generateUrl(images[0], { width: 400 })}
                       className="absolute top-0 w-full h-full object-cover"
                       loading={idx < 7 ? "eager" : "lazy"}
                     />
+                  ) : (
+                    <Img
+                      webp
+                      url
+                      alt={name}
+                      src={PlaceholderImage}
+                      className="absolute top-0 w-full h-full object-cover"
+                      loading={idx < 7 ? "eager" : "lazy"}
+                      sizes={[160, 250, 300]}
+                    />
+                  )}
+                </div>
+                <div className="p-1">
+                  <div>{name}</div>
+                  <div className="text-sm text-gray-700 mb-1">
+                    {new Intl.NumberFormat("id", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(price)}
                   </div>
-                  <div className="p-1">
-                    <div>{name}</div>
-                    <div className="text-sm text-gray-700 mb-1">
-                      {new Intl.NumberFormat("id", {
-                        style: "currency",
-                        currency: "IDR",
-                      }).format(price)}
-                    </div>
-                    <div className="flex">
-                      <img
-                        alt={userName}
-                        className="rounded w-5 h-5 mr-1 object-cover"
-                        src={generateUrl(userPhoto, {
-                          width: 40,
-                          height: 40,
-                          scale: true,
-                        })}
-                      />
-                      <div className="text-sm text-gray-700">{userName}</div>
-                    </div>
+                  <div className="flex">
+                    <img
+                      alt={userName}
+                      className="rounded w-5 h-5 mr-1 object-cover"
+                      src={generateUrl(userPhoto, {
+                        width: 40,
+                        height: 40,
+                        scale: true,
+                      })}
+                    />
+                    <div className="text-sm text-gray-700">{userName}</div>
                   </div>
                 </div>
-              )
-            })}
+              </div>
+            ))}
         </div>
         {products.length === 0 && (
           <>
@@ -105,6 +109,7 @@ const Home: FC<Props> = ({ products }) => {
                 className="w-64 mx-auto mt-12"
                 alt="No plans yet illustration"
                 src={require("../images/no-product.png?resize&size=672")}
+                loading="lazy"
               />
             </picture>
             <h6 className="mt-8 text-center text-xl text-gray-900">

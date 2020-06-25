@@ -16,11 +16,6 @@
     "cloudinary": "1.22.0",
     "dayjs": "1.8.28",
     "formidable-serverless": "1.0.3",
-    "imagemin-mozjpeg": "9.0.0",
-    "imagemin-optipng": "8.0.0",
-    "imagemin-svgo": "8.0.0",
-    "img-loader": "3.0.1",
-    "lqip-loader": "2.2.0",
     "mongodb": "3.5.9",
     "next": "9.4.5-canary.18",
     "next-compose-plugins": "2.2.0",
@@ -31,13 +26,13 @@
     "preact-render-to-string": "5.1.9",
     "react": "github:preact-compat/react#1.0.0",
     "react-dom": "github:preact-compat/react-dom#1.0.0",
+    "react-optimized-image": "^0.2.0",
     "react-query": "1.5.9",
     "react-refresh": "0.8.3",
     "react-ssr-prepass": "npm:preact-ssr-prepass@1.0.1",
     "tailwindcss": "1.4.6",
     "typescript": "3.9.5",
-    "uuid": "8.2.0",
-    "webp-loader": "0.6.0"
+    "uuid": "8.2.0"
   },
   "devDependencies": {
     "@types/formidable": "1.0.31",
@@ -59,7 +54,6 @@
     "eslint-plugin-react": "7.20.0",
     "eslint-plugin-react-hooks": "4.0.4",
     "prettier": "2.0.5",
-    "responsive-loader": "1.2.0",
     "stylelint": "13.6.1",
     "stylelint-config-prettier": "8.0.2",
     "stylelint-config-standard": "20.0.0"

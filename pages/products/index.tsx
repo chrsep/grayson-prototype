@@ -1,5 +1,6 @@
 import React, { FC } from "react"
 import Link from "next/link"
+import { Svg } from "react-optimized-image"
 import PlusIcon from "../../icons/plus.svg"
 import useGetMyProducts from "../../hooks/useGetMyProducts"
 import { generateUrl } from "../../utils/cloudinary"
@@ -14,7 +15,7 @@ const ProductPage = () => {
           <h1 className="text-3xl font-bold mx-3">Produk-ku</h1>
           <Link href="/products/new">
             <button className="bg-black rounded-full py-3 pl-3 pr-6 shadow absolute right-0 bottom-0 m-3 z-50 text-white flex items-center md:relative md:ml-auto text-sm">
-              <img alt="Produk baru" src={PlusIcon} className="mr-2" />
+              <Svg src={PlusIcon} className="mr-2" />
               Tambah Produk
             </button>
           </Link>
@@ -65,6 +66,7 @@ const ProductPage = () => {
                 className="w-64 mx-auto mt-12"
                 alt="No plans yet illustration"
                 src={require("../../images/you-no-product.png?resize&size=672")}
+                loading="lazy"
               />
             </picture>
             <h6 className="mt-8 text-center text-xl text-gray-900">
