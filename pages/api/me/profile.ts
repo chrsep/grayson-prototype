@@ -21,7 +21,7 @@ async function handlePatchProfile(req: NextApiRequest, res: NextApiResponse) {
       body.image,
       body.phone,
       body.whatsapp,
-      body.address,
+      body.address
     )
     res.status(201).end()
   }
