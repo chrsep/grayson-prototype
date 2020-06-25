@@ -9,7 +9,7 @@ const connectToDb = async () => {
     return cachedDb
   }
 
-  cachedDb = await MongoClient.connect(MONGO_URL)
+  cachedDb = await MongoClient.connect(MONGO_URL, { ignoreUndefined: true })
   return cachedDb
 }
 
@@ -57,17 +57,10 @@ export const updateUser = async (
   const session = await client.startSession()
   try {
     await session.withTransaction(async () => {
-      const newUser: Partial<User> = {}
-      if (email) newUser.email = email
-      if (name) newUser.name = name
-      if (image) newUser.image = image
-      if (phone) newUser.phone = phone
-      if (whatsapp) newUser.whatsapp = whatsapp
-      if (address) newUser.address = address
       await client.db("grayson").collection<User>("users").updateOne(
         { _id },
         {
-          $set: newUser,
+          $set: { email, name, image, phone, whatsapp, address },
         },
         { session }
       )
@@ -75,13 +68,16 @@ export const updateUser = async (
       const newProduct: { userName?: string; userPhoto?: string } = {}
       if (name) newProduct.userName = name
       if (image) newProduct.userPhoto = image
-      await client.db("grayson").collection<Product>("products").updateMany(
-        { userId: _id },
-        {
-          $set: newProduct,
-        },
-        { session }
-      )
+      await client
+        .db("grayson")
+        .collection<Product>("products")
+        .updateMany(
+          { userId: _id },
+          {
+            $set: { userName: name, userPhoto: image },
+          },
+          { session }
+        )
     })
   } finally {
     await session.endSession()

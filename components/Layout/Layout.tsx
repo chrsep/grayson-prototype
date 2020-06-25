@@ -36,7 +36,7 @@ const Header = () => {
                 scale: true,
               })}
               className="rounded flex-shrink-0 shadow-md object-cover"
-              style={{ height: 40, width: 40 }}
+              style={{ height: 36, width: 36 }}
             />
             <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
           </div>
