@@ -51,7 +51,7 @@ const Home: FC<Props> = ({ products }) => {
               const productImage =
                 (images?.length ?? 0) > 0
                   ? generateUrl(images[0], { width: 400 })
-                  : require("../images/empty-image-placeholder.jpg?webp&width=300")
+                  : require("../images/empty-image-placeholder.jpg?webp&width=250")
               return (
                 <div key={_id} className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
                   <div
