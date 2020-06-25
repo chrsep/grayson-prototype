@@ -72,7 +72,7 @@ const IndexNavigation: FC<{ status: string }> = ({ status }) => {
   return status === "success" ? (
     <Link href="/products">
       <Button className="flex items-center ml-auto flex-shrink-0 fade-in">
-        <Svg src={BoxIcon} className="text-white mr-2 w-5 transition-opacity" />
+        <Svg src={BoxIcon} className="text-white mr-2 transition-opacity" />
         Produk-ku
       </Button>
     </Link>
