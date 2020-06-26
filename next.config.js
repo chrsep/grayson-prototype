@@ -15,6 +15,22 @@ module.exports = withPlugins(
           disable: process.env.NODE_ENV === "development",
           dest: "public",
           precacheHomePage: false,
+          exclude: [
+            ({ asset }) => {
+              if (
+                asset.name.match(
+                  /^(build-manifest\.json|react-loadable-manifest\.json)$/
+                )
+              ) {
+                return true
+              }
+              // if (dev && !asset.name.startsWith("static/runtime/")) {
+              //   return true
+              // }
+              return false
+            },
+            /.*images.*$/,
+          ],
         },
       },
     ],
