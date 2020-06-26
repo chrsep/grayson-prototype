@@ -66,7 +66,7 @@ const Home: FC<Props> = ({ products }) => {
                 <Link key={_id} href={`/${userSlug}/${productSlug}`}>
                   <div className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
                     <div
-                      className="w-full relative overflow-hidden rounded-lg shadow"
+                      className="w-full relative overflow-hidden rounded-lg"
                       style={{ paddingBottom: "75%" }}
                     >
                       {(images?.length ?? 0) > 0 ? (
@@ -90,7 +90,7 @@ const Home: FC<Props> = ({ products }) => {
                     </div>
                     <div className="p-1">
                       <div>{name}</div>
-                      <div className="text-sm text-gray-700 mb-1">
+                      <div className="text-gray-700 mb-1 text-sm">
                         {new Intl.NumberFormat("id", {
                           style: "currency",
                           currency: "IDR",
@@ -106,7 +106,9 @@ const Home: FC<Props> = ({ products }) => {
                             scale: true,
                           })}
                         />
-                        <div className="text-sm text-gray-700">{userName}</div>
+                        <div className="text-sm text-gray-700 truncate pr-6">
+                          {userName}
+                        </div>
                       </div>
                     </div>
                   </div>

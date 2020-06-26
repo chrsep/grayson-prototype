@@ -12,7 +12,7 @@ const NewProductPage = () => {
   const router = useRouter()
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
-  const [descriptions, setDescription] = useState("")
+  const [description, setDescription] = useState("")
   const [images, setImages] = useState<string[]>([])
 
   const [error, setError] = useState("")
@@ -30,7 +30,7 @@ const NewProductPage = () => {
             const result = await upsertProduct({
               name,
               price: parseInt(price, 10),
-              note: descriptions,
+              description,
               images,
             })
             if (result.ok) {
@@ -62,7 +62,7 @@ const NewProductPage = () => {
             id="description"
             label="Deskripsi"
             placeholder="Belum di-isi"
-            value={descriptions}
+            value={description}
             onChange={(e) => {
               setDescription(e.target.value)
             }}

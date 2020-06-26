@@ -1,6 +1,13 @@
 import { queryCache, useMutation } from "react-query"
 import { patchApi } from "../utils/api"
-import { PatchProduct } from "../pages/api/products"
+
+interface PatchProduct {
+  id?: string
+  name: string
+  price: number
+  note: string
+  images: string[]
+}
 
 const useUpsertProduct = () => {
   const patchProduct = patchApi<PatchProduct>("/me/products")
