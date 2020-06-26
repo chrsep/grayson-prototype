@@ -24,6 +24,13 @@ module.exports = withPlugins(
               ) {
                 return true
               }
+              // precache module.js only, not .js. Optimize for modern browsers.
+              if (asset.name.endsWith(".module.js")) {
+                return false
+              }
+              if (asset.name.endsWith(".js")) {
+                return true
+              }
               // if (dev && !asset.name.startsWith("static/runtime/")) {
               //   return true
               // }
