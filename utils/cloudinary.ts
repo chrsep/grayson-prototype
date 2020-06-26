@@ -16,7 +16,7 @@ export const generateUrl = (
   }
   const configArray: string[] = []
   if (width) configArray.push(`w_${width}`)
-  if (height) configArray.push(`w_${height}`)
+  if (height) configArray.push(`h_${height}`)
   if (scale) configArray.push(`c_scale`)
 
   return `https://res.cloudinary.com/grayson/image/upload/${configArray.join(
