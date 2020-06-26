@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import Button from "../components/Button/Button"
 import Input from "../components/Input/Input"
 import usePostImage from "../hooks/usePostImage"
@@ -50,21 +50,21 @@ const Form: FC<FormProps> = (props) => {
 
   return (
     <form className="fade-in pb-8">
-      <NameField
+      <TextField
         id="name"
-        label="Nama"
+        label="Nama Lengkap"
         placeholder="Belum di-isi"
         original={props.name}
         onSubmit={(name) => mutate({ name })}
       />
-      <NameField
+      <TextField
         id="phone"
         label="Telefon / HP"
         placeholder="Belum di-isi"
         original={props.phone}
         onSubmit={(phone) => mutate({ phone })}
       />
-      <NameField
+      <TextField
         id="whatsapp"
         label="WhatsApp"
         placeholder="Belum di-isi"
@@ -82,7 +82,7 @@ const Form: FC<FormProps> = (props) => {
   )
 }
 
-const NameField: FC<{
+const TextField: FC<{
   id: string
   original?: string
   onSubmit: (value?: string) => void
@@ -92,7 +92,7 @@ const NameField: FC<{
   const [name, setName] = useState(original)
 
   return (
-    <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2 focus-within:shadow-outline">
+    <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full pl-3 pr-2 py-2 focus-within:shadow-outline">
       <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
         {label}
       </label>
@@ -116,7 +116,7 @@ const NameField: FC<{
             </Button>
             <Button
               type="button"
-              className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
+              className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(name)}
             >
               <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
@@ -138,7 +138,7 @@ const TextAreaField: FC<{
   const [name, setName] = useState(original)
 
   return (
-    <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2 focus-within:shadow-outline">
+    <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full pl-3 pr-2 py-2 focus-within:shadow-outline">
       <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
         {label}
       </label>
@@ -164,7 +164,7 @@ const TextAreaField: FC<{
         </Button>
         <Button
           type="button"
-          className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
+          className="px-2 py-1 flex-shrink-0 fade-in"
           onClick={() => onSubmit(name)}
         >
           <img alt="accept" className="mx-auto w-5" src={CheckIcon} />

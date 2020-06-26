@@ -1,6 +1,7 @@
 import Head from "next/head"
 import React, { FC, useState } from "react"
 import Img, { Svg } from "react-optimized-image"
+import Link from "next/link"
 import Input from "../components/Input/Input"
 import SearchIcon from "../icons/search.svg"
 import { queryProducts } from "../utils/mongodb"
@@ -16,6 +17,8 @@ interface Props {
     images: string[]
     userPhoto: string
     userName: string
+    userSlug: string
+    productSlug: string
   }>
 }
 
@@ -46,54 +49,70 @@ const Home: FC<Props> = ({ products }) => {
         <div className="flex ml-3 mr-1 mt-3 flex-wrap">
           {products
             .filter((product) => product.name.toLowerCase().includes(search))
-            .map(({ _id, name, price, images, userName, userPhoto }, idx) => (
-              <div key={_id} className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
-                <div
-                  className="w-full relative overflow-hidden rounded-lg shadow"
-                  style={{ paddingBottom: "75%" }}
-                >
-                  {(images?.length ?? 0) > 0 ? (
-                    <img
-                      alt={name}
-                      src={generateUrl(images[0], { width: 400 })}
-                      className="absolute top-0 w-full h-full object-cover"
-                      loading={idx < 7 ? "eager" : "lazy"}
-                    />
-                  ) : (
-                    <Img
-                      webp
-                      url
-                      alt={name}
-                      src={PlaceholderImage}
-                      className="absolute top-0 w-full h-full object-cover"
-                      loading={idx < 7 ? "eager" : "lazy"}
-                      sizes={[160, 250, 300]}
-                    />
-                  )}
-                </div>
-                <div className="p-1">
-                  <div>{name}</div>
-                  <div className="text-sm text-gray-700 mb-1">
-                    {new Intl.NumberFormat("id", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(price)}
+            .map(
+              (
+                {
+                  _id,
+                  name,
+                  price,
+                  images,
+                  userName,
+                  userPhoto,
+                  userSlug,
+                  productSlug,
+                },
+                idx
+              ) => (
+                <Link key={_id} href={`/${userSlug}/${productSlug}`}>
+                  <div className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
+                    <div
+                      className="w-full relative overflow-hidden rounded-lg shadow"
+                      style={{ paddingBottom: "75%" }}
+                    >
+                      {(images?.length ?? 0) > 0 ? (
+                        <img
+                          alt={name}
+                          src={generateUrl(images[0], { width: 400 })}
+                          className="absolute top-0 w-full h-full object-cover"
+                          loading={idx < 7 ? "eager" : "lazy"}
+                        />
+                      ) : (
+                        <Img
+                          webp
+                          url
+                          alt={name}
+                          src={PlaceholderImage}
+                          className="absolute top-0 w-full h-full object-cover"
+                          loading={idx < 7 ? "eager" : "lazy"}
+                          sizes={[160, 250, 300]}
+                        />
+                      )}
+                    </div>
+                    <div className="p-1">
+                      <div>{name}</div>
+                      <div className="text-sm text-gray-700 mb-1">
+                        {new Intl.NumberFormat("id", {
+                          style: "currency",
+                          currency: "IDR",
+                        }).format(price)}
+                      </div>
+                      <div className="flex">
+                        <img
+                          alt={userName}
+                          className="rounded w-5 h-5 mr-1 object-cover"
+                          src={generateUrl(userPhoto, {
+                            width: 40,
+                            height: 40,
+                            scale: true,
+                          })}
+                        />
+                        <div className="text-sm text-gray-700">{userName}</div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex">
-                    <img
-                      alt={userName}
-                      className="rounded w-5 h-5 mr-1 object-cover"
-                      src={generateUrl(userPhoto, {
-                        width: 40,
-                        height: 40,
-                        scale: true,
-                      })}
-                    />
-                    <div className="text-sm text-gray-700">{userName}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+                </Link>
+              )
+            )}
         </div>
         {products.length === 0 && (
           <>

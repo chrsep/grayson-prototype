@@ -1,4 +1,6 @@
 import { MongoClient } from "mongodb"
+import slugify from "slugify"
+import { nanoid } from "nanoid"
 
 const MONGO_URL = process.env.MONGO_URL ?? ""
 
@@ -13,6 +15,12 @@ const connectToDb = async () => {
   return cachedDb
 }
 
+const generateUserSlug = (name: string) =>
+  slugify(`${name}-${nanoid(3)}`, { lower: true })
+
+const generateProductSlug = (name: string) =>
+  slugify(`${name}-${nanoid(3)}`, { lower: true })
+
 interface User {
   _id: string
   email: string
@@ -22,6 +30,7 @@ interface User {
   phone: string
   whatsapp: string
   address: string
+  slug: string
 }
 export const createUser = async (
   userId: string,
@@ -37,7 +46,12 @@ export const createUser = async (
     .updateOne(
       { _id: userId },
       {
-        $setOnInsert: { email, name, picture: image },
+        $setOnInsert: {
+          email,
+          name,
+          picture: image,
+          slug: generateUserSlug(name),
+        },
         $set: { emailVerified },
       },
       { upsert: true }
@@ -57,13 +71,28 @@ export const updateUser = async (
   const session = await client.startSession()
   try {
     await session.withTransaction(async () => {
-      await client.db("grayson").collection<User>("users").updateOne(
-        { _id },
-        {
-          $set: { email, name, image, phone, whatsapp, address },
-        },
-        { session }
-      )
+      let userSlug: string | undefined
+      if (name) {
+        userSlug = generateUserSlug(name)
+      }
+      await client
+        .db("grayson")
+        .collection<User>("users")
+        .updateOne(
+          { _id },
+          {
+            $set: {
+              email,
+              name,
+              image,
+              phone,
+              whatsapp,
+              address,
+              slug: userSlug,
+            },
+          },
+          { session }
+        )
       if (!name && !image) return
 
       await client
@@ -72,7 +101,7 @@ export const updateUser = async (
         .updateMany(
           { userId: _id },
           {
-            $set: { userName: name, userPhoto: image },
+            $set: { userName: name, userPhoto: image, userSlug },
           },
           { session }
         )
@@ -97,6 +126,8 @@ interface Product {
   userId: string
   userName: string
   userPhoto: string
+  productSlug: string
+  userSlug: string
 }
 export const upsertProduct = async (
   _id: string,
@@ -113,6 +144,11 @@ export const upsertProduct = async (
     .db("grayson")
     .collection<User>("users")
     .findOne({ _id: userId })
+
+  let productSlug: string | undefined
+  if (name) {
+    productSlug = generateProductSlug(name)
+  }
   await client
     .db("grayson")
     .collection<Product>("products")
@@ -124,9 +160,14 @@ export const upsertProduct = async (
           price,
           description,
           images,
+          productSlug,
+        },
+        $setOnInsert: {
           userId,
           userName: user?.name ?? userName,
           userPhoto: user?.image ?? userPhoto,
+          userSlug:
+            user?.slug ?? generateUserSlug(user?.name ?? userName ?? ""),
         },
       },
       { upsert: true }
@@ -151,4 +192,40 @@ export const queryProductsByUserId = async (
     .collection<Product>("products")
     .find({ userId })
   return allProducts.toArray()
+}
+
+export const queryAllProductSlugs = async () => {
+  const client = await connectToDb()
+  const allProductIds = client
+    .db("grayson")
+    .collection<Product>("products")
+    .find({}, { projection: { _id: 0, userSlug: 1, productSlug: 1 } })
+  return allProductIds.toArray()
+}
+
+export const queryCompleteProductBySlug = async (
+  userSlug: string,
+  productSlug: string
+) => {
+  const client = await connectToDb()
+  const fullProduct = await client
+    .db("grayson")
+    .collection("products")
+    .aggregate([
+      { $match: { userSlug, productSlug } },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+    ])
+
+  const hasNext = await fullProduct.hasNext()
+  if (hasNext) {
+    return fullProduct.next()
+  }
+  return undefined
 }
