@@ -1,9 +1,11 @@
 import React, { FC } from "react"
 import Link from "next/link"
 import { Svg } from "react-optimized-image"
+import Img from "react-optimized-image/lib"
 import PlusIcon from "../../icons/plus.svg"
 import useGetMyProducts from "../../hooks/useGetMyProducts"
 import { generateUrl } from "../../utils/cloudinary"
+import YouNoProductImage from "../../images/you-no-product.png"
 
 const ProductPage = () => {
   const { data, status } = useGetMyProducts()
@@ -53,22 +55,12 @@ const ProductPage = () => {
         })}
         {data?.length === 0 && (
           <>
-            <picture>
-              <source
-                srcSet={require("../../images/you-no-product.png?webp&width=672")}
-                type="image/webp"
-              />
-              <source
-                srcSet={require("../../images/you-no-product.png?resize&size=672")}
-                type="image/jpeg"
-              />
-              <img
-                className="w-64 mx-auto mt-12"
-                alt="No plans yet illustration"
-                src={require("../../images/you-no-product.png?resize&size=672")}
-                loading="lazy"
-              />
-            </picture>
+            <Img
+              className="w-64 mx-auto mt-12"
+              src={YouNoProductImage}
+              webp
+              sizes={[250, 300, 672]}
+            />
             <h6 className="mt-8 text-center text-xl text-gray-900">
               Anda belum menambahkan produk
             </h6>

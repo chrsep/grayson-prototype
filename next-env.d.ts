@@ -46,3 +46,9 @@ declare module "*.jpg" {
   const content: ImgSrc
   export default content
 }
+
+declare module "*.png" {
+  import { ImgSrc } from "react-optimized-image/lib/components/Img";
+  const content: ImgSrc
+  export default content
+}

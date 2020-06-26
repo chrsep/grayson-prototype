@@ -6,6 +6,7 @@ import SearchIcon from "../icons/search.svg"
 import { queryProducts } from "../utils/mongodb"
 import { generateUrl } from "../utils/cloudinary"
 import PlaceholderImage from "../images/empty-image-placeholder.jpg"
+import NoProductImage from "../images/no-product.png"
 
 interface Props {
   products: Array<{
@@ -96,22 +97,12 @@ const Home: FC<Props> = ({ products }) => {
         </div>
         {products.length === 0 && (
           <>
-            <picture>
-              <source
-                srcSet={require("../images/no-product.png?webp&width=672")}
-                type="image/webp"
-              />
-              <source
-                srcSet={require("../images/no-product.png?resize&size=672")}
-                type="image/jpeg"
-              />
-              <img
-                className="w-64 mx-auto mt-12"
-                alt="No plans yet illustration"
-                src={require("../images/no-product.png?resize&size=672")}
-                loading="lazy"
-              />
-            </picture>
+            <Img
+              className="w-64 mx-auto mt-12"
+              src={NoProductImage}
+              webp
+              sizes={[250, 300, 672]}
+            />
             <h6 className="mt-8 text-center text-xl text-gray-900">
               Belum ada produk terdaftar
             </h6>
