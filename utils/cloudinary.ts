@@ -27,5 +27,5 @@ export const generateUrl = (
 
   return `https://res.cloudinary.com/grayson/image/upload/${configArray.join(
     ","
-  )}/${image}`
+  )}/${image}.jpg`
 }
