@@ -203,6 +203,7 @@ export const getStaticProps: GetStaticProps<any, { slug: string[] }> = async ({
 }) => {
   if (params?.slug === undefined) throw new Error("params is undefined")
 
+  console.log(params.slug)
   const product = await queryCompleteProductBySlug(
     params.slug[0],
     params.slug[1]
@@ -220,7 +221,7 @@ export const getStaticProps: GetStaticProps<any, { slug: string[] }> = async ({
 export const getStaticPaths: GetStaticPaths = async () => {
   const products = await queryAllProductSlugs()
   const paths = products.map(({ productSlug, userSlug }) => ({
-    params: { slug: [productSlug, userSlug] },
+    params: { slug: [userSlug, productSlug] },
   }))
 
   return {
