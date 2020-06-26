@@ -77,12 +77,11 @@ const ProductPage: FC<Props> = ({ product }) => {
               <div className="flex items-center mb-3">
                 <img
                   alt={product.user?.[0].name}
+                  className="rounded-lg w-20 h-20 object-cover"
                   src={generateUrl(product.user?.[0].image, {
                     width: 400,
-                    height: 400,
-                    scale: true,
+                    fit: true,
                   })}
-                  className="rounded-lg w-20"
                 />
                 <div>
                   <p className="mb-1 ml-3 text-2xl leading-tight">

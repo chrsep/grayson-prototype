@@ -103,7 +103,7 @@ const Home: FC<Props> = ({ products }) => {
                           src={generateUrl(userPhoto, {
                             width: 40,
                             height: 40,
-                            scale: true,
+                            fit: true,
                           })}
                         />
                         <div className="text-sm text-gray-700 truncate pr-6">

@@ -34,7 +34,7 @@ const Header = () => {
               src={generateUrl(data.picture, {
                 width: 160,
                 height: 160,
-                scale: true,
+                fit: true,
               })}
               className="rounded flex-shrink-0 shadow-md object-cover"
               style={{ height: 36, width: 36 }}

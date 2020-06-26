@@ -186,7 +186,7 @@ const ChangeImageForm: FC<{
       <img
         alt="profil"
         className="mb-1 border rounded-lg mr-3 w-full h-24 object-cover"
-        src={generateUrl(image, { width: 160, height: 160 })}
+        src={generateUrl(image, { width: 300, height: 300, fit: true })}
       />
       {image === original ? (
         <ImageUploader
