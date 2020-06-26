@@ -26,7 +26,7 @@ interface Props {
       email: string
       emailVerified: boolean
       name: string
-      picture: string
+      image: string
       slug: string
       whatsapp: string
       phone: string
@@ -77,7 +77,11 @@ const ProductPage: FC<Props> = ({ product }) => {
               <div className="flex items-center mb-3">
                 <img
                   alt={product.user?.[0].name}
-                  src={generateUrl(product.user?.[0].picture, {})}
+                  src={generateUrl(product.user?.[0].image, {
+                    width: 400,
+                    height: 400,
+                    scale: true,
+                  })}
                   className="rounded-lg w-20"
                 />
                 <div>

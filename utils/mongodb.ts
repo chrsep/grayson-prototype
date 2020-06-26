@@ -49,7 +49,7 @@ export const createUser = async (
         $setOnInsert: {
           email,
           name,
-          picture: image,
+          image,
           slug: generateUserSlug(name),
         },
         $set: { emailVerified },
