@@ -29,14 +29,14 @@ const ProductPage = () => {
             <LoadingPlaceholder />
           </>
         )}
-        {data?.map(({ _id, name, images, price }) => {
+        {data?.map(({ _id, name, images, price, hidden }) => {
           const productImage =
             (images?.length ?? 0) > 0
               ? generateUrl(images[0], { width: 80 })
               : require("../../images/empty-image-placeholder.jpg?webp&width=80")
           return (
             <Link key={_id} href={`/products/edit?id=${_id}`}>
-              <div className="flex m-3 items-center fade-in">
+              <div className="flex m-3 items-start fade-in">
                 <img
                   alt={name}
                   src={productImage}
@@ -50,6 +50,9 @@ const ProductPage = () => {
                       currency: "IDR",
                     }).format(price)}
                   </div>
+                  {hidden && (
+                    <p className="text-sm text-yellow-800">Tersembunyi</p>
+                  )}
                 </div>
               </div>
             </Link>

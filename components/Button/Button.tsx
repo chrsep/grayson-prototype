@@ -18,7 +18,7 @@ const Button: FC<Props> = ({ className = "default", outline, ...props }) => {
   ${className}
   ${
     outline &&
-    "flex items-center rounded bg-transparent text-black border shadow-none"
+    "flex justify-center items-center rounded bg-transparent text-black border shadow-none"
   }
   `}
       {...props}

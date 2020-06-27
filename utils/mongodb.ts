@@ -122,11 +122,11 @@ interface Product {
   price: number
   description: string
   images: string[]
+  productSlug: string
   // Denormalized user data
   userId: string
   userName: string
   userPhoto: string
-  productSlug: string
   userSlug: string
 }
 export const upsertProduct = async (
@@ -135,6 +135,7 @@ export const upsertProduct = async (
   price?: number,
   description?: string,
   images?: string[],
+  hidden?: boolean,
   userId?: string,
   userName?: string,
   userPhoto?: string
@@ -161,6 +162,7 @@ export const upsertProduct = async (
           description,
           images,
           productSlug,
+          hidden,
         },
         $setOnInsert: {
           userId,
@@ -179,7 +181,7 @@ export const queryProducts = async (): Promise<Product[]> => {
   const allProducts = client
     .db("grayson")
     .collection<Product>("products")
-    .find()
+    .find({ hidden: false })
   return allProducts.toArray()
 }
 

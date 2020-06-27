@@ -48,7 +48,9 @@ const Home: FC<Props> = ({ products }) => {
         </div>
         <div className="flex ml-3 mr-1 mt-3 flex-wrap">
           {products
-            .filter((product) => product.name.toLowerCase().includes(search))
+            .filter((product) =>
+              product.name.toLowerCase().includes(search.toLowerCase())
+            )
             .map(
               (
                 {
@@ -64,7 +66,7 @@ const Home: FC<Props> = ({ products }) => {
                 idx
               ) => (
                 <Link key={_id} href={`/${userSlug}/${productSlug}`}>
-                  <div className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3">
+                  <div className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 cursor-pointer mb-6 fade-in">
                     <div
                       className="w-full relative overflow-hidden rounded-lg"
                       style={{ paddingBottom: "75%" }}

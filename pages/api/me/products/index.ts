@@ -16,6 +16,7 @@ export interface GetMyProductsResponse {
   name: string
   price: number
   images: string[]
+  hidden: boolean
 }
 
 async function postHandler(req: NextApiRequest, res: NextApiResponse) {
@@ -30,6 +31,7 @@ async function postHandler(req: NextApiRequest, res: NextApiResponse) {
       price,
       description,
       images ?? [],
+      false,
       session.user.sub,
       session.user.name,
       session.user.picture

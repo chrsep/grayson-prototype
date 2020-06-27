@@ -24,6 +24,7 @@ const EditProductPage = () => {
         <h1 className="text-3xl font-bold mx-3 flex-shrink-0 mt-auto">
           Edit Produk
         </h1>
+
         {status === "success" && data && (
           <Form
             id={id as string}
@@ -31,6 +32,7 @@ const EditProductPage = () => {
             description={data.description}
             images={data.images ?? []}
             price={data.price?.toString()}
+            hidden={data.hidden}
           />
         )}
       </main>
@@ -44,8 +46,16 @@ interface FormProps {
   price: string
   description: string
   images: string[]
+  hidden: boolean
 }
-const Form: FC<FormProps> = ({ id, name, price, description, images }) => {
+const Form: FC<FormProps> = ({
+  id,
+  name,
+  price,
+  description,
+  images,
+  hidden,
+}) => {
   const router = useRouter()
   const [error, setError] = useState("")
   const [patch] = usePatchProduct(id)
@@ -95,11 +105,39 @@ const Form: FC<FormProps> = ({ id, name, price, description, images }) => {
       {error && (
         <div className="ml-3 md:ml-0 mt-2 text-sm text-red-600">{error}</div>
       )}
-      <div className="flex py-3 px-3 md:px-0">
+      {hidden && (
+        <div className="text p-3 mt-3 rounded border border-yellow-300 bg-yellow-200 text-sm">
+          <p className="font-bold text-yellow-800">Produk Tersembunyi-kan</p>
+          Produk ini tak akan terlihat oleh pengguna lain.
+        </div>
+      )}
+      <div className="flex flex-col md:flex-row md:items-center px-3 md:px-0 mt-3">
+        {hidden ? (
+          <Button
+            type="button"
+            className="mb-3 md:mb-0"
+            onClick={async () => {
+              await patch({ hidden: false })
+            }}
+          >
+            Tampilkan
+          </Button>
+        ) : (
+          <Button
+            outline
+            type="button"
+            className="text-yellow-700 font-bold mb-3"
+            onClick={async () => {
+              await patch({ hidden: true })
+            }}
+          >
+            Sembunyi-kan
+          </Button>
+        )}
         <Button
           type="button"
           outline
-          className="flex-shrink-0 mr-3"
+          className="flex-shrink-0 mr-3 text-red-700 font-bold md:ml-3 md:mb-0"
           onClick={async () => {
             const result = await deleteProduct()
             if (result.ok) {
@@ -109,7 +147,6 @@ const Form: FC<FormProps> = ({ id, name, price, description, images }) => {
         >
           Hapus
         </Button>
-        <Button className="w-full">Sembunyikan</Button>
       </div>
     </form>
   )

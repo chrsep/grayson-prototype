@@ -12,6 +12,7 @@ export interface PatchProductRequestBody {
   price?: number
   description?: string
   images?: string[]
+  hidden?: boolean
 }
 
 export interface GetProductDetailsResponse {
@@ -20,6 +21,7 @@ export interface GetProductDetailsResponse {
   price: number
   description: string
   images: string[]
+  hidden: boolean
 }
 
 async function patchProductHandler(
@@ -29,10 +31,10 @@ async function patchProductHandler(
 ) {
   const session = await auth0.getSession(req)
   if (session) {
-    const { name, price, description, images } = JSON.parse(
+    const { name, price, description, images, hidden } = JSON.parse(
       req.body
     ) as PatchProductRequestBody
-    await upsertProduct(id as string, name, price, description, images)
+    await upsertProduct(id as string, name, price, description, images, hidden)
     res.status(201).end()
   }
 }
