@@ -234,3 +234,11 @@ export const queryProductById = async (_id: string) => {
   const client = await connectToDb()
   return client.db("grayson").collection("products").findOne({ _id })
 }
+
+export const deleteProductByIdAndUserId = async (_id: string, userId: any) => {
+  const client = await connectToDb()
+  return client
+    .db("grayson")
+    .collection("products")
+    .findOneAndDelete({ _id, userId })
+}

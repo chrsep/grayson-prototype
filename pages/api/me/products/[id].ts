@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import auth0 from "../../../../utils/auth0"
-import { queryProductById, upsertProduct } from "../../../../utils/mongodb"
+import {
+  deleteProductByIdAndUserId,
+  queryProductById,
+  upsertProduct,
+} from "../../../../utils/mongodb"
 
 export interface PatchProductRequestBody {
   id?: string
@@ -46,6 +50,22 @@ async function getProductDetailHandler(
   }
 }
 
+async function deleteProductHandler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  id: string
+) {
+  const session = await auth0.getSession(req)
+  if (session) {
+    const { ok } = await deleteProductByIdAndUserId(id, session.user.sub)
+    if (ok !== 1) {
+      res.status(404).end()
+      return
+    }
+    res.status(200).end()
+  }
+}
+
 export default auth0.requireAuthentication(
   async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -63,6 +83,9 @@ export default auth0.requireAuthentication(
           break
         case "GET":
           await getProductDetailHandler(req, res, id)
+          break
+        case "DELETE":
+          await deleteProductHandler(req, res, id)
           break
         default:
       }
