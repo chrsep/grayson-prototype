@@ -180,7 +180,7 @@ const TextAreaField: FC<{
           id={id}
           placeholder={placeholder}
           value={value}
-          className="w-full py-1 px-0 outline-none"
+          className="w-full py-1 px-0 outline-none h-32"
           onChange={(e) => setValue(e.target.value)}
         />
 
