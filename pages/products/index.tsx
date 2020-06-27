@@ -35,22 +35,24 @@ const ProductPage = () => {
               ? generateUrl(images[0], { width: 80 })
               : require("../../images/empty-image-placeholder.jpg?webp&width=80")
           return (
-            <div className="flex m-3 items-center fade-in" key={_id}>
-              <img
-                alt={name}
-                src={productImage}
-                className="w-12 h-12 rounded object-cover"
-              />
-              <div className="ml-3">
-                <div>{name}</div>
-                <div className="text-gray-700 text-sm">
-                  {new Intl.NumberFormat("id", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(price)}
+            <Link key={_id} href={`/products/edit?id=${_id}`}>
+              <div className="flex m-3 items-center fade-in">
+                <img
+                  alt={name}
+                  src={productImage}
+                  className="w-12 h-12 rounded object-cover"
+                />
+                <div className="ml-3">
+                  <div>{name}</div>
+                  <div className="text-gray-700 text-sm">
+                    {new Intl.NumberFormat("id", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(price)}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           )
         })}
         {data?.length === 0 && (

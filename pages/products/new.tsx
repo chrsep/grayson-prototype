@@ -6,7 +6,7 @@ import PlusIcon from "../../icons/plus-black.svg"
 import usePostImage from "../../hooks/usePostImage"
 import { PostImageResponse } from "../api/images"
 import { generateUrl } from "../../utils/cloudinary"
-import useUpsertProduct from "../../hooks/useUpsertProduct"
+import usePostNewProduct from "../../hooks/usePostNewProduct"
 
 const NewProductPage = () => {
   const router = useRouter()
@@ -16,7 +16,7 @@ const NewProductPage = () => {
   const [images, setImages] = useState<string[]>([])
 
   const [error, setError] = useState("")
-  const [upsertProduct] = useUpsertProduct()
+  const [upsertProduct] = usePostNewProduct()
 
   return (
     <>

@@ -51,6 +51,8 @@ const Header = () => {
             switch (router.route) {
               case "/products/new":
                 return "/products"
+              case "/products/edit":
+                return "/products"
               default:
                 return "/"
             }

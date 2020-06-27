@@ -229,3 +229,8 @@ export const queryCompleteProductBySlug = async (
   }
   return undefined
 }
+
+export const queryProductById = async (_id: string) => {
+  const client = await connectToDb()
+  return client.db("grayson").collection("products").findOne({ _id })
+}

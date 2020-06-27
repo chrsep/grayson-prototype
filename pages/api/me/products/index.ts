@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { v4 } from "uuid"
-import auth0 from "../../../utils/auth0"
-import { queryProductsByUserId, upsertProduct } from "../../../utils/mongodb"
+import auth0 from "../../../../utils/auth0"
+import { queryProductsByUserId, upsertProduct } from "../../../../utils/mongodb"
 
-export interface PatchProduct {
+export interface PostProductRequestBody {
   id?: string
   name: string
   price: number
@@ -23,7 +23,7 @@ async function postHandler(req: NextApiRequest, res: NextApiResponse) {
   if (session) {
     const { id, name, price, description, images } = JSON.parse(
       req.body
-    ) as PatchProduct
+    ) as PostProductRequestBody
     await upsertProduct(
       id ?? v4(),
       name,
@@ -51,7 +51,7 @@ export default auth0.requireAuthentication(
   async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       switch (req.method) {
-        case "PATCH":
+        case "POST":
           await postHandler(req, res)
           break
         case "GET":

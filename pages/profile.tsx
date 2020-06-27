@@ -54,28 +54,28 @@ const Form: FC<FormProps> = (props) => {
         id="name"
         label="Nama Lengkap"
         placeholder="Belum di-isi"
-        original={props.name}
+        originalValue={props.name}
         onSubmit={(name) => mutate({ name })}
       />
       <TextField
         id="phone"
         label="Telefon / HP"
         placeholder="Belum di-isi"
-        original={props.phone}
+        originalValue={props.phone}
         onSubmit={(phone) => mutate({ phone })}
       />
       <TextField
         id="whatsapp"
         label="WhatsApp"
         placeholder="Belum di-isi"
-        original={props.whatsapp}
+        originalValue={props.whatsapp}
         onSubmit={(whatsapp) => mutate({ whatsapp })}
       />
       <TextAreaField
         id="address"
         label="Alamat"
         placeholder="Belum di-isi"
-        original={props.address}
+        originalValue={props.address}
         onSubmit={(address) => mutate({ address })}
       />
     </form>
@@ -84,12 +84,12 @@ const Form: FC<FormProps> = (props) => {
 
 const TextField: FC<{
   id: string
-  original?: string
+  originalValue?: string
   onSubmit: (value?: string) => void
   label: string
   placeholder: string
-}> = ({ id, original = "", onSubmit, label, placeholder }) => {
-  const [name, setName] = useState(original)
+}> = ({ id, originalValue = "", onSubmit, label, placeholder }) => {
+  const [value, setValue] = useState(originalValue)
 
   return (
     <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full pl-3 pr-2 py-2 focus-within:shadow-outline">
@@ -101,23 +101,23 @@ const TextField: FC<{
           id={id}
           placeholder={placeholder}
           className="w-full py-1 px-0 outline-none"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
         />
-        {name !== original && (
+        {value !== originalValue && (
           <>
             <Button
               outline
               type="button"
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
-              onClick={() => setName(original)}
+              onClick={() => setValue(originalValue)}
             >
               <img alt="cancel" src={CancelIcon} className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
-              onClick={() => onSubmit(name)}
+              onClick={() => onSubmit(value)}
             >
               <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
             </Button>
@@ -130,12 +130,12 @@ const TextField: FC<{
 
 const TextAreaField: FC<{
   id: string
-  original?: string
+  originalValue?: string
   onSubmit: (value?: string) => void
   label: string
   placeholder: string
-}> = ({ id, original = "", onSubmit, label, placeholder }) => {
-  const [name, setName] = useState(original)
+}> = ({ id, originalValue = "", onSubmit, label, placeholder }) => {
+  const [name, setName] = useState(originalValue)
 
   return (
     <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full pl-3 pr-2 py-2 focus-within:shadow-outline">
@@ -151,14 +151,14 @@ const TextAreaField: FC<{
       />
       <div
         className={`flex ${
-          name === original && "opacity-0"
+          name === originalValue && "opacity-0"
         } transition-opacity duration-100`}
       >
         <Button
           outline
           type="button"
           className="mr-2 px-2 py-1 flex-shrink-0 fade-in ml-auto"
-          onClick={() => setName(original)}
+          onClick={() => setName(originalValue)}
         >
           <img alt="cancel" src={CancelIcon} className="w-5" />
         </Button>
