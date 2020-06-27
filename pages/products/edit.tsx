@@ -10,6 +10,7 @@ import CancelIcon from "../../icons/cancel.svg"
 import CheckIcon from "../../icons/check.svg"
 import useGetProductDetails from "../../hooks/useGetProductDetails"
 import usePatchProduct from "../../hooks/usePatchProduct"
+import useDeleteProduct from "../../hooks/useDeleteProduct"
 
 const EditProductPage = () => {
   const {
@@ -45,8 +46,10 @@ interface FormProps {
   images: string[]
 }
 const Form: FC<FormProps> = ({ id, name, price, description, images }) => {
+  const router = useRouter()
   const [error, setError] = useState("")
-  const [mutate] = usePatchProduct(id)
+  const [patch] = usePatchProduct(id)
+  const [deleteProduct] = useDeleteProduct(id)
 
   return (
     <form>
@@ -54,7 +57,7 @@ const Form: FC<FormProps> = ({ id, name, price, description, images }) => {
         id="name"
         label="Nama produk / jasa"
         placeholder="Belum di-isi"
-        onSubmit={(newName) => mutate({ name: newName })}
+        onSubmit={(newName) => patch({ name: newName })}
         originalValue={name}
       />
       <CurrencyField
@@ -62,14 +65,14 @@ const Form: FC<FormProps> = ({ id, name, price, description, images }) => {
         label="Harga"
         placeholder="0"
         originalValue={price}
-        onSubmit={(value) => mutate({ price: parseInt(value, 10) })}
+        onSubmit={(value) => patch({ price: parseInt(value, 10) })}
       />
       <TextAreaField
         id="description"
         label="Deskripsi"
         placeholder="Belum di-isi"
         originalValue={description}
-        onSubmit={(value) => mutate({ description: value })}
+        onSubmit={(value) => patch({ description: value })}
       />
       {images.length > 0 && (
         <p className="mx-4 md:mx-0 mt-3 text-sm text-gray-800">
@@ -93,7 +96,17 @@ const Form: FC<FormProps> = ({ id, name, price, description, images }) => {
         <div className="ml-3 md:ml-0 mt-2 text-sm text-red-600">{error}</div>
       )}
       <div className="flex py-3 px-3 md:px-0">
-        <Button type="button" outline className="flex-shrink-0 mr-3">
+        <Button
+          type="button"
+          outline
+          className="flex-shrink-0 mr-3"
+          onClick={async () => {
+            const result = await deleteProduct()
+            if (result.ok) {
+              await router.push("/products")
+            }
+          }}
+        >
           Hapus
         </Button>
         <Button className="w-full">Sembunyikan</Button>
