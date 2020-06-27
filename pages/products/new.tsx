@@ -94,7 +94,17 @@ const NewProductPage = () => {
             </div>
           )}
           <div className="flex py-3 px-3 md:px-0">
-            <Button outline className="flex-shrink-0 mr-3">
+            <Button
+              type="button"
+              outline
+              className="flex-shrink-0 mr-3"
+              onClick={() => {
+                setName("")
+                setPrice("")
+                setDescription("")
+                setImages([])
+              }}
+            >
               Reset Ulang
             </Button>
             <Button className="w-full">Simpan</Button>
