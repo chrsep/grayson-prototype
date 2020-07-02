@@ -14,7 +14,7 @@
     "@hapi/joi": "17.1.1",
     "@prefresh/next": "0.3.1",
     "cloudinary": "1.22.0",
-    "dayjs": "1.8.28",
+    "dayjs": "1.8.29",
     "formidable-serverless": "1.0.3",
     "mongodb": "3.5.9",
     "nanoid": "3.1.10",
