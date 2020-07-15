@@ -12,7 +12,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "0.15.0",
     "@hapi/joi": "17.1.1",
-    "@prefresh/next": "0.3.1",
+    "@prefresh/next": "0.3.2",
     "cloudinary": "1.22.0",
     "dayjs": "1.8.29",
     "formidable-serverless": "1.0.3",
