@@ -1357,11 +1357,6 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@scarf/scarf@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.0.6.tgz#52011dfb19187b53b75b7b6eac20da0810ddd88f"
-  integrity sha512-y4+DuXrAd1W5UIY3zTcsosi/1GyYT8k5jGnZ/wG7UUHVrU+MHlH4Mp87KK2/lvMW4+H7HVcdB+aJhqywgXksjA==
-
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -7592,12 +7587,11 @@ react-optimized-image@0.2.0, react-optimized-image@^0.2.0:
     babel-plugin-syntax-jsx "^6.18.0"
     clone "^2.1.2"
 
-react-query@1.5.9:
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.9.tgz#8df202a338c1875a033cc6a29d1b7f777b233237"
-  integrity sha512-RrCSSRBkFZe+AAhGFuMDvaucMIANWEbDeuVbn/bWPXuYCNYKz2HD4v7uN1FYAArFjv3i8E0PoR8ll3dBjhrObg==
+react-query@2.4.21:
+  version "2.4.21"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.4.21.tgz#5c59dd591e6a4061283aeb6b0ed95179e5070331"
+  integrity sha512-QFtZOvB0XXrAUFARMC6C5Ar4aCzHRgR8ezMcLfYNfeZA1eGzISa9y9afbueoiA2aqstbg8i7LLPtWJ1UecA/WQ==
   dependencies:
-    "@scarf/scarf" "^1.0.6"
     ts-toolbelt "^6.9.4"
 
 react-refresh@0.8.3:
