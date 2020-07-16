@@ -33,7 +33,7 @@
     "react-ssr-prepass": "npm:preact-ssr-prepass@1.0.1",
     "slugify": "1.4.4",
     "tailwindcss": "1.5.1",
-    "typescript": "3.9.6",
+    "typescript": "3.9.7",
     "uuid": "8.2.0"
   },
   "devDependencies": {
