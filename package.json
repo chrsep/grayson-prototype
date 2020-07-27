@@ -34,7 +34,7 @@
     "slugify": "1.4.5",
     "tailwindcss": "1.5.2",
     "typescript": "3.9.7",
-    "uuid": "8.2.0"
+    "uuid": "8.3.0"
   },
   "devDependencies": {
     "@types/formidable": "1.0.31",
