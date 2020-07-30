@@ -7971,18 +7971,7 @@ react-is@16.13.1, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-optimized-image@0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/react-optimized-image/-/react-optimized-image-0.3.3.tgz#0a7bf7f5a38ae701b2f6a4fa965696ccb1aac850"
-  integrity sha512-hj89xSLbF9uCodOqZuIA6GsIt/T55gvI/14auFh+iW+4t/UHFxtDcsbM/tbDXimMZkA4BqpS98/XZTz54HKuyQ==
-  dependencies:
-    app-root-path "^3.0.0"
-    babel-explode-module "^3.0.0"
-    babel-file-loader "^2.0.0"
-    babel-plugin-syntax-jsx "^6.18.0"
-    clone "^2.1.2"
-
-react-optimized-image@^0.3.4:
+react-optimized-image@0.3.4, react-optimized-image@^0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/react-optimized-image/-/react-optimized-image-0.3.4.tgz#ea53606bd2d654e51117427090f521291d3fcd63"
   integrity sha512-GtIoAimeq149m1BfYbHj7OdW30/JVQvLFWWJgDr3Q2ZVypEblq1CQe34RXvMATtruxL273euZKXAqCKKqdcN4A==
