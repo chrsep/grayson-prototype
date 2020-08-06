@@ -30,7 +30,7 @@
     "react-optimized-image": "0.3.4",
     "react-query": "1.5.9",
     "react-refresh": "0.8.3",
-    "react-ssr-prepass": "npm:preact-ssr-prepass@1.1.0",
+    "react-ssr-prepass": "npm:preact-ssr-prepass@1.1.1",
     "slugify": "1.4.5",
     "tailwindcss": "1.6.2",
     "typescript": "3.9.7",

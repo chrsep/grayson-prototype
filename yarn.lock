@@ -8000,10 +8000,10 @@ react-refresh@0.8.3:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==
 
-"react-ssr-prepass@npm:preact-ssr-prepass@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/preact-ssr-prepass/-/preact-ssr-prepass-1.1.0.tgz#62390309cfac3f7c1d3fe3708b63b828ab2ee9f9"
-  integrity sha512-NZMBkRDZKmflEhA5YRMeaBgcvYmqorbWjpoSQ3s1bG/5FN5tgnMCw8slLHndUEeFOEHX2OquhxFotmF1tkgGHg==
+"react-ssr-prepass@npm:preact-ssr-prepass@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/preact-ssr-prepass/-/preact-ssr-prepass-1.1.1.tgz#1031e50c3b80cbdd8e155e520d0e97b9bc425faa"
+  integrity sha512-AszER25gPq8GMcUP+PruRCRg6FEgeoVfR8tlquz7QCPbRLSqkmHkTNwRiwx0zeRl0wd0CtFN4D9r6zCPeVo8Hg==
 
 "react@github:preact-compat/react#1.0.0":
   version "1.0.0"
