@@ -20,7 +20,7 @@
     "nanoid": "3.1.12",
     "next": "9.4.4",
     "next-compose-plugins": "2.2.0",
-    "next-optimized-images": "3.0.0-canary.8",
+    "next-optimized-images": "3.0.0-canary.10",
     "next-pwa": "3.1.1",
     "postcss-preset-env": "6.7.0",
     "preact": "10.4.7",
