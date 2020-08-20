@@ -4,7 +4,7 @@ import {
   deleteProductByIdAndUserId,
   queryProductById,
   upsertProduct,
-} from "../../../../utils/mongodb"
+} from "../../../../db"
 
 export interface PatchProductRequestBody {
   id?: string

@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next"
 import auth0 from "../../utils/auth0"
-import { createUser } from "../../utils/mongodb"
+import { createUser } from "../../db"
 
 const callback: NextApiHandler = async (req, res) => {
   try {

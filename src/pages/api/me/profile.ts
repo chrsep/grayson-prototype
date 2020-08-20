@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import auth0 from "../../../utils/auth0"
-import { queryUserById, updateUser } from "../../../utils/mongodb"
+import { queryUserById, updateUser } from "../../../db"
 
 export interface PatchProfileRequestBody {
   email?: string
