@@ -1,6 +1,6 @@
 import Head from "next/head"
 import React, { FC, useState } from "react"
-import Img, { Svg } from "react-optimized-image"
+import Img from "react-optimized-image"
 import Link from "next/link"
 import Input from "../components/Input/Input"
 import SearchIcon from "../icons/search.svg"
@@ -37,7 +37,7 @@ const Home: FC<Props> = ({ products }) => {
             className="flex bg-white w-full block rounded-lg shadow focus-within:shadow-outline"
             aria-label="search"
           >
-            <Svg src={SearchIcon} className="m-3 mr-1 flex-shrink-0" />
+            <Img src={SearchIcon} className="m-3 mr-1 flex-shrink-0" />
             <Input
               className="w-full outline-none rounded-lg"
               placeholder="Cari"

@@ -37,7 +37,8 @@ declare module "formidable-serverless" {
 }
 
 declare module "*.svg" {
-  const content: string
+  import { ImgSrc } from "react-optimized-image/lib/components/Img";
+  const content: ImgSrc
   export default content
 }
 
