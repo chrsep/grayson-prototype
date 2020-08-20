@@ -1,5 +1,5 @@
-type FULL_URL = string
-type CLOUDINARY_ID = string
+type FullUrl = string
+type CloudinaryId = string
 
 interface Options {
   width?: number
@@ -10,7 +10,7 @@ interface Options {
   fit?: boolean
 }
 export const generateUrl = (
-  image: FULL_URL | CLOUDINARY_ID,
+  image: FullUrl | CloudinaryId,
   { width, height, scale, crop, face, fit }: Options
 ) => {
   // In case image is already a full URL
