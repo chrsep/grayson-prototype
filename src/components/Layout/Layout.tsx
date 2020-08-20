@@ -39,7 +39,7 @@ const Header = () => {
               className="rounded flex-shrink-0 shadow-md object-cover"
               style={{ height: 36, width: 36 }}
             />
-            <p className="ml-2 mr-3 w-3/5 truncate">{data?.name}</p>
+            <p className="ml-2 mr-3 w-3/5 truncate text-sm font-bold">{data?.name}</p>
           </div>
         </Link>
       )}

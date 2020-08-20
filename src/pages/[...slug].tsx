@@ -38,8 +38,8 @@ const ProductPage: FC<Props> = ({ product }) => {
         <>
           <div className="mx-3 my-8 md:hidden">
             <div className="flex">
-              <h2 className="font-bold text-gray-700">{product?.userName}</h2>
-              <h2 className="font-bold text-gray-700 ml-auto">
+              <h2 className="font-bold opacity-75">{product?.userName}</h2>
+              <h2 className="font-bold opacity-75 ml-auto">
                 {new Intl.NumberFormat("id", {
                   style: "currency",
                   currency: "IDR",
