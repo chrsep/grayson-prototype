@@ -2,5 +2,19 @@
   "automerge": true,
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "packagePatterns": [
+        "eslint"
+      ],
+      "groupName": "eslint"
+    },
+    {
+      "packagePatterns": [
+        "@storybook"
+      ],
+      "groupName": "storybook"
+    }
   ]
 }
