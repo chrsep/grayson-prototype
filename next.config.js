@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // next.config.js
 const withPlugins = require("next-compose-plugins")
-const optimizedImages = require("next-optimized-images")
+const withOptimizedImage = require("next-optimized-images")
 const withPrefresh = require("@prefresh/next")
 const withPWA = require("next-pwa")
 const path = require("path")
@@ -13,13 +13,13 @@ module.exports = withPlugins(
       {
         pwa: {
           disable: process.env.NODE_ENV === "development",
-          dest: "public",
+          dest: "src/public",
           buildExcludes: [/.*images.*$/],
         },
       },
     ],
     withPrefresh,
-    optimizedImages,
+    withOptimizedImage,
   ],
   {
     experimental: {
