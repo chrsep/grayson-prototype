@@ -1,29 +1,27 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from "react"
+import { ButtonHTMLAttributes, FC } from "react"
 import styles from "./Button.module.css"
 
-interface Props
-  extends DetailedHTMLProps<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+interface Props {
   outline?: boolean
   className?: string
+  onClick?: () => void
+  type?: ButtonHTMLAttributes<any>["type"]
 }
-const Button: FC<Props> = ({ className = "default", outline, ...props }) => {
-  // eslint-disable-next-line jsx-a11y/control-has-associated-label
-  return (
-    <button
-      className={`
-  ${styles.base} 
-  ${className}
-  ${
-    outline &&
-    "flex justify-center items-center rounded bg-transparent text-black border shadow-none"
-  }
-  `}
-      {...props}
-    />
-  )
-}
+
+const Button: FC<Props> = ({
+  onClick,
+  className = "default",
+  outline,
+  children,
+  type,
+}) => (
+  <button
+    className={`${className} ${styles.base} ${outline && styles.outline}`}
+    onClick={onClick}
+    type={type}
+  >
+    {children}
+  </button>
+)
 
 export default Button

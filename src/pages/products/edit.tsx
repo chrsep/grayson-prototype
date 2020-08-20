@@ -112,7 +112,7 @@ const Form: FC<FormProps> = ({
           Produk ini tak akan terlihat oleh pengguna lain.
         </div>
       )}
-      <div className="flex flex-col md:flex-row md:items-center px-3 md:px-0 mt-3">
+      <div className="flex flex-col md:flex-row md:items-center px-3 md:px-0 mt-3 md:ml-3 lg:ml-0">
         {hidden ? (
           <Button
             type="button"
@@ -138,7 +138,7 @@ const Form: FC<FormProps> = ({
         <Button
           type="button"
           outline
-          className="flex-shrink-0 mr-3 text-red-700 font-bold md:ml-3 md:mb-0"
+          className="flex-shrink-0 text-red-700 font-bold md:ml-3 mb-3"
           onClick={async () => {
             const result = await deleteProduct()
             if (result.ok) {

@@ -1,3 +1,7 @@
 .base {
     @apply rounded px-4 py-2 bg-black text-white text-sm shadow-md;
 }
+
+.outline {
+    @apply flex justify-center items-center rounded bg-transparent text-black border shadow-none bg-white;
+}
