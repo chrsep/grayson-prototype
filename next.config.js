@@ -13,7 +13,7 @@ module.exports = withPlugins(
       {
         pwa: {
           disable: process.env.NODE_ENV === "development",
-          dest: "src/public",
+          dest: "public",
           buildExcludes: [/.*images.*$/],
         },
       },
