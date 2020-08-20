@@ -1,6 +1,5 @@
 import React, { FC } from "react"
 import Link from "next/link"
-import { Svg } from "react-optimized-image"
 import Img from "react-optimized-image/lib"
 import PlusIcon from "../../icons/plus.svg"
 import useGetMyProducts from "../../hooks/useGetMyProducts"
@@ -17,7 +16,7 @@ const ProductPage = () => {
           <h1 className="text-3xl font-bold mx-3">Produk-ku</h1>
           <Link href="/products/new">
             <button className="bg-black rounded-full py-3 pl-3 pr-6 shadow absolute right-0 bottom-0 m-3 z-50 text-white flex items-center md:relative md:ml-auto text-sm">
-              <Svg src={PlusIcon} className="mr-2" />
+              <Img src={PlusIcon} className="mr-2" />
               Tambah Produk
             </button>
           </Link>

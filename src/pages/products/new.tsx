@@ -1,5 +1,6 @@
 import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import Img from "react-optimized-image"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
@@ -239,7 +240,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
         <div>loading...</div>
       ) : (
         <>
-          <img alt="foto" src={PlusIcon} className="mx-auto" />
+          <Img alt="foto" src={PlusIcon} className="mx-auto" />
           Gambar
           <input
             type="file"

@@ -4,7 +4,7 @@ import {
   deleteProductByIdAndUserId,
   queryProductById,
   upsertProduct,
-} from "../../../../utils/mongodb"
+} from "../../../../db"
 
 export interface PatchProductRequestBody {
   id?: string
@@ -48,7 +48,6 @@ async function getProductDetailHandler(
   if (session) {
     const products = await queryProductById(id)
     res.json(products)
-    res.status(200).end()
   }
 }
 

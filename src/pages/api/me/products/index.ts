@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { v4 } from "uuid"
 import auth0 from "../../../../utils/auth0"
-import { queryProductsByUserId, upsertProduct } from "../../../../utils/mongodb"
+import { queryProductsByUserId, upsertProduct } from "../../../../db"
 
 export interface PostProductRequestBody {
   id?: string
@@ -45,7 +45,6 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   if (session) {
     const products = await queryProductsByUserId(session.user.sub)
     res.json(products)
-    res.status(200).end()
   }
 }
 

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import Img from "react-optimized-image"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
@@ -182,14 +183,14 @@ const TextField: FC<{
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => setValue(originalValue)}
             >
-              <img alt="cancel" src={CancelIcon} className="w-5" />
+              <Img alt="cancel" src={CancelIcon} className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
             </Button>
           </>
         )}
@@ -229,14 +230,14 @@ const TextAreaField: FC<{
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => setValue(originalValue)}
             >
-              <img alt="cancel" src={CancelIcon} className="w-5" />
+              <Img alt="cancel" src={CancelIcon} className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
             </Button>
           </>
         )}
@@ -277,14 +278,14 @@ const CurrencyField: FC<{
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => setValue(originalValue)}
             >
-              <img alt="cancel" src={CancelIcon} className="w-5" />
+              <Img alt="cancel" src={CancelIcon} className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
             </Button>
           </>
         )}
@@ -312,7 +313,7 @@ const ImageUploader: FC<{
         <div>loading...</div>
       ) : (
         <>
-          <img alt="foto" src={PlusIcon} className="mx-auto" />
+          <Img alt="foto" src={PlusIcon} className="mx-auto" />
           Gambar
           <input
             type="file"

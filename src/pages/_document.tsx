@@ -38,10 +38,6 @@ class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#2B5797" />
           <meta name="msapplication-tap-highlight" content="no" />
           <meta name="theme-color" content="#000000" />
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-          />
 
           <link
             rel="apple-touch-icon"
@@ -62,6 +58,11 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script
+            async
+            data-goatcounter="https://grayson.goatcounter.com/count"
+            src="https://gc.zgo.at/count.js"
+          />
         </body>
       </Html>
     )
