@@ -62,6 +62,11 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script
+            async
+            data-goatcounter="https://grayson.goatcounter.com/count"
+            src="https://gc.zgo.at/count.js"
+          />
         </body>
       </Html>
     )

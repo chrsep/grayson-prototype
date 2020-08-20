@@ -47,7 +47,6 @@ async function handleGetProfile(req: NextApiRequest, res: NextApiResponse) {
       whatsapp: user?.whatsapp,
     }
     res.json(response)
-    res.status(200).end()
   }
 }
 

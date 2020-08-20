@@ -48,7 +48,6 @@ async function getProductDetailHandler(
   if (session) {
     const products = await queryProductById(id)
     res.json(products)
-    res.status(200).end()
   }
 }
 

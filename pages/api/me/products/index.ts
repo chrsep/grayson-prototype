@@ -45,7 +45,6 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
   if (session) {
     const products = await queryProductsByUserId(session.user.sub)
     res.json(products)
-    res.status(200).end()
   }
 }
 
