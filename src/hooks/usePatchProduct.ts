@@ -8,8 +8,8 @@ const usePatchProduct = (id: string) => {
   return useMutation(patchProduct, {
     onSuccess: async () => {
       await Promise.all([
-        queryCache.refetchQueries(["me", "products"]),
-        queryCache.refetchQueries(["product", id]),
+        queryCache.invalidateQueries(["me", "products"]),
+        queryCache.invalidateQueries(["product", id]),
       ])
     },
   })

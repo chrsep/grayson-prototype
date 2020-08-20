@@ -6,7 +6,7 @@ const usePostNewProduct = () => {
   const patchProduct = postApi<PostProductRequestBody>("/me/products")
 
   return useMutation(patchProduct, {
-    onSuccess: () => queryCache.refetchQueries(["me", "products"]),
+    onSuccess: () => queryCache.invalidateQueries(["me", "products"]),
   })
 }
 

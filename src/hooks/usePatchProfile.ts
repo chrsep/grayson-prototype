@@ -5,7 +5,7 @@ import { PatchProfileRequestBody } from "../pages/api/me/profile"
 const usePatchProfile = () => {
   const patchProfile = patchApi<PatchProfileRequestBody>("/me/profile")
   return useMutation(patchProfile, {
-    onSuccess: () => queryCache.refetchQueries(["me", "profile"]),
+    onSuccess: () => queryCache.invalidateQueries(["me", "profile"]),
   })
 }
 

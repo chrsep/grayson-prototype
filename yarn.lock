@@ -1637,11 +1637,6 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@scarf/scarf@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.0.6.tgz#52011dfb19187b53b75b7b6eac20da0810ddd88f"
-  integrity sha512-y4+DuXrAd1W5UIY3zTcsosi/1GyYT8k5jGnZ/wG7UUHVrU+MHlH4Mp87KK2/lvMW4+H7HVcdB+aJhqywgXksjA==
-
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -1840,10 +1835,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/mongodb@3.5.25":
-  version "3.5.25"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.25.tgz#ab187db04d79f8e3f15af236327dc9139d9d4736"
-  integrity sha512-2H/Owt+pHCl9YmBOYnXc3VdnxejJEjVdH+QCWL5ZAfPehEn3evygKBX3/vKRv7aTwfNbUd0E5vjJdQklH/9a6w==
+"@types/mongodb@3.5.26":
+  version "3.5.26"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.26.tgz#aa10315925ba10cdc7931ef280c0ff6f54fd37f3"
+  integrity sha512-p0X2VJgIBNHfNBdZdzzG8eQ/3bf6mQoXDT0UhVyVEdSzXEa1+2pFcwGvEZp72sjztyBwfRKlgrXMjCVavLcuGg==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
@@ -7795,18 +7790,7 @@ react-is@16.13.1, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-optimized-image@0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/react-optimized-image/-/react-optimized-image-0.3.4.tgz#ea53606bd2d654e51117427090f521291d3fcd63"
-  integrity sha512-GtIoAimeq149m1BfYbHj7OdW30/JVQvLFWWJgDr3Q2ZVypEblq1CQe34RXvMATtruxL273euZKXAqCKKqdcN4A==
-  dependencies:
-    app-root-path "^3.0.0"
-    babel-explode-module "^3.0.0"
-    babel-file-loader "^2.0.0"
-    babel-plugin-syntax-jsx "^6.18.0"
-    clone "^2.1.2"
-
-react-optimized-image@^0.4.1:
+react-optimized-image@0.4.1, react-optimized-image@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/react-optimized-image/-/react-optimized-image-0.4.1.tgz#dc81b3ed79b6cf4eee8ebbda6b832b1fde35bb71"
   integrity sha512-KFSuBnHvoXRsFew4jSOaBlWO8RJBs61/lo+/kHQMeh2a9UXApZIO6xpmby1SfRh4DqnjSLYdV0RyUT/1OS0ScQ==
@@ -7817,12 +7801,11 @@ react-optimized-image@^0.4.1:
     babel-plugin-syntax-jsx "^6.18.0"
     clone "^2.1.2"
 
-react-query@1.5.9:
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.9.tgz#8df202a338c1875a033cc6a29d1b7f777b233237"
-  integrity sha512-RrCSSRBkFZe+AAhGFuMDvaucMIANWEbDeuVbn/bWPXuYCNYKz2HD4v7uN1FYAArFjv3i8E0PoR8ll3dBjhrObg==
+react-query@2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.7.0.tgz#54ce04f108515e2f33b57b70efbe4ac38f2e4e2f"
+  integrity sha512-+3VoqjBs8fxK5Nh75/+tRFKI85AmYFPvazoiKSy1yxmzH80xsAd5pCUn5E0zIIi0KKWN/13kYnKUdvIUPyuRqA==
   dependencies:
-    "@scarf/scarf" "^1.0.6"
     ts-toolbelt "^6.9.4"
 
 react-refresh@0.8.3:

@@ -5,7 +5,7 @@ const useDeleteProduct = (id: string) => {
   const patchProduct = deleteApi(`/me/products/${id}`)
 
   return useMutation(patchProduct, {
-    onSuccess: () => queryCache.refetchQueries(["me", "products"]),
+    onSuccess: () => queryCache.invalidateQueries(["me", "products"]),
   })
 }
 
