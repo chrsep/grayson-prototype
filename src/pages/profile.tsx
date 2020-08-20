@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from "react"
+import Img from "react-optimized-image"
 import Button from "../components/Button/Button"
 import Input from "../components/Input/Input"
 import usePostImage from "../hooks/usePostImage"
@@ -112,14 +113,14 @@ const TextField: FC<{
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => setValue(originalValue)}
             >
-              <img alt="cancel" src={CancelIcon} className="w-5" />
+              <Img alt="cancel" src={CancelIcon} className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
             </Button>
           </>
         )}
@@ -160,14 +161,14 @@ const TextAreaField: FC<{
           className="mr-2 px-2 py-1 flex-shrink-0 fade-in ml-auto"
           onClick={() => setName(originalValue)}
         >
-          <img alt="cancel" src={CancelIcon} className="w-5" />
+          <Img alt="cancel" src={CancelIcon} className="w-5" />
         </Button>
         <Button
           type="button"
           className="px-2 py-1 flex-shrink-0 fade-in"
           onClick={() => onSubmit(name)}
         >
-          <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+          <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
         </Button>
       </div>
     </div>
@@ -201,7 +202,7 @@ const ChangeImageForm: FC<{
             className="mr-2 px-2 flex-shrink-0"
             onClick={() => setImage(original)}
           >
-            <img alt="cancel" src={CancelIcon} className="w-5" />
+            <Img alt="cancel" src={CancelIcon} className="w-5" />
           </Button>
           <Button
             type="button"
@@ -210,7 +211,7 @@ const ChangeImageForm: FC<{
               await mutate({ image })
             }}
           >
-            <img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+            <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
           </Button>
         </div>
       )}
