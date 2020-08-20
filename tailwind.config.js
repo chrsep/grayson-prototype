@@ -16,4 +16,7 @@ module.exports = {
     boxShadow: ["responsive", "responsive", "hover", "focus", "focus-within"],
   },
   plugins: [],
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
 }
