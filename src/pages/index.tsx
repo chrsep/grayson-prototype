@@ -5,7 +5,6 @@ import Link from "next/link"
 import Input from "../components/Input/Input"
 import SearchIcon from "../icons/search.svg"
 import { queryProducts } from "../db"
-import { generateUrl } from "../utils/cloudinary"
 import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 import NoProductImage from "../images/no-product.png"
 import CloudinaryImage from "../components/CloudinaryImage/CloudinaryImage"
@@ -152,14 +151,12 @@ const Product: FC<{
               }).format(price)}
             </div>
             <div className="flex">
-              <img
+              <CloudinaryImage
                 alt={userName}
                 className="rounded w-5 h-5 mr-1 object-cover"
-                src={generateUrl(userPhoto, {
-                  width: 40,
-                  height: 40,
-                  fit: true,
-                })}
+                cloudinaryId={userPhoto}
+                breakpoints={[{ imageWidth: 80, viewport: 200 }]}
+                options={{ fill: true, crop: true, aspectRatio: 1 }}
               />
               <div className="text-sm text-gray-700 truncate pr-6">
                 {userName}

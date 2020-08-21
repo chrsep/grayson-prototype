@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { CSSProperties, FC } from "react"
 import { CloudinaryOptions, generateUrl } from "../../utils/cloudinary"
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
   loading?: "eager" | "lazy"
   breakpoints: { imageWidth: number; viewport: number }[]
   options?: CloudinaryOptions
+  style?: CSSProperties
 }
 const CloudinaryImage: FC<Props> = ({
   className,
@@ -15,6 +16,7 @@ const CloudinaryImage: FC<Props> = ({
   loading,
   alt,
   cloudinaryId,
+  style,
   options = {},
 }) => {
   const srcSet = breakpoints
@@ -48,6 +50,7 @@ const CloudinaryImage: FC<Props> = ({
         loading={loading}
         className={className}
         sizes="50vw"
+        style={style}
       />
     </picture>
   )
