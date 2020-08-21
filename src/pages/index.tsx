@@ -65,56 +65,61 @@ const Home: FC<Props> = ({ products }) => {
                 },
                 idx
               ) => (
-                <Link key={_id} href={`/${userSlug}/${productSlug}`}>
-                  <div className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 cursor-pointer mb-6 fade-in">
-                    <div
-                      className="w-full relative overflow-hidden rounded-lg"
-                      style={{ paddingBottom: "75%" }}
-                    >
-                      {(images?.length ?? 0) > 0 ? (
-                        <img
-                          alt={name}
-                          src={generateUrl(images[0], { width: 400 })}
-                          className="absolute top-0 w-full h-full object-cover"
-                          loading={idx < 7 ? "eager" : "lazy"}
-                        />
-                      ) : (
-                        <Img
-                          webp
-                          url
-                          alt={name}
-                          src={PlaceholderImage}
-                          className="absolute top-0 w-full h-full object-cover"
-                          loading={idx < 7 ? "eager" : "lazy"}
-                          sizes={[160, 250, 300]}
-                        />
-                      )}
-                    </div>
-                    <div className="p-1">
-                      <div>{name}</div>
-                      <div className="text-gray-700 mb-1 text-sm">
-                        {new Intl.NumberFormat("id", {
-                          style: "currency",
-                          currency: "IDR",
-                        }).format(price)}
+                <div
+                  key={_id}
+                  className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6 fade-in"
+                >
+                  <Link href={`/${userSlug}/${productSlug}`}>
+                    <a className="block">
+                      <div
+                        className="w-full relative overflow-hidden rounded-lg"
+                        style={{ paddingBottom: "75%" }}
+                      >
+                        {(images?.length ?? 0) > 0 ? (
+                          <img
+                            alt={name}
+                            src={generateUrl(images[0], { width: 400 })}
+                            className="absolute top-0 w-full h-full object-cover"
+                            loading={idx < 7 ? "eager" : "lazy"}
+                          />
+                        ) : (
+                          <Img
+                            webp
+                            url
+                            alt={name}
+                            src={PlaceholderImage}
+                            className="absolute top-0 w-full h-full object-cover"
+                            loading={idx < 7 ? "eager" : "lazy"}
+                            sizes={[160, 250, 300]}
+                          />
+                        )}
                       </div>
-                      <div className="flex">
-                        <img
-                          alt={userName}
-                          className="rounded w-5 h-5 mr-1 object-cover"
-                          src={generateUrl(userPhoto, {
-                            width: 40,
-                            height: 40,
-                            fit: true,
-                          })}
-                        />
-                        <div className="text-sm text-gray-700 truncate pr-6">
-                          {userName}
+                      <div className="p-1">
+                        <div>{name}</div>
+                        <div className="text-gray-700 mb-1 text-sm">
+                          {new Intl.NumberFormat("id", {
+                            style: "currency",
+                            currency: "IDR",
+                          }).format(price)}
+                        </div>
+                        <div className="flex">
+                          <img
+                            alt={userName}
+                            className="rounded w-5 h-5 mr-1 object-cover"
+                            src={generateUrl(userPhoto, {
+                              width: 40,
+                              height: 40,
+                              fit: true,
+                            })}
+                          />
+                          <div className="text-sm text-gray-700 truncate pr-6">
+                            {userName}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </Link>
+                    </a>
+                  </Link>
+                </div>
               )
             )}
         </div>
