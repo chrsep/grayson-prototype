@@ -124,7 +124,11 @@ const Product: FC<{
                 cloudinaryId={images[0]}
                 className="absolute top-0 w-full h-full object-cover"
                 loading={idx < 7 ? "eager" : "lazy"}
-                sizes={[150, 200, 250]}
+                breakpoints={[
+                  { viewport: 200, imageWidth: 150 },
+                  { viewport: 400, imageWidth: 300 },
+                  { viewport: 640, imageWidth: 150 },
+                ]}
                 options={{ fill: true, crop: true, aspectRatio: 1.3 }}
               />
             ) : (
