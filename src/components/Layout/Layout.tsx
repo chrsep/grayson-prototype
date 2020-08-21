@@ -34,7 +34,7 @@ const Header = () => {
               cloudinaryId={data.picture}
               options={{ fill: true, crop: true, aspectRatio: 1 }}
               breakpoints={[{ imageWidth: 80, viewport: 200 }]}
-              className="rounded flex-shrink-0 shadow-md object-cover"
+              className="rounded flex-shrink-0 object-cover"
               style={{ height: 36, width: 36 }}
             />
             <p className="ml-2 mr-3 w-3/5 truncate text-sm font-bold">
