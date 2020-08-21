@@ -37,7 +37,7 @@ const ProductPage: FC<Props> = ({ product }) => {
       {product ? (
         <>
           <div className="mx-3 my-8 md:hidden">
-            <div className="flex">
+            <div className="flex mb-3">
               <h2 className="font-bold opacity-75">{product?.userName}</h2>
               <h2 className="font-bold opacity-75 ml-auto">
                 {new Intl.NumberFormat("id", {
@@ -46,7 +46,9 @@ const ProductPage: FC<Props> = ({ product }) => {
                 }).format(product?.price ?? 0)}
               </h2>
             </div>
-            <h1 className="text-4xl">{product?.name}</h1>
+            <h1 className="font-bold text-2xl leading-tight">
+              {product?.name}
+            </h1>
           </div>
           <div className="md:w-1/2">
             <ImagePreviews images={product.images} />

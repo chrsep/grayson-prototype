@@ -78,7 +78,7 @@ const Home: FC<Props> = ({ products }) => {
                         {(images?.length ?? 0) > 0 ? (
                           <img
                             alt={name}
-                            src={generateUrl(images[0], { width: 400 })}
+                            src={generateUrl(images[0], { width: 200 })}
                             className="absolute top-0 w-full h-full object-cover"
                             loading={idx < 7 ? "eager" : "lazy"}
                           />
