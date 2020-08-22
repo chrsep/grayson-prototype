@@ -6,18 +6,20 @@ interface Props {
   alt: string
   cloudinaryId: string
   loading?: "eager" | "lazy"
-  breakpoints: { imageWidth: number; viewport: number }[]
+  breakpoints?: Array<{ imageWidth: number; viewport: number }>
   options?: CloudinaryOptions
   style?: CSSProperties
+  onClick?: () => void
 }
 const CloudinaryImage: FC<Props> = ({
   className,
-  breakpoints,
+  breakpoints = [],
   loading,
   alt,
   cloudinaryId,
   style,
   options = {},
+  onClick,
 }) => {
   const srcSet = breakpoints
     .map(
@@ -43,14 +45,19 @@ const CloudinaryImage: FC<Props> = ({
   return (
     <picture>
       <source srcSet={webpSrcSet} type="image/webp" sizes="50vw" />
+      <source
+        srcSet={generateUrl(cloudinaryId, { fileType: "webp", ...options })}
+        type="image/webp"
+      />
       <img
         alt={alt}
-        src={generateUrl(cloudinaryId, {})}
+        src={generateUrl(cloudinaryId, options)}
         srcSet={srcSet}
         loading={loading}
         className={className}
         sizes="50vw"
         style={style}
+        onClick={onClick}
       />
     </picture>
   )

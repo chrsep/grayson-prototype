@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import Img from "react-optimized-image"
+import Img, { Svg } from "react-optimized-image"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
-import { generateUrl } from "../../utils/cloudinary"
 import CancelIcon from "../../icons/cancel.svg"
 import CheckIcon from "../../icons/check.svg"
 import useGetProductDetails from "../../hooks/useGetProductDetails"
 import usePatchProduct from "../../hooks/usePatchProduct"
 import useDeleteProduct from "../../hooks/useDeleteProduct"
 import usePostImageToProduct from "../../hooks/usePostImageToProduct"
+import CloudinaryImage from "../../components/CloudinaryImage/CloudinaryImage"
 
 const EditProductPage = () => {
   const {
@@ -92,14 +92,7 @@ const Form: FC<FormProps> = ({
       <div className="flex mt-3 overflow-x-auto">
         <ImageUploader onError={setError} productId={id} />
         {images.map((image) => {
-          return (
-            <img
-              key={image}
-              src={generateUrl(image, { width: 160 })}
-              alt="gambar produk"
-              className="h-20 border rounded mr-3 object-cover"
-            />
-          )
+          return <Image cloudinaryId={image} />
         })}
       </div>
       {error && (
@@ -329,4 +322,47 @@ const ImageUploader: FC<{
     </label>
   )
 }
+
+const Image: FC<{ cloudinaryId: string }> = ({ cloudinaryId }) => {
+  const [showPreview, setShowPreview] = useState(false)
+  return (
+    <div>
+      <CloudinaryImage
+        key={cloudinaryId}
+        alt="gambar produk"
+        breakpoints={[{ viewport: 160, imageWidth: 160 }]}
+        cloudinaryId={cloudinaryId}
+        className="h-20 border rounded mr-3 cursor-pointer"
+        onClick={() => setShowPreview(true)}
+      />
+      {showPreview && (
+        <div className="fixed top-0 bottom-0 right-0 left-0 overflow-y-auto bg-black flex flex-col items-center">
+          <div className="m-3 w-full max-w-3xl flex">
+            <Button
+              type="button"
+              className="text-white font-bold"
+              onClick={() => setShowPreview(false)}
+            >
+              <Svg src={CancelIcon} className="w-8 h-8" />
+            </Button>
+            <Button
+              type="button"
+              outline
+              className="ml-auto mr-3 text-red-700 font-bold"
+            >
+              Hapus
+            </Button>
+          </div>
+          <CloudinaryImage
+            key={cloudinaryId}
+            alt="gambar produk"
+            cloudinaryId={cloudinaryId}
+            className="mr-3 w-full max-w-3xl"
+          />
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default EditProductPage

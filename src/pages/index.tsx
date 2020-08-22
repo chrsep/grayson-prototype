@@ -114,7 +114,7 @@ const Product: FC<{
 ) => {
   return (
     <div key={id} className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6 fade-in">
-      <Link href={`/${userSlug}/${productSlug}`}>
+      <Link href="/[...slug]" as={`/${userSlug}/${productSlug}`}>
         <a className="block">
           <div
             className="w-full relative overflow-hidden rounded-lg"
