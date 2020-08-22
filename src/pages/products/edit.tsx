@@ -326,7 +326,7 @@ const ImageUploader: FC<{
 const Image: FC<{ cloudinaryId: string }> = ({ cloudinaryId }) => {
   const [showPreview, setShowPreview] = useState(false)
   return (
-    <div>
+    <div className="flex-shrink-0">
       <CloudinaryImage
         key={cloudinaryId}
         alt="gambar produk"
