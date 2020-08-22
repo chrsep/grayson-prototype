@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import auth0 from "../../../../utils/auth0"
+import auth0 from "../../../../../utils/auth0"
 import {
   deleteProductByIdAndUserId,
   queryProductById,
   upsertProduct,
-} from "../../../../db"
+} from "../../../../../db"
 
 export interface PatchProductRequestBody {
   id?: string
@@ -13,15 +13,6 @@ export interface PatchProductRequestBody {
   description?: string
   images?: string[]
   hidden?: boolean
-}
-
-export interface GetProductDetailsResponse {
-  id?: string
-  name: string
-  price: number
-  description: string
-  images: string[]
-  hidden: boolean
 }
 
 async function patchProductHandler(
@@ -37,6 +28,15 @@ async function patchProductHandler(
     await upsertProduct(id as string, name, price, description, images, hidden)
     res.status(201).end()
   }
+}
+
+export interface GetProductDetailsResponse {
+  id?: string
+  name: string
+  price: number
+  description: string
+  images: string[]
+  hidden: boolean
 }
 
 async function getProductDetailHandler(

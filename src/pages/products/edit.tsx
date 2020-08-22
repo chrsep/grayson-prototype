@@ -4,14 +4,13 @@ import Img from "react-optimized-image"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
-import usePostImage from "../../hooks/usePostImage"
-import { PostImageResponse } from "../api/images"
 import { generateUrl } from "../../utils/cloudinary"
 import CancelIcon from "../../icons/cancel.svg"
 import CheckIcon from "../../icons/check.svg"
 import useGetProductDetails from "../../hooks/useGetProductDetails"
 import usePatchProduct from "../../hooks/usePatchProduct"
 import useDeleteProduct from "../../hooks/useDeleteProduct"
+import usePostImageToProduct from "../../hooks/usePostImageToProduct"
 
 const EditProductPage = () => {
   const {
@@ -91,7 +90,7 @@ const Form: FC<FormProps> = ({
         </p>
       )}
       <div className="flex mt-3 overflow-x-auto">
-        <ImageUploader onChange={() => {}} onError={setError} />
+        <ImageUploader onError={setError} productId={id} />
         {images.map((image) => {
           return (
             <img
@@ -295,11 +294,10 @@ const CurrencyField: FC<{
 }
 
 const ImageUploader: FC<{
-  onChange: (image: string) => void
+  productId: string
   onError: (error: string) => void
-}> = ({ onChange, onError }) => {
-  const [mutate, { status, error }] = usePostImage()
-  const [loadingImage, setLoadingImage] = useState(false)
+}> = ({ onError, productId }) => {
+  const [mutate, { status, error }] = usePostImageToProduct(productId)
 
   useEffect(() => {
     if (error) {
@@ -309,7 +307,7 @@ const ImageUploader: FC<{
 
   return (
     <label className=" h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3 cursor-pointer">
-      {status === "loading" || loadingImage ? (
+      {status === "loading" ? (
         <div>loading...</div>
       ) : (
         <>
@@ -322,14 +320,7 @@ const ImageUploader: FC<{
             onChange={async (e) => {
               const file = e?.target?.files?.[0]
               if (file) {
-                const result = await mutate(file)
-                if (result?.ok) {
-                  setLoadingImage(true)
-                  const imageData: PostImageResponse = await result.json()
-                  await fetch(generateUrl(imageData.id, { width: 160 }))
-                  setLoadingImage(false)
-                  onChange(imageData.id)
-                }
+                await mutate(file)
               }
             }}
           />
