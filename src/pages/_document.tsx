@@ -81,6 +81,7 @@ class MyDocument extends Document {
           <NextScript />
           <script
             async
+            defer
             data-goatcounter="https://grayson.goatcounter.com/count"
             src="https://gc.zgo.at/count.js"
           />
