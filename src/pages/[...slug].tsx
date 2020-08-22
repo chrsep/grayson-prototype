@@ -178,7 +178,7 @@ const ImageThumbnail: FC<{
     <div
       role="button"
       tabIndex={0}
-      className="w-16 mr-2 outline-none"
+      className="w-16 mr-2 outline-none flex-shrink-0"
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === "Enter") onClick()
