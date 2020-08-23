@@ -22,7 +22,7 @@ const parseForm = (req: NextApiRequest) => {
 const productImages: NextApiHandler = async (req, res) => {
   try {
     const {
-      query: { id: productId },
+      query: { productId },
     } = req
     if (!productId || Array.isArray(productId)) {
       res.status(401).end()

@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiRequest } from "next"
 import { IncomingForm, File } from "formidable-serverless"
 import { v2 } from "cloudinary"
-import auth0 from "../../../../utils/auth0"
+import auth0 from "../../../utils/auth0"
 
 export interface PostImageResponse {
   id: string
