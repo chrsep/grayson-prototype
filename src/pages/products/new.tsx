@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import Img from "react-optimized-image"
+import Img, { Svg } from "react-optimized-image"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
@@ -8,6 +8,9 @@ import usePostImage from "../../hooks/usePostImage"
 import { PostImageResponse } from "../api/images"
 import { generateUrl } from "../../utils/cloudinary"
 import usePostNewProduct from "../../hooks/usePostNewProduct"
+import CloudinaryImage from "../../components/CloudinaryImage/CloudinaryImage"
+import CancelIcon from "../../icons/cancel.svg"
+import useDeleteImage from "../../hooks/useDeleteImage"
 
 const NewProductPage = () => {
   const router = useRouter()
@@ -80,11 +83,11 @@ const NewProductPage = () => {
             />
             {images.map((image) => {
               return (
-                <img
-                  key={image}
-                  src={generateUrl(image, { width: 160 })}
-                  alt="gambar produk"
-                  className="h-20 border rounded mr-3 object-cover"
+                <Image
+                  cloudinaryId={image}
+                  onDelete={() =>
+                    setImages(images.filter((imageId) => imageId !== image))
+                  }
                 />
               )
             })}
@@ -265,4 +268,56 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
     </label>
   )
 }
+
+const Image: FC<{ onDelete: () => void; cloudinaryId: string }> = ({
+  onDelete,
+  cloudinaryId,
+}) => {
+  const [showPreview, setShowPreview] = useState(false)
+  const [deleteImage] = useDeleteImage(cloudinaryId)
+
+  return (
+    <div className="flex-shrink-0">
+      <CloudinaryImage
+        key={cloudinaryId}
+        alt="gambar produk"
+        breakpoints={[{ viewport: 160, imageWidth: 160 }]}
+        cloudinaryId={cloudinaryId}
+        className="h-20 border rounded mr-3 cursor-pointer"
+        onClick={() => setShowPreview(true)}
+      />
+      {showPreview && (
+        <div className="fixed top-0 bottom-0 right-0 left-0 overflow-y-auto bg-black flex flex-col items-center">
+          <div className="m-3 w-full max-w-3xl flex">
+            <Button
+              type="button"
+              className="text-white font-bold"
+              onClick={() => setShowPreview(false)}
+            >
+              <Svg src={CancelIcon} className="w-8 h-8" />
+            </Button>
+            <Button
+              type="button"
+              outline
+              className="ml-auto mr-3 text-red-700 font-bold"
+              onClick={async () => {
+                const result = await deleteImage()
+                if (result.ok) onDelete()
+              }}
+            >
+              Hapus
+            </Button>
+          </div>
+          <CloudinaryImage
+            key={cloudinaryId}
+            alt="gambar produk"
+            cloudinaryId={cloudinaryId}
+            className="mr-3 w-full max-w-3xl"
+          />
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default NewProductPage

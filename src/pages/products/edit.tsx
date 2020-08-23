@@ -11,7 +11,7 @@ import usePatchProduct from "../../hooks/usePatchProduct"
 import useDeleteProduct from "../../hooks/useDeleteProduct"
 import usePostImageToProduct from "../../hooks/usePostImageToProduct"
 import CloudinaryImage from "../../components/CloudinaryImage/CloudinaryImage"
-import useDeleteImage from "../../hooks/useDeleteImage"
+import useDeleteProductImage from "../../hooks/useDeleteProductImage"
 
 const EditProductPage = () => {
   const {
@@ -329,7 +329,7 @@ const Image: FC<{ productId: string; cloudinaryId: string }> = ({
   cloudinaryId,
 }) => {
   const [showPreview, setShowPreview] = useState(false)
-  const [deleteImage] = useDeleteImage(productId, cloudinaryId)
+  const [deleteImage] = useDeleteProductImage(productId, cloudinaryId)
 
   return (
     <div className="flex-shrink-0">
