@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import { getApi } from "../utils/api"
-import { GetProductDetailsResponse } from "../pages/api/me/products/[id]"
+import { GetProductDetailsResponse } from "../pages/api/me/products/[productId]"
 
 const useGetProductDetails = (id: string) => {
   const getMyProducts = getApi<GetProductDetailsResponse>(`/me/products/${id}`)

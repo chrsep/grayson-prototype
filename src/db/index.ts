@@ -252,3 +252,11 @@ export const addImageToProduct = async (_id: string, cloudinaryId: string) => {
     .collection<Product>("products")
     .updateOne({ _id }, { $push: { images: cloudinaryId } })
 }
+
+export const deleteImageById = async (_id: string, cloudinaryId: any) => {
+  const client = await connectToDb()
+  return client
+    .db("grayson")
+    .collection("products")
+    .updateOne({ _id }, { $pull: { images: cloudinaryId } })
+}

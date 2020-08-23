@@ -11,6 +11,7 @@ import usePatchProduct from "../../hooks/usePatchProduct"
 import useDeleteProduct from "../../hooks/useDeleteProduct"
 import usePostImageToProduct from "../../hooks/usePostImageToProduct"
 import CloudinaryImage from "../../components/CloudinaryImage/CloudinaryImage"
+import useDeleteImage from "../../hooks/useDeleteImage"
 
 const EditProductPage = () => {
   const {
@@ -92,7 +93,7 @@ const Form: FC<FormProps> = ({
       <div className="flex mt-3 overflow-x-auto">
         <ImageUploader onError={setError} productId={id} />
         {images.map((image) => {
-          return <Image cloudinaryId={image} />
+          return <Image productId={id} cloudinaryId={image} />
         })}
       </div>
       {error && (
@@ -323,8 +324,13 @@ const ImageUploader: FC<{
   )
 }
 
-const Image: FC<{ cloudinaryId: string }> = ({ cloudinaryId }) => {
+const Image: FC<{ productId: string; cloudinaryId: string }> = ({
+  productId,
+  cloudinaryId,
+}) => {
   const [showPreview, setShowPreview] = useState(false)
+  const [deleteImage] = useDeleteImage(productId, cloudinaryId)
+
   return (
     <div className="flex-shrink-0">
       <CloudinaryImage
@@ -349,6 +355,12 @@ const Image: FC<{ cloudinaryId: string }> = ({ cloudinaryId }) => {
               type="button"
               outline
               className="ml-auto mr-3 text-red-700 font-bold"
+              onClick={async () => {
+                const result = await deleteImage()
+                if (result.ok) {
+                  setShowPreview(false)
+                }
+              }}
             >
               Hapus
             </Button>

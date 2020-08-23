@@ -71,22 +71,22 @@ export default auth0.requireAuthentication(
   async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const {
-        query: { id },
+        query: { productId },
       } = req
-      if (!id || Array.isArray(id)) {
+      if (!productId || Array.isArray(productId)) {
         res.status(401).end()
         return
       }
 
       switch (req.method) {
         case "PATCH":
-          await patchProductHandler(req, res, id)
+          await patchProductHandler(req, res, productId)
           break
         case "GET":
-          await getProductDetailHandler(req, res, id)
+          await getProductDetailHandler(req, res, productId)
           break
         case "DELETE":
-          await deleteProductHandler(req, res, id)
+          await deleteProductHandler(req, res, productId)
           break
         default:
       }

@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiRequest } from "next"
 import { IncomingForm, File } from "formidable-serverless"
 import { v2 } from "cloudinary"
-import auth0 from "../../utils/auth0"
+import auth0 from "../../../../utils/auth0"
 
 export interface PostImageResponse {
   id: string
@@ -17,7 +17,7 @@ const parseForm = (req: NextApiRequest) => {
   })
 }
 
-const images: NextApiHandler = async (req, res) => {
+const index: NextApiHandler = async (req, res) => {
   try {
     const session = await auth0.getSession(req)
     if (session) {
@@ -40,4 +40,4 @@ export const config = {
   },
 }
 
-export default images
+export default index

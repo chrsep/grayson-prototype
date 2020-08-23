@@ -1,8 +1,8 @@
 import { NextApiHandler, NextApiRequest } from "next"
 import { File, IncomingForm } from "formidable-serverless"
 import { v2 } from "cloudinary"
-import auth0 from "../../../../../utils/auth0"
-import { addImageToProduct } from "../../../../../db"
+import auth0 from "../../../../../../utils/auth0"
+import { addImageToProduct } from "../../../../../../db"
 
 export interface PostImageToProductResponse {
   id: string
@@ -22,9 +22,9 @@ const parseForm = (req: NextApiRequest) => {
 const productImages: NextApiHandler = async (req, res) => {
   try {
     const {
-      query: { id },
+      query: { id: productId },
     } = req
-    if (!id || Array.isArray(id)) {
+    if (!productId || Array.isArray(productId)) {
       res.status(401).end()
       return
     }
@@ -33,7 +33,7 @@ const productImages: NextApiHandler = async (req, res) => {
     if (session) {
       const image = await parseForm(req)
       const result = await v2.uploader.upload(image.path)
-      const test = await addImageToProduct(id, result.public_id)
+      const test = await addImageToProduct(productId, result.public_id)
       console.log(test)
 
       res.json(JSON.stringify({ id: result.public_id, url: result.url }))

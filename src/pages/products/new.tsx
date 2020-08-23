@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
 import usePostImage from "../../hooks/usePostImage"
-import { PostImageResponse } from "../api/images"
+import { PostImageResponse } from "../api/me/images"
 import { generateUrl } from "../../utils/cloudinary"
 import usePostNewProduct from "../../hooks/usePostNewProduct"
 
