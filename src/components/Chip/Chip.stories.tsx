@@ -11,5 +11,5 @@ const Template: Story<ChipProps> = (args) => <Chip {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  text: "test",
+  text: "Chip",
 }
