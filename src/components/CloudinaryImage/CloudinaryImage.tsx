@@ -1,7 +1,7 @@
-import React, { CSSProperties, FC } from "react"
+import React, { CSSProperties, FC, ImgHTMLAttributes } from "react"
 import { CloudinaryOptions, generateUrl } from "../../utils/cloudinary"
 
-interface Props {
+interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   className: string
   alt: string
   cloudinaryId: string
@@ -10,6 +10,9 @@ interface Props {
   options?: CloudinaryOptions
   style?: CSSProperties
   onClick?: () => void
+  onKeyUp?: () => void
+  tabIndex?: number
+  role?: string
 }
 const CloudinaryImage: FC<Props> = ({
   className,
@@ -19,7 +22,7 @@ const CloudinaryImage: FC<Props> = ({
   cloudinaryId,
   style,
   options = {},
-  onClick,
+  ...props
 }) => {
   const srcSet = breakpoints
     .map(
@@ -57,7 +60,7 @@ const CloudinaryImage: FC<Props> = ({
         className={className}
         sizes="50vw"
         style={style}
-        onClick={onClick}
+        {...props}
       />
     </picture>
   )

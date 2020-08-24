@@ -21,17 +21,6 @@ const generateUserSlug = (name: string) =>
 const generateProductSlug = (name: string) =>
   slugify(`${name}-${nanoid(3)}`, { lower: true })
 
-interface User {
-  _id: string
-  email: string
-  name: string
-  image: string
-  emailVerified: boolean
-  phone: string
-  whatsapp: string
-  address: string
-  slug: string
-}
 export const createUser = async (
   userId: string,
   email: string,
@@ -116,19 +105,6 @@ export const queryUserById = async (userId: string) => {
   return client.db("grayson").collection<User>("users").findOne({ _id: userId })
 }
 
-interface Product {
-  _id: string
-  name: string
-  price: number
-  description: string
-  images: string[]
-  productSlug: string
-  // Denormalized user data
-  userId: string
-  userName: string
-  userPhoto: string
-  userSlug: string
-}
 export const upsertProduct = async (
   _id: string,
   name?: string,
