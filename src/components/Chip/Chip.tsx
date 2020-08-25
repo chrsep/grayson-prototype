@@ -5,11 +5,13 @@ export interface ChipProps {
   text: string
   onClick: () => void
   selected: boolean
+  className: string
 }
-const Chip: FC<ChipProps> = ({ selected, onClick, text }) => {
+const Chip: FC<ChipProps> = ({ className, selected, onClick, text }) => {
   return (
     <button
-      className={`${styles.chip} ${selected && styles.selected}`}
+      type="button"
+      className={`${className} ${styles.chip} ${selected && styles.selected}`}
       onClick={onClick}
     >
       {text}
