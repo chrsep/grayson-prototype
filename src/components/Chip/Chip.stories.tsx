@@ -1,5 +1,6 @@
 import { Meta, Story } from "@storybook/react/types-6-0"
 import React from "react"
+import { action } from "@storybook/addon-actions"
 import Chip, { ChipProps } from "./Chip"
 
 export default {
@@ -12,4 +13,5 @@ const Template: Story<ChipProps> = (args) => <Chip {...args} />
 export const Default = Template.bind({})
 Default.args = {
   text: "Chip",
+  onClick: action("click"),
 }

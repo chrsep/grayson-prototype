@@ -1,3 +1,8 @@
 .chip {
     @apply border rounded px-3 py-1 text-sm inline-block bg-surface;
 }
+
+.selected {
+    @apply bg-primary text-onPrimary;
+    border-color: rgba(255, 255, 255, 0.1);
+}
