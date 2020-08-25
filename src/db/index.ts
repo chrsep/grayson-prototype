@@ -1,25 +1,24 @@
 import { MongoClient } from "mongodb"
-import slugify from "slugify"
-import { nanoid } from "nanoid"
+import { generateProductSlug, generateUserSlug } from "../utils/slug"
 
 const MONGO_URL = process.env.MONGO_URL ?? ""
 
 let cachedDb: MongoClient
 
 const connectToDb = async () => {
-  if (cachedDb && cachedDb.isConnected()) {
-    return cachedDb
-  }
+  if (cachedDb && cachedDb.isConnected()) return cachedDb
 
   cachedDb = await MongoClient.connect(MONGO_URL, { ignoreUndefined: true })
   return cachedDb
 }
 
-const generateUserSlug = (name: string) =>
-  slugify(`${name}-${nanoid(3)}`, { lower: true })
+const getUsersCollection = (client: MongoClient) => {
+  return client.db("grayson").collection<User>("users")
+}
 
-const generateProductSlug = (name: string) =>
-  slugify(`${name}-${nanoid(3)}`, { lower: true })
+const getProductsCollection = (client: MongoClient) => {
+  return client.db("grayson").collection<Product>("products")
+}
 
 export const createUser = async (
   userId: string,
@@ -29,22 +28,19 @@ export const createUser = async (
   emailVerified: boolean
 ) => {
   const client = await connectToDb()
-  await client
-    .db("grayson")
-    .collection<User>("users")
-    .updateOne(
-      { _id: userId },
-      {
-        $setOnInsert: {
-          email,
-          name,
-          image,
-          slug: generateUserSlug(name),
-        },
-        $set: { emailVerified },
+  await getUsersCollection(client).updateOne(
+    { _id: userId },
+    {
+      $setOnInsert: {
+        email,
+        name,
+        image,
+        slug: generateUserSlug(name),
       },
-      { upsert: true }
-    )
+      $set: { emailVerified },
+    },
+    { upsert: true }
+  )
 }
 
 export const updateUser = async (
@@ -64,36 +60,30 @@ export const updateUser = async (
       if (name) {
         userSlug = generateUserSlug(name)
       }
-      await client
-        .db("grayson")
-        .collection<User>("users")
-        .updateOne(
-          { _id },
-          {
-            $set: {
-              email,
-              name,
-              image,
-              phone,
-              whatsapp,
-              address,
-              slug: userSlug,
-            },
+      await getUsersCollection(client).updateOne(
+        { _id },
+        {
+          $set: {
+            email,
+            name,
+            image,
+            phone,
+            whatsapp,
+            address,
+            slug: userSlug,
           },
-          { session }
-        )
+        },
+        { session }
+      )
       if (!name && !image) return
 
-      await client
-        .db("grayson")
-        .collection<Product>("products")
-        .updateMany(
-          { userId: _id },
-          {
-            $set: { userName: name, userPhoto: image, userSlug },
-          },
-          { session }
-        )
+      await getProductsCollection(client).updateMany(
+        { userId: _id },
+        {
+          $set: { userName: name, userPhoto: image, userSlug },
+        },
+        { session }
+      )
     })
   } finally {
     await session.endSession()
@@ -102,7 +92,7 @@ export const updateUser = async (
 
 export const queryUserById = async (userId: string) => {
   const client = await connectToDb()
-  return client.db("grayson").collection<User>("users").findOne({ _id: userId })
+  return getUsersCollection(client).findOne({ _id: userId })
 }
 
 export const upsertProduct = async (
@@ -117,68 +107,51 @@ export const upsertProduct = async (
   userPhoto?: string
 ) => {
   const client = await connectToDb()
-  const user = await client
-    .db("grayson")
-    .collection<User>("users")
-    .findOne({ _id: userId })
+  const user = await getUsersCollection(client).findOne({ _id: userId })
 
   let productSlug: string | undefined
   if (name) {
     productSlug = generateProductSlug(name)
   }
-  await client
-    .db("grayson")
-    .collection<Product>("products")
-    .updateOne(
-      { _id },
-      {
-        $set: {
-          name,
-          price,
-          description,
-          images,
-          productSlug,
-          hidden,
-        },
-        $setOnInsert: {
-          userId,
-          userName: user?.name ?? userName,
-          userPhoto: user?.image ?? userPhoto,
-          userSlug:
-            user?.slug ?? generateUserSlug(user?.name ?? userName ?? ""),
-        },
+  await getProductsCollection(client).updateOne(
+    { _id },
+    {
+      $set: {
+        name,
+        price,
+        description,
+        images,
+        productSlug,
+        hidden,
       },
-      { upsert: true }
-    )
+      $setOnInsert: {
+        userId,
+        userName: user?.name ?? userName,
+        userPhoto: user?.image ?? userPhoto,
+        userSlug: user?.slug ?? generateUserSlug(user?.name ?? userName ?? ""),
+      },
+    },
+    { upsert: true }
+  )
 }
 
 export const queryProducts = async (): Promise<Product[]> => {
   const client = await connectToDb()
-  const allProducts = client
-    .db("grayson")
-    .collection<Product>("products")
-    .find({ hidden: false })
-  return allProducts.toArray()
+  return getProductsCollection(client).find({ hidden: false }).toArray()
 }
 
 export const queryProductsByUserId = async (
   userId: string
 ): Promise<Product[]> => {
   const client = await connectToDb()
-  const allProducts = client
-    .db("grayson")
-    .collection<Product>("products")
-    .find({ userId })
-  return allProducts.toArray()
+  return getProductsCollection(client).find({ userId }).toArray()
 }
 
 export const queryAllProductSlugs = async () => {
   const client = await connectToDb()
-  const allProductIds = client
-    .db("grayson")
-    .collection<Product>("products")
+  return getProductsCollection(client)
     .find({}, { projection: { _id: 0, userSlug: 1, productSlug: 1 } })
-  return allProductIds.toArray()
+    .toArray()
 }
 
 export const queryCompleteProductBySlug = async (
@@ -186,20 +159,17 @@ export const queryCompleteProductBySlug = async (
   productSlug: string
 ) => {
   const client = await connectToDb()
-  const fullProduct = await client
-    .db("grayson")
-    .collection("products")
-    .aggregate([
-      { $match: { userSlug, productSlug } },
-      {
-        $lookup: {
-          from: "users",
-          localField: "userId",
-          foreignField: "_id",
-          as: "user",
-        },
+  const fullProduct = await getProductsCollection(client).aggregate([
+    { $match: { userSlug, productSlug } },
+    {
+      $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "_id",
+        as: "user",
       },
-    ])
+    },
+  ])
 
   const hasNext = await fullProduct.hasNext()
   if (hasNext) {
@@ -210,29 +180,26 @@ export const queryCompleteProductBySlug = async (
 
 export const queryProductById = async (_id: string) => {
   const client = await connectToDb()
-  return client.db("grayson").collection("products").findOne({ _id })
+  return getProductsCollection(client).findOne({ _id })
 }
 
 export const deleteProductByIdAndUserId = async (_id: string, userId: any) => {
   const client = await connectToDb()
-  return client
-    .db("grayson")
-    .collection("products")
-    .findOneAndDelete({ _id, userId })
+  return getProductsCollection(client).findOneAndDelete({ _id, userId })
 }
 
 export const addImageToProduct = async (_id: string, cloudinaryId: string) => {
   const client = await connectToDb()
-  return client
-    .db("grayson")
-    .collection<Product>("products")
-    .updateOne({ _id }, { $push: { images: cloudinaryId } })
+  return getProductsCollection(client).updateOne(
+    { _id },
+    { $push: { images: cloudinaryId } }
+  )
 }
 
 export const deleteImageById = async (_id: string, cloudinaryId: any) => {
   const client = await connectToDb()
-  return client
-    .db("grayson")
-    .collection("products")
-    .updateOne({ _id }, { $pull: { images: cloudinaryId } })
+  return getProductsCollection(client).updateOne(
+    { _id },
+    { $pull: { images: cloudinaryId } }
+  )
 }
