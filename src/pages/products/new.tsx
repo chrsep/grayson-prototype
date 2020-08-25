@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
+import React, { ChangeEventHandler, FC, useState } from "react"
 import { useRouter } from "next/router"
 import Img, { Svg } from "react-optimized-image"
 import Button from "../../components/Button/Button"
@@ -11,6 +11,8 @@ import usePostNewProduct from "../../hooks/usePostNewProduct"
 import CloudinaryImage from "../../components/CloudinaryImage/CloudinaryImage"
 import CancelIcon from "../../icons/cancel.svg"
 import useDeleteImage from "../../hooks/useDeleteImage"
+import Chip from "../../components/Chip/Chip"
+import { Categories } from "../../utils/categories"
 
 const NewProductPage = () => {
   const router = useRouter()
@@ -18,9 +20,10 @@ const NewProductPage = () => {
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
   const [images, setImages] = useState<string[]>([])
+  const [category, setCategory] = useState<number>()
 
   const [error, setError] = useState("")
-  const [upsertProduct] = usePostNewProduct()
+  const [postNewProduct] = usePostNewProduct()
 
   return (
     <>
@@ -31,11 +34,12 @@ const NewProductPage = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault()
-            const result = await upsertProduct({
+            const result = await postNewProduct({
               name,
               price: parseInt(price, 10),
               description,
               images,
+              category,
             })
             if (result.ok) {
               await router.push("/products")
@@ -70,6 +74,12 @@ const NewProductPage = () => {
             onChange={(e) => {
               setDescription(e.target.value)
             }}
+          />
+          <ChipField
+            label="Kategori"
+            onChange={(value) => setCategory(value)}
+            selectedValue={category}
+            values={Categories}
           />
           {images.length > 0 && (
             <p className="mx-4 md:mx-0 mt-3 text-sm text-gray-800">
@@ -119,126 +129,114 @@ const NewProductPage = () => {
   )
 }
 
-interface TextFieldProps {
+const TextField: FC<{
   id: string
   label: string
   value: string
   onChange: ChangeEventHandler<HTMLInputElement>
   placeholder: string
   required?: boolean
-}
-const TextField: FC<TextFieldProps> = ({
-  id,
-  label,
-  onChange,
-  placeholder,
-  value,
-  required,
-}) => {
-  return (
-    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
-        {label}
-      </label>
-      <Input
-        required={required}
-        id={id}
-        placeholder={placeholder}
-        className="w-full py-1 px-0"
-        onChange={onChange}
-        value={value}
-      />
-    </div>
-  )
-}
+}> = ({ id, label, onChange, placeholder, value, required }) => (
+  <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+    <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
+      {label}
+    </label>
+    <Input
+      required={required}
+      id={id}
+      placeholder={placeholder}
+      className="w-full py-1 px-0"
+      onChange={onChange}
+      value={value}
+    />
+  </div>
+)
 
-interface TextAreaFieldProps {
+const TextAreaField: FC<{
   id: string
   label: string
   value: string
   onChange: ChangeEventHandler<HTMLTextAreaElement>
   placeholder: string
   required?: boolean
-}
-const TextAreaField: FC<TextAreaFieldProps> = ({
-  id,
-  label,
-  onChange,
-  placeholder,
-  value,
-  required,
-}) => {
-  return (
-    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
-        {label}
-      </label>
-      <textarea
-        required={required}
-        id={id}
-        placeholder={placeholder}
-        className="w-full py-1 px-0 h-32"
-        onChange={onChange}
-        value={value}
-      />
-    </div>
-  )
-}
+}> = ({ id, label, onChange, placeholder, value, required }) => (
+  <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+    <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
+      {label}
+    </label>
+    <textarea
+      required={required}
+      id={id}
+      placeholder={placeholder}
+      className="w-full py-1 px-0 h-32"
+      onChange={onChange}
+      value={value}
+    />
+  </div>
+)
 
-interface CurrencyField {
+const CurrencyField: FC<{
   id: string
   label: string
   value: string
   onChange: ChangeEventHandler<HTMLInputElement>
   placeholder: string
   required?: boolean
-}
-const CurrencyField: FC<CurrencyField> = ({
-  id,
-  label,
-  onChange,
-  placeholder,
-  value,
-  required,
-}) => {
-  return (
-    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
-      <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
-        {label}
-      </label>
-      <div className="flex items-center">
-        <p className="text-gray-600">Rp</p>
-        <Input
-          required={required}
-          id={id}
-          placeholder={placeholder}
-          className="w-full py-1 px-0 ml-1"
-          onChange={onChange}
-          value={value}
-          inputMode="numeric"
-          pattern="[0-9]*"
-        />
-      </div>
+}> = ({ id, label, onChange, placeholder, value, required }) => (
+  <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+    <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
+      {label}
+    </label>
+    <div className="flex items-center">
+      <p className="text-gray-600">Rp</p>
+      <Input
+        required={required}
+        id={id}
+        placeholder={placeholder}
+        className="w-full py-1 px-0 ml-1"
+        onChange={onChange}
+        value={value}
+        inputMode="numeric"
+        pattern="[0-9]*"
+      />
     </div>
-  )
-}
+  </div>
+)
+
+const ChipField: FC<{
+  label: string
+  values: readonly string[]
+  onChange: (selectedIndex: number) => void
+  selectedValue?: number
+}> = ({ label, onChange, values, selectedValue }) => (
+  <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+    <div className="inline-block w-full text-sm text-gray-700">{label}</div>
+    <div className="flex">
+      {values.map((value, idx) => (
+        <Chip
+          key={value}
+          text={value}
+          onClick={() => onChange(idx)}
+          selected={selectedValue === idx}
+          className="capitalize mr-2 my-2"
+        />
+      ))}
+    </div>
+  </div>
+)
 
 interface ImageUploaderProps {
   onChange: (image: string) => void
   onError: (error: string) => void
 }
 const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
-  const [mutate, { status, error }] = usePostImage()
   const [loadingImage, setLoadingImage] = useState(false)
-
-  useEffect(() => {
-    if (error) {
-      onError(error.message)
-    }
-  }, [error])
+  const [mutate, { status }] = usePostImage({
+    onError: (err) => onError(err.message),
+  })
 
   return (
-    <label className=" h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3 cursor-pointer">
+    <label className="h-20 w-20 border rounded text-sm bg-white ml-3 md:ml-0 text-sm text-gray-800 flex flex-col items-center justify-center flex-shrink-0 mr-3 cursor-pointer">
       {status === "loading" || loadingImage ? (
         <div>loading...</div>
       ) : (

@@ -9,14 +9,7 @@ export interface PostProductRequestBody {
   price: number
   description: string
   images: string[]
-}
-
-export interface GetMyProductsResponse {
-  _id: string
-  name: string
-  price: number
-  images: string[]
-  hidden: boolean
+  category?: number
 }
 
 async function postHandler(req: NextApiRequest, res: NextApiResponse) {
@@ -38,6 +31,14 @@ async function postHandler(req: NextApiRequest, res: NextApiResponse) {
     )
     res.status(201).end()
   }
+}
+
+export interface GetMyProductsResponse {
+  _id: string
+  name: string
+  price: number
+  images: string[]
+  hidden: boolean
 }
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {

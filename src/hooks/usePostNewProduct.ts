@@ -3,9 +3,9 @@ import { postApi } from "../utils/api"
 import { PostProductRequestBody } from "../pages/api/me/products"
 
 const usePostNewProduct = () => {
-  const patchProduct = postApi<PostProductRequestBody>("/me/products")
+  const postProduct = postApi<PostProductRequestBody>("/me/products")
 
-  return useMutation(patchProduct, {
+  return useMutation(postProduct, {
     onSuccess: () => queryCache.invalidateQueries(["me", "products"]),
   })
 }

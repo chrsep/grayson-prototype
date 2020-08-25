@@ -3,9 +3,9 @@ import styles from "./Chip.module.css"
 
 export interface ChipProps {
   text: string
-  onClick: () => void
-  selected: boolean
-  className: string
+  onClick?: () => void
+  selected?: boolean
+  className?: string
 }
 const Chip: FC<ChipProps> = ({ className, selected, onClick, text }) => {
   return (
