@@ -12,6 +12,8 @@ import useDeleteProduct from "../../hooks/useDeleteProduct"
 import usePostImageToProduct from "../../hooks/usePostImageToProduct"
 import CloudinaryImage from "../../components/CloudinaryImage/CloudinaryImage"
 import useDeleteProductImage from "../../hooks/useDeleteProductImage"
+import Chip from "../../components/Chip/Chip"
+import { Categories } from "../../utils/categories"
 
 const EditProductPage = () => {
   const {
@@ -34,6 +36,7 @@ const EditProductPage = () => {
             images={data.images ?? []}
             price={data.price?.toString()}
             hidden={data.hidden}
+            category={data.category}
           />
         )}
       </main>
@@ -48,6 +51,7 @@ interface FormProps {
   description: string
   images: string[]
   hidden: boolean
+  category?: number
 }
 const Form: FC<FormProps> = ({
   id,
@@ -56,6 +60,7 @@ const Form: FC<FormProps> = ({
   description,
   images,
   hidden,
+  category,
 }) => {
   const router = useRouter()
   const [error, setError] = useState("")
@@ -85,6 +90,7 @@ const Form: FC<FormProps> = ({
         originalValue={description}
         onSubmit={(value) => patch({ description: value })}
       />
+      <ChipField label="Kategori" originalValue={category} />
       {images.length > 0 && (
         <p className="mx-4 md:mx-0 mt-3 text-sm text-gray-800">
           Ter-pasang {images.length} gambar
@@ -282,6 +288,30 @@ const CurrencyField: FC<{
             </Button>
           </>
         )}
+      </div>
+    </div>
+  )
+}
+
+const ChipField: FC<{
+  label: string
+  originalValue?: number
+}> = ({ label, originalValue }) => {
+  const [selected, setSelected] = useState(originalValue)
+
+  return (
+    <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
+      <div className="inline-block w-full text-sm text-gray-700">{label}</div>
+      <div className="flex">
+        {Categories.map((category, idx) => (
+          <Chip
+            key={category}
+            text={category}
+            onClick={() => setSelected(idx)}
+            selected={selected === idx}
+            className="capitalize mr-2 my-2"
+          />
+        ))}
       </div>
     </div>
   )

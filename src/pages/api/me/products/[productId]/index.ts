@@ -37,6 +37,7 @@ export interface GetProductDetailsResponse {
   description: string
   images: string[]
   hidden: boolean
+  category?: number
 }
 
 async function getProductDetailHandler(
