@@ -102,6 +102,7 @@ export const upsertProduct = async (
   description?: string,
   images?: string[],
   hidden?: boolean,
+  category?: number,
   userId?: string,
   userName?: string,
   userPhoto?: string
@@ -123,6 +124,7 @@ export const upsertProduct = async (
         images,
         productSlug,
         hidden,
+        category,
       },
       $setOnInsert: {
         userId,

@@ -15,7 +15,7 @@ export interface PostProductRequestBody {
 async function postHandler(req: NextApiRequest, res: NextApiResponse) {
   const session = await auth0.getSession(req)
   if (session) {
-    const { id, name, price, description, images } = JSON.parse(
+    const { id, name, price, description, images, category } = JSON.parse(
       req.body
     ) as PostProductRequestBody
     await upsertProduct(
@@ -25,6 +25,7 @@ async function postHandler(req: NextApiRequest, res: NextApiResponse) {
       description,
       images ?? [],
       false,
+      category,
       session.user.sub,
       session.user.name,
       session.user.picture
