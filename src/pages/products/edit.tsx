@@ -90,7 +90,7 @@ const Form: FC<FormProps> = ({
         originalValue={description}
         onSubmit={(value) => patch({ description: value })}
       />
-      <ChipField label="Kategori" originalValue={category} />
+      <ChipField label="Kategori" originalValue={category} productId={id} />
       {images.length > 0 && (
         <p className="mx-4 md:mx-0 mt-3 text-sm text-gray-800">
           Ter-pasang {images.length} gambar
@@ -295,24 +295,32 @@ const CurrencyField: FC<{
 
 const ChipField: FC<{
   label: string
+  productId: string
   originalValue?: number
-}> = ({ label, originalValue }) => {
+}> = ({ productId, label, originalValue }) => {
   const [selected, setSelected] = useState(originalValue)
+  const [patch, { isLoading }] = usePatchProduct(productId)
 
   return (
     <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
       <div className="inline-block w-full text-sm text-gray-700">{label}</div>
-      <div className="flex">
+      <div className={`flex ${isLoading && "opacity-50"}`}>
         {Categories.map((category, idx) => (
           <Chip
             key={category}
             text={category}
-            onClick={() => setSelected(idx)}
+            onClick={async () => {
+              if (idx !== selected) {
+                await patch({ category: idx })
+                setSelected(idx)
+              }
+            }}
             selected={selected === idx}
             className="capitalize mr-2 my-2"
           />
         ))}
       </div>
+      {isLoading && <div className="text-center">Menyimpan...</div>}
     </div>
   )
 }
