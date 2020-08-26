@@ -109,10 +109,10 @@ const Home: FC<Props> = ({ products }) => {
         {products.length === 0 && (
           <>
             <Img
+              webp
               className="w-64 mx-auto mt-12"
               src={NoProductImage}
-              webp
-              sizes={[250, 300, 672]}
+              sizes={[250, 300]}
             />
             <h6 className="mt-8 text-center text-xl text-gray-900">
               Belum ada produk terdaftar
