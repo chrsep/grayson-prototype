@@ -90,7 +90,11 @@ const Form: FC<FormProps> = ({
         originalValue={description}
         onSubmit={(value) => patch({ description: value })}
       />
-      <ChipField label="Kategori" originalValue={category} productId={id} />
+      <CategorySelector
+        label="Kategori"
+        originalValue={category}
+        productId={id}
+      />
       {images.length > 0 && (
         <p className="mx-4 md:mx-0 mt-3 text-sm text-gray-800">
           Ter-pasang {images.length} gambar
@@ -293,7 +297,7 @@ const CurrencyField: FC<{
   )
 }
 
-const ChipField: FC<{
+const CategorySelector: FC<{
   label: string
   productId: string
   originalValue?: number
