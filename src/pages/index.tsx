@@ -8,6 +8,8 @@ import { queryProducts } from "../db"
 import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 import NoProductImage from "../images/no-product.png"
 import CloudinaryImage from "../components/CloudinaryImage/CloudinaryImage"
+import { Categories } from "../utils/categories"
+import Chip from "../components/Chip/Chip"
 
 interface Props {
   products: Array<{
@@ -19,11 +21,13 @@ interface Props {
     userName: string
     userSlug: string
     productSlug: string
+    category?: number
   }>
 }
 
 const Home: FC<Props> = ({ products }) => {
   const [search, setSearch] = useState("")
+  const [filteredCategory, setFilteredCategory] = useState<number>()
 
   return (
     <>
@@ -49,6 +53,21 @@ const Home: FC<Props> = ({ products }) => {
             />
           </label>
         </div>
+        <div className="flex mx-3 mt-2">
+          <Chip
+            text="All"
+            className="mr-2"
+            selected={filteredCategory === undefined}
+            onClick={() => setFilteredCategory(undefined)}
+          />
+          {Categories.map((category, idx) => (
+            <Chip
+              text={category}
+              className="mr-2"
+              onClick={() => setFilteredCategory(idx)}
+            />
+          ))}
+        </div>
         <div className="flex ml-3 mr-1 mt-3 flex-wrap">
           {products
             .filter((product) =>
@@ -64,6 +83,7 @@ const Home: FC<Props> = ({ products }) => {
                 userPhoto,
                 userSlug,
                 productSlug,
+                category,
               }) => {
                 return (
                   <Product
@@ -76,6 +96,7 @@ const Home: FC<Props> = ({ products }) => {
                     userPhoto={userPhoto}
                     productSlug={productSlug}
                     userSlug={userSlug}
+                    category={category}
                   />
                 )
               }
@@ -108,6 +129,7 @@ const Product: FC<{
   userName: string
   userSlug: string
   productSlug: string
+  category?: number
 }> = (
   { id, name, price, images, userName, userPhoto, userSlug, productSlug },
   idx
