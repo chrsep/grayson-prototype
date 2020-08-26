@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint --ext .tsx,.ts ./",
     "typecheck": "tsc --noemit",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 --ci",
     "build-storybook": "build-storybook",
     "cy:open": "cypress open",
     "cy:run": "cypress run"

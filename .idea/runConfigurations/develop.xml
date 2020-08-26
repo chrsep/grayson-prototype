@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="develop" type="CompoundRunConfigurationType">
+    <toRun name="dev" type="js.build_tools.npm" />
+    <toRun name="storybook" type="js.build_tools.npm" />
+    <toRun name="debug storybook" type="JavascriptDebugType" />
+    <toRun name="debug grayson" type="JavascriptDebugType" />
+    <toRun name="docker dev" type="docker-deploy" />
+    <method v="2" />
+  </configuration>
+</component>
