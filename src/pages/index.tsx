@@ -53,25 +53,29 @@ const Home: FC<Props> = ({ products }) => {
             />
           </label>
         </div>
-        <div className="flex mx-3 mt-2">
+        <div className="flex mx-3 mt-2 flex-wrap">
           <Chip
-            text="All"
-            className="mr-2"
+            text="Semua"
+            className="mr-2 mb-2"
             selected={filteredCategory === undefined}
             onClick={() => setFilteredCategory(undefined)}
           />
           {Categories.map((category, idx) => (
             <Chip
               text={category}
-              className="mr-2"
+              className="mr-2 mb-2 capitalize"
               onClick={() => setFilteredCategory(idx)}
+              selected={filteredCategory === idx}
             />
           ))}
         </div>
         <div className="flex ml-3 mr-1 mt-3 flex-wrap">
           {products
-            .filter((product) =>
-              product.name.toLowerCase().includes(search.toLowerCase())
+            .filter(
+              (product) =>
+                product.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filteredCategory === undefined ||
+                  product.category === filteredCategory)
             )
             .map(
               ({
