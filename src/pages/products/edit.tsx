@@ -216,35 +216,32 @@ const TextAreaField: FC<{
       <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
         {label}
       </label>
-      <div className="flex items-center">
-        <textarea
-          id={id}
-          placeholder={placeholder}
-          value={value}
-          className="w-full py-1 px-0 outline-none h-32"
-          onChange={(e) => setValue(e.target.value)}
-        />
-
-        {value !== originalValue && (
-          <>
-            <Button
-              outline
-              type="button"
-              className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
-              onClick={() => setValue(originalValue)}
-            >
-              <Img alt="cancel" src={CancelIcon} className="w-5" />
-            </Button>
-            <Button
-              type="button"
-              className="px-2 py-1 flex-shrink-0 fade-in"
-              onClick={() => onSubmit(value)}
-            >
-              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
-            </Button>
-          </>
-        )}
-      </div>
+      <textarea
+        id={id}
+        placeholder={placeholder}
+        value={value}
+        className="w-full py-1 px-0 outline-none h-32"
+        onChange={(e) => setValue(e.target.value)}
+      />
+      {value !== originalValue && (
+        <div className="flex items-center">
+          <Button
+            outline
+            type="button"
+            className="ml-auto mr-2 px-2 py-1 flex-shrink-0 fade-in"
+            onClick={() => setValue(originalValue)}
+          >
+            <Img alt="cancel" src={CancelIcon} className="w-5" />
+          </Button>
+          <Button
+            type="button"
+            className="px-2 py-1 flex-shrink-0 fade-in"
+            onClick={() => onSubmit(value)}
+          >
+            <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
@@ -259,7 +256,9 @@ const CurrencyField: FC<{
   const [value, setValue] = useState(originalValue)
 
   return (
-    <div className="items-end overflow-auto bg-white border md:rounded mt-3 w-full pl-3 pr-2 py-2 focus-within:shadow-outline">
+    <div
+      className={`items-end overflow-auto bg-white border md:rounded mt-3 w-full pl-3 pr-2 py-2 focus-within:shadow-outline `}
+    >
       <label htmlFor={id} className="inline-block w-full text-sm text-gray-700">
         {label}
       </label>
@@ -314,9 +313,11 @@ const CategorySelector: FC<{
             key={category}
             text={category}
             onClick={async () => {
-              if (idx !== selected) {
-                await patch({ category: idx })
+              const oldSelected = selected
+              if (!isLoading && idx !== selected) {
                 setSelected(idx)
+                const result = await patch({ category: idx })
+                if (!result?.ok) setSelected(oldSelected)
               }
             }}
             selected={selected === idx}
@@ -324,7 +325,11 @@ const CategorySelector: FC<{
           />
         ))}
       </div>
-      {isLoading && <div className="text-center">Menyimpan...</div>}
+      {isLoading && (
+        <div className="my-2 text-center text-sm text-gray-700">
+          Menyimpan...
+        </div>
+      )}
     </div>
   )
 }
