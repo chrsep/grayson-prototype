@@ -69,7 +69,7 @@ const Home: FC<Props> = ({ products }) => {
             />
           ))}
         </div>
-        <div className="flex ml-3 mr-1 mt-3 flex-wrap">
+        <div className="flex ml-3 mr-1 flex-wrap">
           {products
             .filter(
               (product) =>

@@ -4,7 +4,6 @@ import Img from "react-optimized-image/lib"
 import { queryAllProductSlugs, queryCompleteProductBySlug } from "../db"
 import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 import { generateUrl } from "../utils/cloudinary"
-import Button from "../components/Button/Button"
 
 interface Props {
   product: {
@@ -33,81 +32,62 @@ interface Props {
 }
 const ProductPage: FC<Props> = ({ product }) => {
   return (
-    <main className="md:flex mx-auto max-w-4xl pb-8">
+    <main className="md:flex md:px-3 mx-auto max-w-4xl pb-8">
       {product ? (
         <>
-          <div className="mx-3 my-8 md:hidden">
-            <div className="flex mb-3">
-              <h2 className="font-bold opacity-75">{product?.userName}</h2>
-              <h2 className="font-bold opacity-75 ml-auto">
+          <div className="md:w-1/2">
+            <ImagePreviews images={product.images} />
+          </div>
+          <div className="md:w-1/2 md:ml-3">
+            <div className="m-3">
+              <h1 className="font-bold text-2xl leading-tight">
+                {product?.name}
+              </h1>
+              <h2 className="opacity-75 ml-auto">
                 {new Intl.NumberFormat("id", {
                   style: "currency",
                   currency: "IDR",
                 }).format(product?.price ?? 0)}
               </h2>
             </div>
-            <h1 className="font-bold text-2xl leading-tight">
-              {product?.name}
-            </h1>
-          </div>
-          <div className="md:w-1/2">
-            <ImagePreviews images={product.images} />
-          </div>
-          <div className="md:w-1/2 md:ml-3">
-            <div className="flex flex-col md:block hidden md:my-8">
-              <div className="flex mx-3">
-                <h2 className="font-bold text-gray-700">{product?.userName}</h2>
-                <h2 className="font-bold text-gray-700 ml-auto">
-                  {new Intl.NumberFormat("id", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(product?.price ?? 0)}
-                </h2>
-              </div>
-              <h1 className="mx-3 font-bold text-4xl">{product?.name}</h1>
-            </div>
             {product?.description && (
-              <div className="px-3 py-8 border bg-white mb-6 md:rounded md:mb-3">
+              <article className="px-3 py-8 border bg-white md:rounded md:mb-3">
                 <p className="font-bold text-gray-700 mb-3">{product?.name}</p>
                 <p className="">{product?.description}</p>
-              </div>
+              </article>
             )}
-            <div className="px-3 py-8 border bg-white md:rounded">
-              <div className="flex items-center mb-3">
-                <img
-                  alt={product.user?.[0].name}
-                  className="rounded-lg w-20 h-20 object-cover"
-                  src={generateUrl(product.user?.[0].image, {
-                    width: 400,
-                    fit: true,
-                  })}
-                />
-                <div>
-                  <p className="mb-1 ml-3 text-2xl leading-tight">
-                    {product.user?.[0].name}
-                  </p>
-                  {product.user?.[0].address && (
-                    <p className="ml-3 text-gray-700">
-                      {product.user?.[0].address}
-                    </p>
-                  )}
-                </div>
-              </div>
+            <div className="flex items-center mb-3 px-3">
+              <img
+                alt={product.user?.[0].name}
+                className="rounded-lg w-20 h-20 object-cover"
+                src={generateUrl(product.user?.[0].image, {
+                  width: 400,
+                  fit: true,
+                })}
+              />
               <div>
+                <p className="mb-1 ml-3 text-xl leading-tight font-bold">
+                  {product.user?.[0].name}
+                </p>
+                {product.user?.[0].address && (
+                  <p className="ml-3 text-gray-700">
+                    {product.user?.[0].address}
+                  </p>
+                )}
                 {product.user?.[0].whatsapp && (
-                  <Button outline className="mr-2 w-full mb-3 flex-col py-3">
+                  <div className="mx-3 mb-2">
                     WhatsApp {product.user?.[0].whatsapp}
-                  </Button>
+                  </div>
                 )}
                 {product.user?.[0].phone && (
-                  <Button outline className="mr-2 w-full mb-3 flex-col py-3">
-                    Telfon/HP {product.user?.[0].phone}
-                  </Button>
+                  <div className="mx-3 mb-2">
+                    Telfon {product.user?.[0].phone}
+                  </div>
                 )}
                 {product.user?.[0].email && (
-                  <Button outline className="mr-2 w-full mb-3 flex-col py-3">
+                  <div className="mx-3 mb-2">
                     Email {product.user?.[0].email}
-                  </Button>
+                  </div>
                 )}
               </div>
             </div>
@@ -139,7 +119,7 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
             <img
               alt="gambar product"
               src={generateUrl(selectedImage, {})}
-              className="absolute top-0 left-0 w-full h-full object-contain bg-black"
+              className="absolute top-0 left-0 w-full h-full object-contain bg-black rounded"
             />
           ) : (
             <Img
@@ -147,13 +127,13 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
               url
               alt="gambar product"
               src={PlaceholderImage}
-              className="absolute top-0 w-full h-full object-cover"
+              className="absolute top-0 w-full h-full object-cover rounded"
               sizes={[400, 500, 600]}
             />
           )}
         </div>
       </div>
-      {images && (
+      {images.length > 0 && (
         <div className="flex px-3 pb-3 pt-2 overflow-x-auto">
           {images.map((value) => (
             <ImageThumbnail

@@ -15,7 +15,7 @@ module.exports = {
   variants: {
     boxShadow: ["responsive", "responsive", "hover", "focus", "focus-within"],
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
   future: {
     removeDeprecatedGapUtilities: true,
   },
