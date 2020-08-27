@@ -159,9 +159,11 @@ export const queryAllProductSlugs = async () => {
 export const queryCompleteProductBySlug = async (
   userSlug: string,
   productSlug: string
-) => {
+): Promise<(Product & { user: User }) | null> => {
   const client = await connectToDb()
-  const fullProduct = await getProductsCollection(client).aggregate([
+  const fullProduct = await getProductsCollection(client).aggregate<
+    Product & { user: User }
+  >([
     { $match: { userSlug, productSlug } },
     {
       $lookup: {
@@ -171,13 +173,15 @@ export const queryCompleteProductBySlug = async (
         as: "user",
       },
     },
+    {
+      $unwind: {
+        path: "$user",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
   ])
 
-  const hasNext = await fullProduct.hasNext()
-  if (hasNext) {
-    return fullProduct.next()
-  }
-  return undefined
+  return fullProduct.next()
 }
 
 export const queryProductById = async (_id: string) => {
@@ -204,4 +208,11 @@ export const deleteImageById = async (_id: string, cloudinaryId: any) => {
     { _id },
     { $pull: { images: cloudinaryId } }
   )
+}
+
+export const findProductByUserSlug = async (
+  userSlug: string
+): Promise<Product[]> => {
+  const client = await connectToDb()
+  return getProductsCollection(client).find({ userSlug }).toArray()
 }

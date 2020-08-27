@@ -1,7 +1,12 @@
 import React, { FC, useState } from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Img from "react-optimized-image/lib"
-import { queryAllProductSlugs, queryCompleteProductBySlug } from "../db"
+import { ParsedUrlQuery } from "querystring"
+import {
+  findProductByUserSlug,
+  queryAllProductSlugs,
+  queryCompleteProductBySlug,
+} from "../db"
 import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 import { generateUrl } from "../utils/cloudinary"
 
@@ -17,7 +22,7 @@ interface Props {
     userPhoto: string
     userSlug: string
     description: string
-    user: Array<{
+    user: {
       _id: string
       email: string
       emailVerified: boolean
@@ -27,8 +32,9 @@ interface Props {
       whatsapp: string
       phone: string
       address?: string
-    }>
+    }
   }
+  otherProducts: Array<Product>
 }
 const ProductPage: FC<Props> = ({ product }) => {
   return (
@@ -55,35 +61,33 @@ const ProductPage: FC<Props> = ({ product }) => {
             </div>
             <div className="flex items-center mb-3 px-3">
               <img
-                alt={product.user?.[0].name}
+                alt={product.user.name}
                 className="rounded-lg w-20 h-20 object-cover"
-                src={generateUrl(product.user?.[0].image, {
+                src={generateUrl(product.user.image, {
                   width: 400,
                   fit: true,
                 })}
               />
               <div>
                 <p className="mb-1 ml-3 text-xl leading-tight font-bold">
-                  {product.user?.[0].name}
+                  {product.user.name}
                 </p>
-                {product.user?.[0].address && (
-                  <p className="ml-3 text-gray-700">
-                    {product.user?.[0].address}
-                  </p>
+                {product.user.address && (
+                  <p className="ml-3 text-gray-700">{product.user.address}</p>
                 )}
-                {product.user?.[0].whatsapp && (
+                {product.user.whatsapp && (
                   <div className="mx-3 mb-2 text-sm">
-                    WhatsApp {product.user?.[0].whatsapp}
+                    WhatsApp {product.user.whatsapp}
                   </div>
                 )}
-                {product.user?.[0].phone && (
+                {product.user.phone && (
                   <div className="mx-3 mb-2 text-sm">
-                    Telfon {product.user?.[0].phone}
+                    Telfon {product.user.phone}
                   </div>
                 )}
-                {product.user?.[0].email && (
+                {product.user.email && (
                   <div className="mx-3 mb-2 text-sm">
-                    Email {product.user?.[0].email}
+                    Email {product.user.email}
                   </div>
                 )}
               </div>
@@ -177,17 +181,26 @@ const ImageThumbnail: FC<{
   )
 }
 
-export const getStaticProps: GetStaticProps<any, { slug: string[] }> = async ({
+interface PageParams extends ParsedUrlQuery {
+  slugs: string[]
+}
+export const getStaticProps: GetStaticProps<Props, PageParams> = async ({
   params,
 }) => {
-  if (params?.slug === undefined) throw new Error("params is undefined")
+  if (params?.slugs === undefined) throw new Error("params is undefined")
 
-  const product = await queryCompleteProductBySlug(
-    params.slug[0],
-    params.slug[1]
-  )
+  const [userSlug, productSlug] = params.slugs
+
+  const product = await queryCompleteProductBySlug(userSlug, productSlug)
+  const otherProducts = await findProductByUserSlug(userSlug)
+
+  if (!product) throw new Error("product not found")
+
   return {
-    props: { product: product ?? [] },
+    props: {
+      product,
+      otherProducts: otherProducts ?? [],
+    },
     // we will attempt to re-generate the page:
     // - when a request comes in
     // - at most once every second
@@ -195,11 +208,11 @@ export const getStaticProps: GetStaticProps<any, { slug: string[] }> = async ({
   }
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths<PageParams> = async () => {
   const products = await queryAllProductSlugs()
   // TODO: don't use as.
   const paths = products.map(({ productSlug, userSlug }) => ({
-    params: { slug: [userSlug as string, productSlug as string] },
+    params: { slugs: [userSlug as string, productSlug as string] },
   }))
 
   return {
