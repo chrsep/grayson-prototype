@@ -1,18 +1,38 @@
 import React, { FC } from "react"
 import Link from "next/link"
-import Img from "react-optimized-image/lib"
+import Img, { Svg } from "react-optimized-image"
 import PlusIcon from "../../icons/plus.svg"
+import ChevronRightIcon from "../../icons/chevron-right.svg"
 import useGetMyProducts from "../../hooks/useGetMyProducts"
 import { generateUrl } from "../../utils/cloudinary"
 import YouNoProductImage from "../../images/you-no-product.png"
+import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 
 const ProductPage = () => {
   const { data, status } = useGetMyProducts()
+  const user = useGetUserProfileApi()
 
   return (
     <>
-      <main className="mx-auto max-w-4xl pt-6">
-        <div className="flex items-end">
+      <main className="mx-auto max-w-4xl">
+        <Link href="/profile">
+          <a className="flex items-center shadow-xs bg-white p-3 my-3 mx-0 md:mx-3 md:rounded-lg block">
+            <img
+              alt={user.data?.name}
+              className="rounded-lg w-12 h-12 object-cover"
+              src={generateUrl(user.data?.picture ?? "", {
+                width: 200,
+                fit: true,
+              })}
+            />
+            <div className="ml-3">
+              <div className="text-sm opacity-75">Data diri</div>
+              <div className="font-bold">{user.data?.name}</div>
+            </div>
+            <Svg src={ChevronRightIcon} className="w-6 ml-auto" />
+          </a>
+        </Link>
+        <div className="flex items-end pt-2">
           <h1 className="text-3xl font-bold mx-3">Produk-ku</h1>
           <Link href="/products/new">
             <button className="bg-black rounded-full py-3 pl-3 pr-6 shadow absolute right-0 bottom-0 m-3 z-50 text-white flex items-center md:relative md:ml-auto text-sm">
