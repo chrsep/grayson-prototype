@@ -27,6 +27,12 @@ const Home: FC<Props> = ({ products }) => {
   const [search, setSearch] = useState("")
   const [filteredCategory, setFilteredCategory] = useState<number>()
 
+  const filteredProducts = products.filter(
+    (product) =>
+      product.name.toLowerCase().includes(search.toLowerCase()) &&
+      (filteredCategory === undefined || product.category === filteredCategory)
+  )
+
   return (
     <>
       <main className="mx-auto max-w-4xl">
@@ -68,44 +74,37 @@ const Home: FC<Props> = ({ products }) => {
           ))}
         </div>
         <div className="flex ml-3 mr-1 flex-wrap">
-          {products
-            .filter(
-              (product) =>
-                product.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filteredCategory === undefined ||
-                  product.category === filteredCategory)
-            )
-            .map(
-              ({
-                _id,
-                name,
-                price,
-                images,
-                userName,
-                userPhoto,
-                userSlug,
-                productSlug,
-                category,
-              }) => {
-                return (
-                  <Product
-                    key={_id}
-                    id={_id}
-                    name={name}
-                    price={price}
-                    images={images}
-                    userName={userName}
-                    userPhoto={userPhoto}
-                    productSlug={productSlug}
-                    userSlug={userSlug}
-                    category={category}
-                    className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
-                  />
-                )
-              }
-            )}
+          {filteredProducts.map(
+            ({
+              _id,
+              name,
+              price,
+              images,
+              userName,
+              userPhoto,
+              userSlug,
+              productSlug,
+              category,
+            }) => {
+              return (
+                <Product
+                  key={_id}
+                  id={_id}
+                  name={name}
+                  price={price}
+                  images={images}
+                  userName={userName}
+                  userPhoto={userPhoto}
+                  productSlug={productSlug}
+                  userSlug={userSlug}
+                  category={category}
+                  className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
+                />
+              )
+            }
+          )}
         </div>
-        {products.length === 0 && (
+        {filteredProducts.length === 0 && (
           <>
             <Img
               webp
@@ -113,8 +112,11 @@ const Home: FC<Props> = ({ products }) => {
               src={NoProductImage}
               sizes={[250, 300]}
             />
-            <h6 className="mt-8 text-center text-xl text-gray-900">
-              Belum ada produk terdaftar
+            <h6 className="mt-8 text-center text-xl text-gray-900 px-3">
+              Belum ada produk
+              {filteredCategory !== undefined &&
+                ` ${Categories[filteredCategory]} `}
+              terdaftar
             </h6>
           </>
         )}
