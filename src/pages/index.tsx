@@ -1,15 +1,13 @@
 import Head from "next/head"
 import React, { FC, useState } from "react"
 import Img, { Svg } from "react-optimized-image"
-import Link from "next/link"
 import Input from "../components/Input/Input"
 import SearchIcon from "../icons/search.svg"
 import { queryProducts } from "../db"
-import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 import NoProductImage from "../images/no-product.png"
-import CloudinaryImage from "../components/CloudinaryImage/CloudinaryImage"
 import { Categories } from "../utils/categories"
 import Chip from "../components/Chip/Chip"
+import Product from "../components/Product/Product"
 
 interface Props {
   products: Array<{
@@ -101,6 +99,7 @@ const Home: FC<Props> = ({ products }) => {
                     productSlug={productSlug}
                     userSlug={userSlug}
                     category={category}
+                    className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
                   />
                 )
               }
@@ -121,80 +120,6 @@ const Home: FC<Props> = ({ products }) => {
         )}
       </main>
     </>
-  )
-}
-
-const Product: FC<{
-  id: string
-  name: string
-  price: number
-  images: string[]
-  userPhoto: string
-  userName: string
-  userSlug: string
-  productSlug: string
-  category?: number
-}> = (
-  { id, name, price, images, userName, userPhoto, userSlug, productSlug },
-  idx
-) => {
-  return (
-    <div key={id} className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6 fade-in">
-      <Link href="/[...slug]" as={`/${userSlug}/${productSlug}`}>
-        <a className="block">
-          <div
-            className="w-full relative overflow-hidden rounded-lg"
-            style={{ paddingBottom: "75%" }}
-          >
-            {(images?.length ?? 0) > 0 ? (
-              <CloudinaryImage
-                alt={name}
-                cloudinaryId={images[0]}
-                className="absolute top-0 w-full h-full object-cover"
-                loading={idx < 7 ? "eager" : "lazy"}
-                breakpoints={[
-                  { viewport: 200, imageWidth: 150 },
-                  { viewport: 400, imageWidth: 300 },
-                  { viewport: 640, imageWidth: 150 },
-                ]}
-                options={{ fill: true, crop: true, aspectRatio: 1.3 }}
-              />
-            ) : (
-              <Img
-                webp
-                url
-                alt={name}
-                src={PlaceholderImage}
-                className="absolute top-0 w-full h-full object-cover"
-                loading={idx < 7 ? "eager" : "lazy"}
-                sizes={[160, 250, 300]}
-              />
-            )}
-          </div>
-          <div className="p-1">
-            <div>{name}</div>
-            <div className="text-gray-700 mb-1 text-sm">
-              {new Intl.NumberFormat("id", {
-                style: "currency",
-                currency: "IDR",
-              }).format(price)}
-            </div>
-            <div className="flex">
-              <CloudinaryImage
-                alt={userName}
-                className="rounded w-5 h-5 mr-1 object-cover"
-                cloudinaryId={userPhoto}
-                breakpoints={[{ imageWidth: 80, viewport: 200 }]}
-                options={{ fill: true, crop: true, aspectRatio: 1 }}
-              />
-              <div className="text-sm text-gray-700 truncate pr-6">
-                {userName}
-              </div>
-            </div>
-          </div>
-        </a>
-      </Link>
-    </div>
   )
 }
 

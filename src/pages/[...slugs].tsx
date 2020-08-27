@@ -9,6 +9,7 @@ import {
 } from "../db"
 import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 import { generateUrl } from "../utils/cloudinary"
+import Product from "../components/Product/Product"
 
 interface Props {
   product: {
@@ -36,75 +37,86 @@ interface Props {
   }
   otherProducts: Array<Product>
 }
-const ProductPage: FC<Props> = ({ product }) => {
-  return (
-    <main className="md:flex md:px-3 mx-auto max-w-4xl pb-8">
-      {product ? (
-        <>
-          <div className="md:w-1/2">
-            <ImagePreviews images={product.images} />
-          </div>
-          <div className="md:w-1/2 md:ml-3">
-            <div className="m-3">
-              <h1 className="font-bold text-2xl leading-tight">
-                {product?.name}
-              </h1>
-              <h2 className="opacity-75 ml-auto">
-                {new Intl.NumberFormat("id", {
-                  style: "currency",
-                  currency: "IDR",
-                }).format(product?.price ?? 0)}
-              </h2>
-              {product?.description && (
-                <p className="mt-3 mb-6">{product?.description}</p>
-              )}
-            </div>
-            <div className="flex items-center mb-3 px-3">
-              <img
-                alt={product.user.name}
-                className="rounded-lg w-20 h-20 object-cover"
-                src={generateUrl(product.user.image, {
-                  width: 400,
-                  fit: true,
-                })}
-              />
-              <div>
-                <p className="mb-1 ml-3 text-xl leading-tight font-bold">
-                  {product.user.name}
-                </p>
-                {product.user.address && (
-                  <p className="ml-3 text-gray-700">{product.user.address}</p>
-                )}
-                {product.user.whatsapp && (
-                  <div className="mx-3 mb-2 text-sm">
-                    WhatsApp {product.user.whatsapp}
-                  </div>
-                )}
-                {product.user.phone && (
-                  <div className="mx-3 mb-2 text-sm">
-                    Telfon {product.user.phone}
-                  </div>
-                )}
-                {product.user.email && (
-                  <div className="mx-3 mb-2 text-sm">
-                    Email {product.user.email}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
+const ProductPage: FC<Props> = ({ product, otherProducts }) => (
+  <main className="mx-auto max-w-4xl pb-8">
+    <div className="md:flex md:px-3 ">
+      <div className="md:w-1/2">
+        <ImagePreviews images={product.images} />
+      </div>
+      <div className="md:w-1/2 md:ml-3">
         <div className="m-3">
-          <div
-            className="w-full relative overflow-hidden rounded-lg shadow bg-gray-200"
-            style={{ paddingBottom: "75%" }}
-          />
+          <h1 className="font-bold text-2xl leading-tight">{product?.name}</h1>
+          <h2 className="opacity-75 ml-auto">
+            {new Intl.NumberFormat("id", {
+              style: "currency",
+              currency: "IDR",
+            }).format(product?.price ?? 0)}
+          </h2>
+          {product?.description && (
+            <p className="mt-3 mb-6">{product?.description}</p>
+          )}
         </div>
+        <div className="flex items-center mb-3 px-3">
+          <img
+            alt={product.user.name}
+            className="rounded-lg w-20 h-20 object-cover"
+            src={generateUrl(product.user.image, {
+              width: 400,
+              fit: true,
+            })}
+          />
+          <div>
+            <p className="mb-1 ml-3 text-xl leading-tight font-bold">
+              {product.user.name}
+            </p>
+            {product.user.address && (
+              <p className="ml-3 text-gray-700">{product.user.address}</p>
+            )}
+            {product.user.whatsapp && (
+              <div className="mx-3 mb-2 text-sm">
+                WhatsApp {product.user.whatsapp}
+              </div>
+            )}
+            {product.user.phone && (
+              <div className="mx-3 mb-2 text-sm">
+                Telfon {product.user.phone}
+              </div>
+            )}
+            {product.user.email && (
+              <div className="mx-3 mb-2 text-sm">
+                Email {product.user.email}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div className="mx-3 mt-6 font-bold">
+        Lainnya oleh <span className="">{product.userName}</span>
+      </div>
+    </div>
+    <div className="flex px-3 mt-2">
+      {otherProducts.map(
+        ({ _id, name, price, images, userSlug, productSlug, category }) => {
+          return (
+            <Product
+              key={_id}
+              id={_id}
+              name={name}
+              price={price}
+              images={images}
+              productSlug={productSlug}
+              userSlug={userSlug}
+              category={category}
+              className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
+            />
+          )
+        }
       )}
-    </main>
-  )
-}
+    </div>
+  </main>
+)
 
 const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(images?.[0])
@@ -120,7 +132,7 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
             <img
               alt="gambar product"
               src={generateUrl(selectedImage, {})}
-              className="absolute top-0 left-0 w-full h-full object-contain bg-black md:rounded"
+              className="absolute top-0 left-0 w-full h-full object-contain bg-black md:rounded-lg"
             />
           ) : (
             <Img
@@ -128,7 +140,7 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
               url
               alt="gambar product"
               src={PlaceholderImage}
-              className="absolute top-0 w-full h-full object-cover md:rounded"
+              className="absolute top-0 w-full h-full object-cover md:rounded-lg"
               sizes={[400, 500, 600]}
             />
           )}
@@ -192,18 +204,20 @@ export const getStaticProps: GetStaticProps<Props, PageParams> = async ({
   const [userSlug, productSlug] = params.slugs
 
   const product = await queryCompleteProductBySlug(userSlug, productSlug)
-  const otherProducts = await findProductByUserSlug(userSlug)
+  let otherProducts = await findProductByUserSlug(userSlug)
 
   if (!product) throw new Error("product not found")
+  if (!otherProducts) otherProducts = []
+
+  otherProducts = otherProducts.filter(
+    (otherProduct) => otherProduct.productSlug === productSlug
+  )
 
   return {
     props: {
       product,
-      otherProducts: otherProducts ?? [],
+      otherProducts,
     },
-    // we will attempt to re-generate the page:
-    // - when a request comes in
-    // - at most once every second
     revalidate: 1,
   }
 }
@@ -215,10 +229,7 @@ export const getStaticPaths: GetStaticPaths<PageParams> = async () => {
     params: { slugs: [userSlug as string, productSlug as string] },
   }))
 
-  return {
-    paths,
-    fallback: true,
-  }
+  return { paths, fallback: true }
 }
 
 export default ProductPage

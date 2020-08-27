@@ -214,5 +214,7 @@ export const findProductByUserSlug = async (
   userSlug: string
 ): Promise<Product[]> => {
   const client = await connectToDb()
-  return getProductsCollection(client).find({ userSlug }).toArray()
+  return getProductsCollection(client)
+    .find({ userSlug: { $eq: userSlug } })
+    .toArray()
 }
