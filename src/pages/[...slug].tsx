@@ -49,13 +49,10 @@ const ProductPage: FC<Props> = ({ product }) => {
                   currency: "IDR",
                 }).format(product?.price ?? 0)}
               </h2>
+              {product?.description && (
+                <p className="mt-3 mb-6">{product?.description}</p>
+              )}
             </div>
-            {product?.description && (
-              <article className="px-3 py-8 border bg-white md:rounded md:mb-3">
-                <p className="font-bold text-gray-700 mb-3">{product?.name}</p>
-                <p className="">{product?.description}</p>
-              </article>
-            )}
             <div className="flex items-center mb-3 px-3">
               <img
                 alt={product.user?.[0].name}
@@ -75,17 +72,17 @@ const ProductPage: FC<Props> = ({ product }) => {
                   </p>
                 )}
                 {product.user?.[0].whatsapp && (
-                  <div className="mx-3 mb-2">
+                  <div className="mx-3 mb-2 text-sm">
                     WhatsApp {product.user?.[0].whatsapp}
                   </div>
                 )}
                 {product.user?.[0].phone && (
-                  <div className="mx-3 mb-2">
+                  <div className="mx-3 mb-2 text-sm">
                     Telfon {product.user?.[0].phone}
                   </div>
                 )}
                 {product.user?.[0].email && (
-                  <div className="mx-3 mb-2">
+                  <div className="mx-3 mb-2 text-sm">
                     Email {product.user?.[0].email}
                   </div>
                 )}
@@ -119,7 +116,7 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
             <img
               alt="gambar product"
               src={generateUrl(selectedImage, {})}
-              className="absolute top-0 left-0 w-full h-full object-contain bg-black rounded"
+              className="absolute top-0 left-0 w-full h-full object-contain bg-black md:rounded"
             />
           ) : (
             <Img
@@ -127,7 +124,7 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
               url
               alt="gambar product"
               src={PlaceholderImage}
-              className="absolute top-0 w-full h-full object-cover rounded"
+              className="absolute top-0 w-full h-full object-cover md:rounded"
               sizes={[400, 500, 600]}
             />
           )}
