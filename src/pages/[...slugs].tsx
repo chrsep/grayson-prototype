@@ -37,86 +37,103 @@ interface Props {
   }
   otherProducts: Array<Product>
 }
-const ProductPage: FC<Props> = ({ product, otherProducts }) => (
-  <main className="mx-auto max-w-4xl pb-8">
-    <div className="md:flex md:px-3 ">
-      <div className="md:w-1/2">
-        <ImagePreviews images={product.images} />
-      </div>
-      <div className="md:w-1/2 md:ml-3">
+const ProductPage: FC<Props> = ({ product, otherProducts }) => {
+  if (!product) {
+    return (
+      <main className="mx-auto max-w-4xl pb-8">
         <div className="m-3">
-          <h1 className="font-bold text-2xl leading-tight">{product?.name}</h1>
-          <h2 className="opacity-75 ml-auto">
-            {new Intl.NumberFormat("id", {
-              style: "currency",
-              currency: "IDR",
-            }).format(product?.price ?? 0)}
-          </h2>
-          {product?.description && (
-            <p className="mt-3 mb-6">{product?.description}</p>
-          )}
-        </div>
-        <div className="flex items-center mb-3 px-3">
-          <img
-            alt={product.user.name}
-            className="rounded-lg w-20 h-20 object-cover"
-            src={generateUrl(product.user.image, {
-              width: 400,
-              fit: true,
-            })}
+          <div
+            className="w-full relative overflow-hidden rounded-lg shadow bg-gray-200"
+            style={{ paddingBottom: "75%" }}
           />
-          <div>
-            <p className="mb-1 ml-3 text-xl leading-tight font-bold">
-              {product.user.name}
-            </p>
-            {product.user.address && (
-              <p className="ml-3 text-gray-700">{product.user.address}</p>
+        </div>
+      </main>
+    )
+  }
+
+  return (
+    <main className="mx-auto max-w-4xl pb-8">
+      <div className="md:flex md:px-3 ">
+        <div className="md:w-1/2">
+          <ImagePreviews images={product.images} />
+        </div>
+        <div className="md:w-1/2 md:ml-3">
+          <div className="m-3">
+            <h1 className="font-bold text-2xl leading-tight">
+              {product?.name}
+            </h1>
+            <h2 className="opacity-75 ml-auto">
+              {new Intl.NumberFormat("id", {
+                style: "currency",
+                currency: "IDR",
+              }).format(product.price ?? 0)}
+            </h2>
+            {product?.description && (
+              <p className="mt-3 mb-6">{product.description}</p>
             )}
-            {product.user.whatsapp && (
-              <div className="mx-3 mb-2 text-sm">
-                WhatsApp {product.user.whatsapp}
-              </div>
-            )}
-            {product.user.phone && (
-              <div className="mx-3 mb-2 text-sm">
-                Telfon {product.user.phone}
-              </div>
-            )}
-            {product.user.email && (
-              <div className="mx-3 mb-2 text-sm">
-                Email {product.user.email}
-              </div>
-            )}
+          </div>
+          <div className="flex items-center mb-3 px-3">
+            <img
+              alt={product.user.name}
+              className="rounded-lg w-20 h-20 object-cover"
+              src={generateUrl(product.user.image, {
+                width: 400,
+                fit: true,
+              })}
+            />
+            <div>
+              <p className="mb-1 ml-3 text-xl leading-tight font-bold">
+                {product.user.name}
+              </p>
+              {product.user.address && (
+                <p className="ml-3 text-gray-700">{product.user.address}</p>
+              )}
+              {product.user.whatsapp && (
+                <div className="mx-3 mb-2 text-sm">
+                  WhatsApp {product.user.whatsapp}
+                </div>
+              )}
+              {product.user.phone && (
+                <div className="mx-3 mb-2 text-sm">
+                  Telfon {product.user.phone}
+                </div>
+              )}
+              {product.user.email && (
+                <div className="mx-3 mb-2 text-sm">
+                  Email {product.user.email}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div className="mx-3 mt-6 font-bold">
-        Lainnya oleh <span className="">{product.userName}</span>
+      <div>
+        <div className="mx-3 mt-6 font-bold">
+          Lainnya oleh <span className="">{product.userName}</span>
+        </div>
       </div>
-    </div>
-    <div className="flex px-3 mt-2">
-      {otherProducts.map(
-        ({ _id, name, price, images, userSlug, productSlug, category }) => {
-          return (
-            <Product
-              key={_id}
-              id={_id}
-              name={name}
-              price={price}
-              images={images}
-              productSlug={productSlug}
-              userSlug={userSlug}
-              category={category}
-              className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
-            />
-          )
-        }
-      )}
-    </div>
-  </main>
-)
+      <div className="flex px-3 mt-2">
+        {otherProducts.map(
+          ({ _id, name, price, images, userSlug, productSlug, category }) => {
+            return (
+              <Product
+                key={_id}
+                id={_id}
+                name={name}
+                price={price}
+                images={images}
+                productSlug={productSlug}
+                userSlug={userSlug}
+                category={category}
+                className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
+              />
+            )
+          }
+        )}
+      </div>
+    </main>
+  )
+}
 
 const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(images?.[0])
