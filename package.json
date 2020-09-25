@@ -17,7 +17,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "0.16.0",
     "@hapi/joi": "17.1.1",
-    "@prefresh/next": "1.2.0",
+    "@prefresh/next": "1.2.1",
     "@tailwindcss/typography": "0.2.0",
     "cloudinary": "1.23.0",
     "dayjs": "1.8.36",
