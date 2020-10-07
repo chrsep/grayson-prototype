@@ -1,9 +1,15 @@
 {
   "automerge": true,
   "extends": [
-    "config:base"
+    "schedule:weekends"
   ],
   "packageRules": [
+    {
+      "packagePatterns": [
+        "@types"
+      ],
+      "groupName": "typescript typing"
+    },
     {
       "packagePatterns": [
         "eslint"
