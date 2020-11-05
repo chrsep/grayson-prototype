@@ -5,7 +5,6 @@ const withOptimizedImage = require("next-optimized-images")
 const withPrefresh = require("@prefresh/next")
 const withPWA = require("next-pwa")
 const path = require("path")
-const runtimeCaching = require("./sw-cache.js")
 
 module.exports = withPlugins(
   [
@@ -16,7 +15,6 @@ module.exports = withPlugins(
           disable: process.env.NODE_ENV === "development",
           dest: "public",
           buildExcludes: [/.*images.*$/],
-          runtimeCaching,
         },
       },
     ],
