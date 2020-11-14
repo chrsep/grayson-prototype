@@ -25,7 +25,7 @@
     "mongodb": "3.6.3",
     "nanoid": "3.1.16",
     "next": "9.5.3",
-    "next-compose-plugins": "2.2.0",
+    "next-compose-plugins": "2.2.1",
     "next-optimized-images": "3.0.0-canary.10",
     "next-pwa": "3.1.5",
     "postcss-preset-env": "6.7.0",
