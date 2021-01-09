@@ -20,7 +20,7 @@
     "@prefresh/next": "1.4.4",
     "@tailwindcss/typography": "0.3.1",
     "cloudinary": "1.23.0",
-    "dayjs": "1.10.2",
+    "dayjs": "1.10.3",
     "formidable-serverless": "1.1.1",
     "mongodb": "3.6.3",
     "nanoid": "3.1.20",
