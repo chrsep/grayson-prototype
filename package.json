@@ -24,7 +24,7 @@
     "formidable-serverless": "1.1.1",
     "mongodb": "3.6.3",
     "nanoid": "3.1.20",
-    "next": "9.5.3",
+    "next": "9.5.4",
     "next-compose-plugins": "2.2.1",
     "next-optimized-images": "3.0.0-canary.10",
     "next-pwa": "5.0.4",
