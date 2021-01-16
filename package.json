@@ -59,7 +59,7 @@
     "babel-loader": "8.2.2",
     "chromatic": "5.5.0",
     "cypress": "6.2.1",
-    "eslint": "7.17.0",
+    "eslint": "7.18.0",
     "eslint-config-airbnb-typescript": "9.0.0",
     "eslint-config-prettier": "6.15.0",
     "eslint-import-resolver-node": "0.3.4",
