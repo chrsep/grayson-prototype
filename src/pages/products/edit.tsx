@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import Img, { Svg } from "react-optimized-image"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
@@ -64,8 +63,8 @@ const Form: FC<FormProps> = ({
 }) => {
   const router = useRouter()
   const [error, setError] = useState("")
-  const [patch] = usePatchProduct(id)
-  const [deleteProduct] = useDeleteProduct(id)
+  const patch = usePatchProduct(id)
+  const deleteProduct = useDeleteProduct(id)
 
   return (
     <form>
@@ -73,7 +72,7 @@ const Form: FC<FormProps> = ({
         id="name"
         label="Nama produk / jasa"
         placeholder="Belum di-isi"
-        onSubmit={(newName) => patch({ name: newName })}
+        onSubmit={(newName) => patch.mutateAsync({ name: newName })}
         originalValue={name}
       />
       <CurrencyField
@@ -81,14 +80,14 @@ const Form: FC<FormProps> = ({
         label="Harga"
         placeholder="0"
         originalValue={price}
-        onSubmit={(value) => patch({ price: parseInt(value, 10) })}
+        onSubmit={(value) => patch.mutateAsync({ price: parseInt(value, 10) })}
       />
       <TextAreaField
         id="description"
         label="Deskripsi"
         placeholder="Belum di-isi"
         originalValue={description}
-        onSubmit={(value) => patch({ description: value })}
+        onSubmit={(value) => patch.mutateAsync({ description: value })}
       />
       <CategorySelector
         label="Kategori"
@@ -121,7 +120,7 @@ const Form: FC<FormProps> = ({
             type="button"
             className="mb-3 md:mb-0"
             onClick={async () => {
-              await patch({ hidden: false })
+              await patch.mutateAsync({ hidden: false })
             }}
           >
             Tampilkan
@@ -132,7 +131,7 @@ const Form: FC<FormProps> = ({
             type="button"
             className="text-yellow-700 font-bold mb-3"
             onClick={async () => {
-              await patch({ hidden: true })
+              await patch.mutateAsync({ hidden: true })
             }}
           >
             Sembunyi-kan
@@ -143,7 +142,7 @@ const Form: FC<FormProps> = ({
           outline
           className="flex-shrink-0 text-red-700 font-bold md:ml-3 mb-3"
           onClick={async () => {
-            const result = await deleteProduct()
+            const result = await deleteProduct.mutateAsync()
             if (result.ok) {
               await router.push("/products")
             }
@@ -186,14 +185,14 @@ const TextField: FC<{
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => setValue(originalValue)}
             >
-              <Img alt="cancel" src={CancelIcon} className="w-5" />
+              <CancelIcon src={CancelIcon} className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+              <CheckIcon className="mx-auto w-5" src={CheckIcon} />
             </Button>
           </>
         )}
@@ -231,14 +230,14 @@ const TextAreaField: FC<{
             className="ml-auto mr-2 px-2 py-1 flex-shrink-0 fade-in"
             onClick={() => setValue(originalValue)}
           >
-            <Img alt="cancel" src={CancelIcon} className="w-5" />
+            <CancelIcon src={CancelIcon} className="w-5" />
           </Button>
           <Button
             type="button"
             className="px-2 py-1 flex-shrink-0 fade-in"
             onClick={() => onSubmit(value)}
           >
-            <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+            <CheckIcon className="mx-auto w-5" src={CheckIcon} />
           </Button>
         </div>
       )}
@@ -280,14 +279,14 @@ const CurrencyField: FC<{
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => setValue(originalValue)}
             >
-              <Img alt="cancel" src={CancelIcon} className="w-5" />
+              <CancelIcon src={CancelIcon} className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+              <CheckIcon className="mx-auto w-5" src={CheckIcon} />
             </Button>
           </>
         )}
@@ -302,7 +301,7 @@ const CategorySelector: FC<{
   originalValue?: number
 }> = ({ productId, label, originalValue }) => {
   const [selected, setSelected] = useState(originalValue)
-  const [patch, { isLoading }] = usePatchProduct(productId)
+  const { mutateAsync, isLoading } = usePatchProduct(productId)
 
   return (
     <div className="overflow-auto bg-white border md:rounded mt-3 w-full px-3 py-2">
@@ -313,11 +312,10 @@ const CategorySelector: FC<{
             key={category}
             text={category}
             onClick={async () => {
-              const oldSelected = selected
               if (!isLoading && idx !== selected) {
                 setSelected(idx)
-                const result = await patch({ category: idx })
-                if (!result?.ok) setSelected(oldSelected)
+                const result = await mutateAsync({ category: idx })
+                if (!result?.ok) setSelected(selected)
               }
             }}
             selected={selected === idx}
@@ -338,11 +336,11 @@ const ImageUploader: FC<{
   productId: string
   onError: (error: string) => void
 }> = ({ onError, productId }) => {
-  const [mutate, { status, error }] = usePostImageToProduct(productId)
+  const { mutateAsync, status, error } = usePostImageToProduct(productId)
 
   useEffect(() => {
     if (error) {
-      onError(error.message)
+      onError((error as any).message)
     }
   }, [error])
 
@@ -352,7 +350,7 @@ const ImageUploader: FC<{
         <div>loading...</div>
       ) : (
         <>
-          <Img alt="foto" src={PlusIcon} className="mx-auto" />
+          <PlusIcon className="mx-auto" />
           Gambar
           <input
             type="file"
@@ -361,7 +359,7 @@ const ImageUploader: FC<{
             onChange={async (e) => {
               const file = e?.target?.files?.[0]
               if (file) {
-                await mutate(file)
+                await mutateAsync(file)
               }
             }}
           />
@@ -376,7 +374,7 @@ const Image: FC<{ productId: string; cloudinaryId: string }> = ({
   cloudinaryId,
 }) => {
   const [showPreview, setShowPreview] = useState(false)
-  const [deleteImage] = useDeleteProductImage(productId, cloudinaryId)
+  const deleteImage = useDeleteProductImage(productId, cloudinaryId)
 
   return (
     <div className="flex-shrink-0">
@@ -396,14 +394,14 @@ const Image: FC<{ productId: string; cloudinaryId: string }> = ({
               className="text-white font-bold"
               onClick={() => setShowPreview(false)}
             >
-              <Svg src={CancelIcon} className="w-8 h-8" />
+              <CancelIcon className="w-8 h-8" />
             </Button>
             <Button
               type="button"
               outline
               className="ml-auto mr-3 text-red-700 font-bold"
               onClick={async () => {
-                const result = await deleteImage()
+                const result = await deleteImage.mutateAsync()
                 if (result.ok) {
                   setShowPreview(false)
                 }

@@ -1,10 +1,10 @@
-import { MutationOptions, useMutation } from "react-query"
+import { useMutation, UseMutationOptions } from "react-query"
 
 const convertToMB = (size: number) => {
   return size / 1048576
 }
 
-const usePostImage = (options?: MutationOptions<Response, File>) => {
+const usePostImage = (options?: UseMutationOptions<any, any, any>) => {
   const postImage = (image: File) => {
     const fileSize = convertToMB(image.size)
     if (fileSize > 10) {

@@ -1,13 +1,12 @@
 import React, { FC, useState } from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
-import Img from "react-optimized-image/lib"
+import Image from "next/image"
 import { ParsedUrlQuery } from "querystring"
 import {
   findProductByUserSlug,
   queryAllProductSlugs,
   queryCompleteProductBySlug,
 } from "../db"
-import PlaceholderImage from "../images/empty-image-placeholder.jpg"
 import { generateUrl } from "../utils/cloudinary"
 import Product from "../components/Product/Product"
 
@@ -152,13 +151,12 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
               className="absolute top-0 left-0 w-full h-full object-contain bg-black md:rounded-lg"
             />
           ) : (
-            <Img
-              webp
-              url
+            <Image
               alt="gambar product"
-              src={PlaceholderImage}
+              src="/images/empty-image-placeholder.jpg"
               className="absolute top-0 w-full h-full object-cover md:rounded-lg"
-              sizes={[400, 500, 600]}
+              height={400}
+              width={500}
             />
           )}
         </div>

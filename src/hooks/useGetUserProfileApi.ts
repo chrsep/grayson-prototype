@@ -7,7 +7,7 @@ const useGetUserProfileApi = () => {
 
   return useQuery(["me", "profile"], getProfile, {
     retry: (failureCount, error) => {
-      return error.message !== "not_authenticated"
+      return (error as any).message !== "not_authenticated"
     },
   })
 }

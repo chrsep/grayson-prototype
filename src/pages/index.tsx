@@ -1,10 +1,9 @@
 import Head from "next/head"
 import React, { FC, useState } from "react"
-import Img, { Svg } from "react-optimized-image"
+import Image from "next/image"
 import Input from "../components/Input/Input"
 import SearchIcon from "../icons/search.svg"
 import { queryProducts } from "../db"
-import NoProductImage from "../images/no-product.png"
 import { Categories } from "../utils/categories"
 import Chip from "../components/Chip/Chip"
 import Product from "../components/Product/Product"
@@ -22,7 +21,6 @@ interface Props {
     category?: number
   }>
 }
-
 const Home: FC<Props> = ({ products }) => {
   const [search, setSearch] = useState("")
   const [filteredCategory, setFilteredCategory] = useState<number>()
@@ -45,10 +43,7 @@ const Home: FC<Props> = ({ products }) => {
             className="flex bg-white w-full block rounded-lg shadow focus-within:shadow-outline border overflow-hidden"
             aria-label="search"
           >
-            <Svg
-              src={SearchIcon}
-              className="m-3 mr-1 flex-shrink-0 text-gray-600"
-            />
+            <SearchIcon className="m-3 mr-1 flex-shrink-0 text-gray-600" />
             <Input
               className="w-full outline-none rounded-lg"
               placeholder="Cari"
@@ -106,11 +101,11 @@ const Home: FC<Props> = ({ products }) => {
         </div>
         {filteredProducts.length === 0 && (
           <>
-            <Img
-              webp
+            <Image
               className="w-64 mx-auto mt-12"
-              src={NoProductImage}
-              sizes={[250, 300]}
+              src="/images/no-product.png"
+              width={300}
+              height={300}
             />
             <h6 className="mt-8 text-center text-xl text-gray-900 px-3">
               Belum ada produk

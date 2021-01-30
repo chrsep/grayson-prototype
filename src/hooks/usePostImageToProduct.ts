@@ -1,10 +1,12 @@
-import { queryCache, useMutation } from "react-query"
+import { useMutation, useQueryClient } from "react-query"
 
 const convertToMB = (size: number) => {
   return size / 1048576
 }
 
 const usePostImageToProduct = (productId: string) => {
+  const client = useQueryClient()
+
   const postImageToProduct = (image: File) => {
     const fileSize = convertToMB(image.size)
     if (fileSize > 10) {
@@ -22,7 +24,7 @@ const usePostImageToProduct = (productId: string) => {
   }
 
   return useMutation(postImageToProduct, {
-    onSuccess: async () => queryCache.invalidateQueries(["product", productId]),
+    onSuccess: async () => client.invalidateQueries(["product", productId]),
   })
 }
 

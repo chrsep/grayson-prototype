@@ -1,8 +1,7 @@
 import React, { FC } from "react"
 import Link from "next/link"
-import Img from "react-optimized-image"
+import Image from "next/image"
 import CloudinaryImage from "../CloudinaryImage/CloudinaryImage"
-import PlaceholderImage from "../../images/empty-image-placeholder.jpg"
 
 const Product: FC<{
   id: string
@@ -50,14 +49,13 @@ const Product: FC<{
               options={{ fill: true, crop: true, aspectRatio: 1.3 }}
             />
           ) : (
-            <Img
-              webp
-              url
+            <Image
               alt={name}
-              src={PlaceholderImage}
+              src="/images/empty-image-placeholder.jpg"
               className="absolute top-0 w-full h-full object-cover"
               loading={idx < 7 ? "eager" : "lazy"}
-              sizes={[160, 250, 300]}
+              width={300}
+              height={300}
             />
           )}
         </div>

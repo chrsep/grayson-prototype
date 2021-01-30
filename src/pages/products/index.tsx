@@ -1,11 +1,10 @@
 import React, { FC } from "react"
 import Link from "next/link"
-import Img, { Svg } from "react-optimized-image"
+import Image from "next/image"
 import PlusIcon from "../../icons/plus.svg"
 import ChevronRightIcon from "../../icons/chevron-right.svg"
 import useGetMyProducts from "../../hooks/useGetMyProducts"
 import { generateUrl } from "../../utils/cloudinary"
-import YouNoProductImage from "../../images/you-no-product.png"
 import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 
 const ProductPage = () => {
@@ -29,14 +28,14 @@ const ProductPage = () => {
               <div className="text-sm opacity-75">Data diri</div>
               <div className="font-bold">{user.data?.name}</div>
             </div>
-            <Svg src={ChevronRightIcon} className="w-6 ml-auto" />
+            <ChevronRightIcon className="w-6 ml-auto" />
           </a>
         </Link>
         <div className="flex items-end pt-2">
           <h1 className="text-3xl font-bold mx-3">Produk-ku</h1>
           <Link href="/products/new">
             <button className="bg-black rounded-full py-3 pl-3 pr-6 shadow absolute right-0 bottom-0 m-3 z-50 text-white flex items-center md:relative md:ml-auto text-sm">
-              <Img src={PlusIcon} className="mr-2" />
+              <PlusIcon className="mr-2" />
               Tambah Produk
             </button>
           </Link>
@@ -81,11 +80,11 @@ const ProductPage = () => {
         })}
         {data?.length === 0 && (
           <>
-            <Img
+            <Image
               className="w-64 mx-auto mt-12"
-              src={YouNoProductImage}
-              webp
-              sizes={[250, 300, 672]}
+              src="/images/you-no-product.png"
+              width={300}
+              height={300}
             />
             <h6 className="mt-8 text-center text-xl text-gray-900">
               Anda belum menambahkan produk

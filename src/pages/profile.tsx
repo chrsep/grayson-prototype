@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react"
-import Img from "react-optimized-image"
 import Button from "../components/Button/Button"
 import Input from "../components/Input/Input"
 import usePostImage from "../hooks/usePostImage"
@@ -47,7 +46,7 @@ interface FormProps {
   whatsapp?: string
 }
 const Form: FC<FormProps> = (props) => {
-  const [mutate] = usePatchProfile()
+  const { mutateAsync } = usePatchProfile()
 
   return (
     <form className="fade-in pb-8">
@@ -56,28 +55,28 @@ const Form: FC<FormProps> = (props) => {
         label="Nama Lengkap"
         placeholder="Belum di-isi"
         originalValue={props.name}
-        onSubmit={(name) => mutate({ name })}
+        onSubmit={(name) => mutateAsync({ name })}
       />
       <TextField
         id="phone"
         label="Telefon / HP"
         placeholder="Belum di-isi"
         originalValue={props.phone}
-        onSubmit={(phone) => mutate({ phone })}
+        onSubmit={(phone) => mutateAsync({ phone })}
       />
       <TextField
         id="whatsapp"
         label="WhatsApp"
         placeholder="Belum di-isi"
         originalValue={props.whatsapp}
-        onSubmit={(whatsapp) => mutate({ whatsapp })}
+        onSubmit={(whatsapp) => mutateAsync({ whatsapp })}
       />
       <TextAreaField
         id="address"
         label="Alamat"
         placeholder="Belum di-isi"
         originalValue={props.address}
-        onSubmit={(address) => mutate({ address })}
+        onSubmit={(address) => mutateAsync({ address })}
       />
     </form>
   )
@@ -113,14 +112,14 @@ const TextField: FC<{
               className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => setValue(originalValue)}
             >
-              <Img alt="cancel" src={CancelIcon} className="w-5" />
+              <CancelIcon className="w-5" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+              <CheckIcon className="mx-auto w-5" />
             </Button>
           </>
         )}
@@ -161,14 +160,14 @@ const TextAreaField: FC<{
           className="mr-2 px-2 py-1 flex-shrink-0 fade-in ml-auto"
           onClick={() => setName(originalValue)}
         >
-          <Img alt="cancel" src={CancelIcon} className="w-5" />
+          <CancelIcon className="w-5" />
         </Button>
         <Button
           type="button"
           className="px-2 py-1 flex-shrink-0 fade-in"
           onClick={() => onSubmit(name)}
         >
-          <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+          <CheckIcon className="mx-auto w-5" />
         </Button>
       </div>
     </div>
@@ -180,7 +179,7 @@ const ChangeImageForm: FC<{
 }> = ({ original }) => {
   const [image, setImage] = useState(original)
   const [error, setError] = useState<string>()
-  const [mutate] = usePatchProfile()
+  const { mutateAsync } = usePatchProfile()
 
   return (
     <div className="flex flex-col mt-3 w-24 mx-3 md:mx-0">
@@ -202,16 +201,16 @@ const ChangeImageForm: FC<{
             className="mr-2 px-2 flex-shrink-0"
             onClick={() => setImage(original)}
           >
-            <Img alt="cancel" src={CancelIcon} className="w-5" />
+            <CancelIcon className="w-5" />
           </Button>
           <Button
             type="button"
             className="w-full"
             onClick={async () => {
-              await mutate({ image })
+              await mutateAsync({ image })
             }}
           >
-            <Img alt="accept" className="mx-auto w-5" src={CheckIcon} />
+            <CheckIcon className="mx-auto w-5" />
           </Button>
         </div>
       )}
@@ -227,7 +226,7 @@ interface ImageUploaderProps {
   onError: (error: string) => void
 }
 const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
-  const [mutate, { status, error }] = usePostImage()
+  const { mutateAsync, status, error } = usePostImage()
   const [loadingImage, setLoadingImage] = useState(false)
 
   useEffect(() => {
@@ -254,7 +253,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
           onChange={async (e) => {
             const file = e?.target?.files?.[0]
             if (file) {
-              const result = await mutate(file)
+              const result = await mutateAsync(file)
               if (result?.ok) {
                 setLoadingImage(true)
                 const imageData: PostImageResponse = await result.json()

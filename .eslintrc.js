@@ -11,12 +11,8 @@ module.exports = {
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint",
     "prettier/react",
-    "plugin:jest/recommended",
   ],
-  plugins: ["jest"],
-  env: {
-    "jest/globals": true,
-  },
+
   overrides: [
     {
       // turn off no-new for miragejs use in storybook.
@@ -35,6 +31,7 @@ module.exports = {
     "react/jsx-props-no-spreading": 0,
     "react/react-in-jsx-scope": 0,
     "jsx-a11y/anchor-is-valid": ["off"],
+    "@typescript-eslint/no-use-before-define": 0,
     // Recommended for immer.
     "no-param-reassign": [
       "error",
@@ -62,7 +59,6 @@ module.exports = {
     "import/extensions": "off",
     "import/prefer-default-export": 0,
     "no-unused-expressions": "off",
-    "jest/no-mocks-import": "off",
     "react/jsx-fragments": "off",
     "import/no-unresolved": [2, { ignore: [".png$"] }],
     "jsx-a11y/label-has-associated-control": [

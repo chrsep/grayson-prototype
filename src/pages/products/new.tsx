@@ -1,6 +1,5 @@
 import React, { ChangeEventHandler, FC, useState } from "react"
 import { useRouter } from "next/router"
-import Img, { Svg } from "react-optimized-image"
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 import PlusIcon from "../../icons/plus-black.svg"
@@ -23,7 +22,7 @@ const NewProductPage = () => {
   const [category, setCategory] = useState<number>()
 
   const [error, setError] = useState("")
-  const [postNewProduct] = usePostNewProduct()
+  const postNewProduct = usePostNewProduct()
 
   return (
     <>
@@ -34,7 +33,7 @@ const NewProductPage = () => {
         <form
           onSubmit={async (e) => {
             e.preventDefault()
-            const result = await postNewProduct({
+            const result = await postNewProduct.mutateAsync({
               name,
               price: parseInt(price, 10),
               description,
@@ -231,7 +230,7 @@ interface ImageUploaderProps {
 }
 const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
   const [loadingImage, setLoadingImage] = useState(false)
-  const [mutate, { status }] = usePostImage({
+  const { mutateAsync, status } = usePostImage({
     onError: (err) => onError(err.message),
   })
 
@@ -241,7 +240,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
         <div>loading...</div>
       ) : (
         <>
-          <Img alt="foto" src={PlusIcon} className="mx-auto" />
+          <PlusIcon className="mx-auto" />
           Gambar
           <input
             type="file"
@@ -250,7 +249,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
             onChange={async (e) => {
               const file = e?.target?.files?.[0]
               if (file) {
-                const result = await mutate(file)
+                const result = await mutateAsync(file)
                 if (result?.ok) {
                   setLoadingImage(true)
                   const imageData: PostImageResponse = await result.json()
@@ -272,7 +271,7 @@ const Image: FC<{ onDelete: () => void; cloudinaryId: string }> = ({
   cloudinaryId,
 }) => {
   const [showPreview, setShowPreview] = useState(false)
-  const [deleteImage] = useDeleteImage(cloudinaryId)
+  const deleteImage = useDeleteImage(cloudinaryId)
 
   return (
     <div className="flex-shrink-0">
@@ -292,14 +291,14 @@ const Image: FC<{ onDelete: () => void; cloudinaryId: string }> = ({
               className="text-white font-bold"
               onClick={() => setShowPreview(false)}
             >
-              <Svg src={CancelIcon} className="w-8 h-8" />
+              <CancelIcon className="w-8 h-8" />
             </Button>
             <Button
               type="button"
               outline
               className="ml-auto mr-3 text-red-700 font-bold"
               onClick={async () => {
-                const result = await deleteImage()
+                const result = await deleteImage.mutateAsync()
                 if (result.ok) onDelete()
               }}
             >

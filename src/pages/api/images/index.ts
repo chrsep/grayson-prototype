@@ -12,7 +12,7 @@ const parseForm = (req: NextApiRequest) => {
     const form = new IncomingForm()
     form.parse(req, async (err, fields, files) => {
       if (err) reject(err)
-      resolve(files.image)
+      resolve(files.image as File)
     })
   })
 }

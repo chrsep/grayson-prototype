@@ -1,7 +1,6 @@
 import React, { FC } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import Img from "react-optimized-image"
 import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../Button/Button"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
@@ -43,7 +42,7 @@ const Header = () => {
           })()}
         >
           <Button outline className="flex-shrink-0 pl-2">
-            <Img src={ChevronLeftIcon} className="text-white mr-1" />
+            <ChevronLeftIcon className="text-white mr-1" />
             Kembali
           </Button>
         </Link>
