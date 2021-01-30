@@ -15,7 +15,7 @@
     "chromatic": "npx chromatic --project-token k7e7ca9prrh"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "0.16.0",
+    "@auth0/nextjs-auth0": "0.16.1",
     "@hapi/joi": "17.1.1",
     "@prefresh/next": "1.4.4",
     "@tailwindcss/typography": "0.4.0",
