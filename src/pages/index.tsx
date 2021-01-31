@@ -100,20 +100,21 @@ const Home: FC<Props> = ({ products }) => {
           )}
         </div>
         {filteredProducts.length === 0 && (
-          <>
+          <div className="flex flex-col items-center">
             <Image
               className="w-64 mx-auto mt-12"
               src="/images/no-product.png"
               width={300}
               height={300}
             />
-            <h6 className="mt-8 text-center text-xl text-gray-900 px-3">
+            <h6 className="mt-8 text-xl text-gray-900 px-3">
               Belum ada produk
-              {filteredCategory !== undefined &&
-                ` ${Categories[filteredCategory]} `}
+              {filteredCategory !== undefined
+                ? ` ${Categories[filteredCategory]} `
+                : " "}
               terdaftar
             </h6>
-          </>
+          </div>
         )}
       </main>
     </>
