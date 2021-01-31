@@ -140,22 +140,23 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
   return (
     <>
       <div className="mt-3 fade-in">
-        <div className="w-full relative overflow-hidden">
+        <div
+          className="relative w-full overflow-hidden "
+          style={{ paddingTop: "100%" }}
+        >
           {selectedImage ? (
             <Image
               alt="gambar product"
               src={generateUrl(selectedImage, {})}
               className="absolute top-0 left-0 w-full h-full object-contain bg-black md:rounded-lg"
-              height={400}
-              width={500}
+              layout="fill"
             />
           ) : (
             <Image
               alt="gambar product"
               src="/images/empty-image-placeholder.jpg"
               className="absolute top-0 w-full h-full object-cover md:rounded-lg"
-              height={400}
-              width={500}
+              layout="fill"
             />
           )}
         </div>
