@@ -6,7 +6,7 @@ const usePatchProfile = () => {
   const client = useQueryClient()
   const patchProfile = patchApi<PatchProfileRequestBody>("/me/profile")
   return useMutation(patchProfile, {
-    onSuccess: () => client.invalidateQueries(["me", "profile"]),
+    onSuccess: () => client.refetchQueries(["me", "profile"]),
   })
 }
 

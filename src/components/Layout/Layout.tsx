@@ -1,10 +1,11 @@
 import React, { FC } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import Image from "next/image"
 import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../Button/Button"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
-import CloudinaryImage from "../CloudinaryImage/CloudinaryImage"
+import { generateUrl } from "../../utils/cloudinary"
 
 const Layout: FC = ({ children }) => {
   return (
@@ -50,16 +51,13 @@ const Header = () => {
       {data ? (
         <Link href="/products">
           <div className="flex items-center fade-in cursor-pointer border rounded-full p-1 ml-auto bg-surface">
-            <div className="flex-shrink-0">
-              <CloudinaryImage
-                alt="profile-pic"
-                cloudinaryId={data.picture}
-                options={{ fill: true, crop: true, aspectRatio: 1 }}
-                breakpoints={[{ imageWidth: 80, viewport: 200 }]}
-                className="rounded-full object-cover block"
-                style={{ height: 32, width: 32 }}
-              />
-            </div>
+            <Image
+              alt="profile-pic"
+              src={generateUrl(data.picture, {})}
+              height={32}
+              width={32}
+              className="rounded-full"
+            />
             <p className="ml-2 mr-3 w-3/5 truncate text-sm font-bold block">
               {data?.name}
             </p>

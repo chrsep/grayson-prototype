@@ -1,7 +1,9 @@
 import React, { FC } from "react"
 import Link from "next/link"
+import isEmpty from "lodash/isEmpty"
 import Image from "next/image"
-import CloudinaryImage from "../CloudinaryImage/CloudinaryImage"
+import { generateUrl } from "../../utils/cloudinary"
+import { formatPrice } from "../../utils/formatter"
 
 const Product: FC<{
   id: string
@@ -31,52 +33,42 @@ const Product: FC<{
   <div key={id} className={`${className} fade-in`}>
     <Link href="/[...slugs]" as={`/${userSlug}/${productSlug}`}>
       <a className="block">
-        <div
-          className="w-full relative overflow-hidden rounded-lg"
-          style={{ paddingBottom: "75%" }}
-        >
-          {(images?.length ?? 0) > 0 ? (
-            <CloudinaryImage
-              alt={name}
-              cloudinaryId={images[0]}
-              className="absolute top-0 w-full h-full object-cover"
-              loading={idx < 7 ? "eager" : "lazy"}
-              breakpoints={[
-                { viewport: 200, imageWidth: 150 },
-                { viewport: 400, imageWidth: 300 },
-                { viewport: 640, imageWidth: 150 },
-              ]}
-              options={{ fill: true, crop: true, aspectRatio: 1.3 }}
-            />
-          ) : (
-            <Image
-              alt={name}
-              src="/images/empty-image-placeholder.jpg"
-              className="absolute top-0 w-full h-full object-cover"
-              loading={idx < 7 ? "eager" : "lazy"}
-              width={300}
-              height={300}
-            />
-          )}
-        </div>
+        {!isEmpty(images) ? (
+          <Image
+            alt={name}
+            src={generateUrl(images[0], {})}
+            loading={idx < 7 ? "eager" : "lazy"}
+            width={300}
+            height={200}
+            className="rounded-lg"
+            objectFit="cover"
+          />
+        ) : (
+          <Image
+            alt={name}
+            src="/images/empty-image-placeholder.jpg"
+            loading={idx < 7 ? "eager" : "lazy"}
+            width={300}
+            height={200}
+            className="rounded-lg"
+          />
+        )}
         <div className="p-1">
           <div>{name}</div>
-          <div className="text-gray-700 mb-1 text-sm">
-            {new Intl.NumberFormat("id", {
-              style: "currency",
-              currency: "IDR",
-            }).format(price)}
-          </div>
+          <div className="text-gray-700 mb-1 text-sm">{formatPrice(price)}</div>
           {userName && userPhoto && (
-            <div className="flex">
-              <CloudinaryImage
-                alt={userName}
-                className="rounded w-5 h-5 mr-1 object-cover"
-                cloudinaryId={userPhoto}
-                breakpoints={[{ imageWidth: 80, viewport: 200 }]}
-                options={{ fill: true, crop: true, aspectRatio: 1 }}
-              />
-              <div className="text-sm text-gray-700 truncate pr-6">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <Image
+                  alt={userName}
+                  className="rounded "
+                  src={generateUrl(userPhoto, {})}
+                  width={24}
+                  height={24}
+                  objectFit="cover"
+                />
+              </div>
+              <div className="text-sm text-gray-700 truncate pr-6 ml-2 pb-1">
                 {userName}
               </div>
             </div>

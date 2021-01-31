@@ -140,15 +140,14 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
   return (
     <>
       <div className="mt-3 fade-in">
-        <div
-          className="w-full relative overflow-hidden"
-          style={{ paddingBottom: "100%" }}
-        >
+        <div className="w-full relative overflow-hidden">
           {selectedImage ? (
-            <img
+            <Image
               alt="gambar product"
               src={generateUrl(selectedImage, {})}
               className="absolute top-0 left-0 w-full h-full object-contain bg-black md:rounded-lg"
+              height={400}
+              width={500}
             />
           ) : (
             <Image
@@ -161,6 +160,7 @@ const ImagePreviews: FC<{ images: string[] }> = ({ images }) => {
           )}
         </div>
       </div>
+
       {images.length > 0 && (
         <div className="flex px-3 pb-3 pt-2 overflow-x-auto">
           {images.map((value) => (
@@ -181,32 +181,28 @@ const ImageThumbnail: FC<{
   selected: boolean
   url: string
   onClick: () => void
-}> = ({ url, selected, onClick }) => {
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      className="w-16 mr-2 outline-none flex-shrink-0"
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") onClick()
-      }}
-    >
-      <div
-        className={`w-full relative overflow-hidden rounded-lg ${
-          selected && "shadow-outline"
-        }`}
-        style={{ paddingBottom: "75%" }}
-      >
-        <img
-          alt="gambar product"
-          src={generateUrl(url, { width: 80 })}
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        />
-      </div>
-    </div>
-  )
-}
+}> = ({ url, selected, onClick }) => (
+  <div
+    role="button"
+    tabIndex={0}
+    className="outline-none mr-2 flex-shrink-0"
+    onClick={onClick}
+    onKeyDown={(e) => {
+      if (e.key === "Enter") onClick()
+    }}
+  >
+    <Image
+      alt="gambar product"
+      src={generateUrl(url, { width: 80 })}
+      className={`absolute top-0 left-0 w-full h-full object-cover rounded-lg ${
+        selected && "border-4"
+      }`}
+      width={60}
+      height={50}
+      placeholder="blur"
+    />
+  </div>
+)
 
 interface PageParams extends ParsedUrlQuery {
   slugs: string[]

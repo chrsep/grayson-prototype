@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
 import Button from "../components/Button/Button"
 import Input from "../components/Input/Input"
 import usePostImage from "../hooks/usePostImage"
@@ -235,6 +235,20 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
     }
   }, [error])
 
+  const handleImageUpload: ChangeEventHandler<HTMLInputElement> = async (e) => {
+    const file = e?.target?.files?.[0]
+    if (file) {
+      const result = await mutateAsync(file)
+      if (result?.ok) {
+        setLoadingImage(true)
+        const imageData: PostImageResponse = await result.json()
+        await fetch(generateUrl(imageData.id, {}))
+        setLoadingImage(false)
+        onChange(imageData.id)
+      }
+    }
+  }
+
   return (
     <label>
       <>
@@ -250,21 +264,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
           className="hidden"
           accept="image/*"
           disabled={status === "loading" || loadingImage}
-          onChange={async (e) => {
-            const file = e?.target?.files?.[0]
-            if (file) {
-              const result = await mutateAsync(file)
-              if (result?.ok) {
-                setLoadingImage(true)
-                const imageData: PostImageResponse = await result.json()
-                await fetch(
-                  generateUrl(imageData.id, { width: 160, height: 160 })
-                )
-                setLoadingImage(false)
-                onChange(imageData.id)
-              }
-            }
-          }}
+          onChange={handleImageUpload}
         />
       </>
     </label>
