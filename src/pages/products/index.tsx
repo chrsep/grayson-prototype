@@ -51,15 +51,17 @@ const ProductPage = () => {
           const productImage =
             (images?.length ?? 0) > 0
               ? generateUrl(images[0], { width: 80 })
-              : require("../../images/empty-image-placeholder.jpg?webp&width=80")
+              : "/images/empty-image-placeholder.jpg"
           return (
             <Link key={_id} href={`/products/edit?id=${_id}`}>
               <a>
                 <div className="flex m-3 items-start fade-in">
-                  <img
+                  <Image
                     alt={name}
                     src={productImage}
                     className="w-12 h-12 rounded object-cover"
+                    width="80"
+                    height={80}
                   />
                   <div className="ml-3">
                     <div>{name}</div>
