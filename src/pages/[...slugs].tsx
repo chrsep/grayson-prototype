@@ -9,6 +9,7 @@ import {
 } from "../db"
 import { generateUrl } from "../utils/cloudinary"
 import Product from "../components/Product/Product"
+import { formatPrice } from "../utils/formatter"
 
 interface Props {
   product: {
@@ -61,24 +62,19 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
             <h1 className="font-bold text-2xl leading-tight">
               {product?.name}
             </h1>
-            <h2 className="opacity-75 ml-auto">
-              {new Intl.NumberFormat("id", {
-                style: "currency",
-                currency: "IDR",
-              }).format(product.price ?? 0)}
-            </h2>
+            <h2 className="opacity-75 ml-auto">{formatPrice(product.price)}</h2>
             {product?.description && (
               <p className="mt-3 mb-6">{product.description}</p>
             )}
           </div>
           <div className="flex items-center mb-3 px-3">
-            <img
+            <Image
               alt={product.user.name}
-              className="rounded-lg w-20 h-20 object-cover"
-              src={generateUrl(product.user.image, {
-                width: 400,
-                fit: true,
-              })}
+              className="rounded-lg"
+              src={generateUrl(product.user.image, {})}
+              width={80}
+              height={80}
+              objectFit="cover"
             />
             <div>
               <p className="mb-1 ml-3 text-xl leading-tight font-bold">
@@ -113,21 +109,19 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
       </div>
       <div className="flex px-3 mt-2">
         {otherProducts.map(
-          ({ _id, name, price, images, userSlug, productSlug, category }) => {
-            return (
-              <Product
-                key={_id}
-                id={_id}
-                name={name}
-                price={price}
-                images={images}
-                productSlug={productSlug}
-                userSlug={userSlug}
-                category={category}
-                className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
-              />
-            )
-          }
+          ({ _id, name, price, images, userSlug, productSlug, category }) => (
+            <Product
+              key={_id}
+              id={_id}
+              name={name}
+              price={price}
+              images={images}
+              productSlug={productSlug}
+              userSlug={userSlug}
+              category={category}
+              className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
+            />
+          )
         )}
       </div>
     </main>
