@@ -36,7 +36,12 @@ const Product: FC<{
         {!isEmpty(images) ? (
           <Image
             alt={name}
-            src={generateUrl(images[0], {})}
+            src={generateUrl(images[0], {
+              width: 300,
+              height: 200,
+              fill: true,
+              crop: true,
+            })}
             loading={idx < 7 ? "eager" : "lazy"}
             width={300}
             height={200}
