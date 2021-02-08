@@ -2,6 +2,7 @@ import React, { FC, useState } from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/image"
 import { ParsedUrlQuery } from "querystring"
+import isEmpty from "lodash/isEmpty"
 import {
   findProductByUserSlug,
   queryAllProductSlugs,
@@ -102,28 +103,40 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
           </div>
         </div>
       </div>
-      <div>
-        <div className="mx-3 mt-6 font-bold">
-          Lainnya oleh <span className="">{product.userName}</span>
-        </div>
-      </div>
-      <div className="flex px-3 mt-2">
-        {otherProducts.map(
-          ({ _id, name, price, images, userSlug, productSlug, category }) => (
-            <Product
-              key={_id}
-              id={_id}
-              name={name}
-              price={price}
-              images={images}
-              productSlug={productSlug}
-              userSlug={userSlug}
-              category={category}
-              className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
-            />
-          )
-        )}
-      </div>
+      {!isEmpty(otherProducts) && (
+        <>
+          <div>
+            <div className="mx-3 mt-6 font-bold">
+              Lainnya oleh <span className="">{product.userName}</span>
+            </div>
+          </div>
+          <div className="flex px-3 mt-2">
+            {otherProducts.map(
+              ({
+                _id,
+                name,
+                price,
+                images,
+                userSlug,
+                productSlug,
+                category,
+              }) => (
+                <Product
+                  key={_id}
+                  id={_id}
+                  name={name}
+                  price={price}
+                  images={images}
+                  productSlug={productSlug}
+                  userSlug={userSlug}
+                  category={category}
+                  className="w-1/2 sm:w-1/4 md:w-1/5 pr-2 mb-3 mb-6"
+                />
+              )
+            )}
+          </div>
+        </>
+      )}
     </main>
   )
 }
@@ -210,14 +223,13 @@ export const getStaticProps: GetStaticProps<Props, PageParams> = async ({
   const [userSlug, productSlug] = params.slugs
 
   const product = await queryCompleteProductBySlug(userSlug, productSlug)
-  let otherProducts = await findProductByUserSlug(userSlug)
-
   if (!product) throw new Error("product not found")
-  if (!otherProducts) otherProducts = []
 
-  otherProducts = otherProducts.filter(
-    (otherProduct) => otherProduct.productSlug === productSlug
-  )
+  let otherProducts = await findProductByUserSlug(userSlug)
+  otherProducts =
+    otherProducts?.filter(
+      (otherProduct) => otherProduct.productSlug !== productSlug
+    ) ?? []
 
   return {
     props: {
