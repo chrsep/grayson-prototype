@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/image"
 import { ParsedUrlQuery } from "querystring"
 import isEmpty from "lodash/isEmpty"
+import Head from "next/head"
 import {
   findProductByUserSlug,
   queryAllProductSlugs,
@@ -11,6 +12,7 @@ import {
 import { generateUrl } from "../utils/cloudinary"
 import Product from "../components/Product/Product"
 import { formatPrice } from "../utils/formatter"
+import Button from "../components/Button/Button"
 
 interface Props {
   product: {
@@ -54,6 +56,10 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
 
   return (
     <main className="mx-auto max-w-4xl pb-8">
+      <Head>
+        <title>{product?.name}</title>
+      </Head>
+
       <div className="md:flex md:px-3 ">
         <div className="md:w-1/2">
           <ImagePreviews images={product.images} />
@@ -64,11 +70,14 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
               {product?.name}
             </h1>
             <h2 className="opacity-75 ml-auto">{formatPrice(product.price)}</h2>
+            <Button className="w-full my-3 py-4 font-bold rounded-lg">
+              Masukan ke Keranjang
+            </Button>
             {product?.description && (
               <p className="mt-3 mb-6">{product.description}</p>
             )}
           </div>
-          <div className="flex items-center mb-3 px-3">
+          <div className="flex items-start mb-3 px-3">
             <Image
               alt={product.user.name}
               className="rounded-lg"
@@ -78,11 +87,13 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
               objectFit="cover"
             />
             <div>
-              <p className="mb-1 ml-3 text-xl leading-tight font-bold">
+              <p className="my-1 ml-3 text-xl leading-tight font-bold">
                 {product.user.name}
               </p>
               {product.user.address && (
-                <p className="ml-3 text-gray-700">{product.user.address}</p>
+                <p className="mb-2 ml-3 text-gray-700">
+                  {product.user.address}
+                </p>
               )}
               {product.user.whatsapp && (
                 <div className="mx-3 mb-2 text-sm">
@@ -103,6 +114,7 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
           </div>
         </div>
       </div>
+
       {!isEmpty(otherProducts) && (
         <>
           <div>
