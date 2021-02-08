@@ -255,7 +255,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
         <div
           role="button"
           tabIndex={0}
-          className="w-full bg-black text-white text-center rounded py-2 p-x1 shadow focus:shadow-outline text-xs"
+          className="w-full bg-primary text-onPrimary text-center rounded py-2 p-x1 shadow focus:shadow-outline text-xs"
         >
           {status === "loading" || loadingImage ? "loading..." : "Ubah Gambar"}
         </div>

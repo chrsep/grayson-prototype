@@ -13,6 +13,7 @@ import { generateUrl } from "../utils/cloudinary"
 import Product from "../components/Product/Product"
 import { formatPrice } from "../utils/formatter"
 import Button from "../components/Button/Button"
+import PlusIcon from "../icons/plus.svg"
 
 interface Props {
   product: {
@@ -70,12 +71,15 @@ const ProductPage: FC<Props> = ({ product, otherProducts }) => {
               {product?.name}
             </h1>
             <h2 className="opacity-75 ml-auto">{formatPrice(product.price)}</h2>
-            <Button className="w-full my-3 py-4 font-bold rounded-lg">
-              Masukan ke Keranjang
-            </Button>
+
             {product?.description && (
               <p className="mt-3 mb-6">{product.description}</p>
             )}
+
+            <Button className="w-full mt-3 mb-6 py-4 font-bold rounded-lg">
+              <PlusIcon className="mr-3" />
+              Masukan ke Keranjang
+            </Button>
           </div>
           <div className="flex items-start mb-3 px-3">
             <Image

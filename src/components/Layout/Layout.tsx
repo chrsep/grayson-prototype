@@ -5,6 +5,7 @@ import Image from "next/image"
 import useGetUserProfileApi from "../../hooks/useGetUserProfileApi"
 import Button from "../Button/Button"
 import ChevronLeftIcon from "../../icons/chevron-left.svg"
+import ShoppingBagIcon from "../../icons/shopping-bag-outline.svg"
 import { generateUrl } from "../../utils/cloudinary"
 
 const Layout: FC = ({ children }) => {
@@ -67,12 +68,17 @@ const Header = () => {
         <Link href="/api/login">
           <Button
             outline={status === "loading"}
-            className="ml-auto flex-shrink-0"
+            className="ml-auto flex-shrink-0 h-10"
           >
             Login
           </Button>
         </Link>
       )}
+      <Link href="/cart">
+        <Button outline className="flex-shrink-0 ml-3 p-2">
+          <ShoppingBagIcon className="text-white w-6" />
+        </Button>
+      </Link>
     </nav>
   )
 }
