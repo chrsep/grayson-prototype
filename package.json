@@ -26,7 +26,7 @@
     "@types/node": "14.14.31",
     "@types/react": "17.0.2",
     "@types/uuid": "8.3.0",
-    "cloudinary": "1.24.0",
+    "cloudinary": "1.25.0",
     "dayjs": "1.10.4",
     "formidable-serverless": "1.1.1",
     "lodash": "^4.17.20",
