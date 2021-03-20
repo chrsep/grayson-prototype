@@ -31,7 +31,7 @@
     "formidable-serverless": "1.1.1",
     "lodash": "^4.17.20",
     "mongodb": "3.6.5",
-    "nanoid": "3.1.21",
+    "nanoid": "3.1.22",
     "next": "^10.0.6",
     "next-plugin-preact": "^3.0.3",
     "postcss": "^8.2.4",
