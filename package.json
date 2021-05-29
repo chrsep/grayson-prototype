@@ -19,7 +19,7 @@
     "@auth0/nextjs-auth0": "0.16.1",
     "@hapi/joi": "17.1.1",
     "@svgr/webpack": "^5.5.0",
-    "@tailwindcss/typography": "0.4.0",
+    "@tailwindcss/typography": "0.4.1",
     "@types/formidable": "1.0.32",
     "@types/lodash": "^4.14.168",
     "@types/mongodb": "3.6.10",
