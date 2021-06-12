@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       colors: {
         surface: "#fff",
-        background: "#fafafa",
-        primary: "#0c0c0c",
+        background: "rgba(227,242,253,0.12)",
+        primary: "#2962ff",
         onPrimary: "#fff",
         overlay: "rgba(0, 0, 0, 0.8)",
       },

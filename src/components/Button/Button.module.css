@@ -1,5 +1,5 @@
 .base {
-    @apply rounded px-4 py-2 bg-black text-white text-sm shadow-md;
+    @apply rounded px-4 py-2 bg-primary text-onPrimary text-sm shadow-md font-bold flex items-center justify-center;
 }
 
 .outline {

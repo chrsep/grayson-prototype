@@ -15,7 +15,7 @@ const ProfilePage: FC = () => {
   return (
     <>
       <main className="mx-auto max-w-4xl pb-8">
-        <div className="flex">
+        <div className="flex md:pr-3">
           <h1
             className="text-3xl font-bold ml-3 flex-shrink-0 mr-auto"
             style={{ marginTop: 100 }}
@@ -49,7 +49,7 @@ const Form: FC<FormProps> = (props) => {
   const { mutateAsync } = usePatchProfile()
 
   return (
-    <form className="fade-in pb-8">
+    <form className="fade-in pb-8 md:px-3">
       <TextField
         id="name"
         label="Nama Lengkap"
@@ -109,17 +109,18 @@ const TextField: FC<{
             <Button
               outline
               type="button"
-              className="mr-2 px-2 py-1 flex-shrink-0 fade-in"
+              className="mr-2 px-2 py-1 flex-shrink-0 fade-in border-red-500"
               onClick={() => setValue(originalValue)}
             >
-              <CancelIcon className="w-5" />
+              <CancelIcon className="w-5 text-red-500" />
             </Button>
             <Button
               type="button"
               className="px-2 py-1 flex-shrink-0 fade-in"
               onClick={() => onSubmit(value)}
             >
-              <CheckIcon className="mx-auto w-5" />
+              <CheckIcon className="mx-auto w-5 mr-2" />
+              Simpan
             </Button>
           </>
         )}
@@ -157,17 +158,18 @@ const TextAreaField: FC<{
         <Button
           outline
           type="button"
-          className="mr-2 px-2 py-1 flex-shrink-0 fade-in ml-auto"
+          className="mr-2 px-2 py-1 flex-shrink-0 fade-in ml-auto border-red-500"
           onClick={() => setName(originalValue)}
         >
-          <CancelIcon className="w-5" />
+          <CancelIcon className="w-5 text-red-500" />
         </Button>
         <Button
           type="button"
           className="px-2 py-1 flex-shrink-0 fade-in"
           onClick={() => onSubmit(name)}
         >
-          <CheckIcon className="mx-auto w-5" />
+          <CheckIcon className="mx-auto w-5 mr-2" />
+          Simpan
         </Button>
       </div>
     </div>
@@ -255,7 +257,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ onChange, onError }) => {
         <div
           role="button"
           tabIndex={0}
-          className="w-full bg-black text-white text-center rounded py-2 p-x1 shadow focus:shadow-outline text-xs"
+          className="w-full bg-primary text-onPrimary text-center rounded py-2 p-x1 shadow focus:shadow-outline text-xs"
         >
           {status === "loading" || loadingImage ? "loading..." : "Ubah Gambar"}
         </div>
